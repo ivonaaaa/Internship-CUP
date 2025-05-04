@@ -15,7 +15,7 @@ model User {
   email               String        @unique
   username            String        @unique
   passwordHash        String
-  subscriptionPlan    String        @default("free-trial") // "free-trial" or "paid"
+  subscriptionPlan    SubscriptionPlan @default(FREE_TRIAL)
   phoneNumber         String
   subscriptionExpiry  DateTime      @default(dbgenerated("CURRENT_TIMESTAMP + interval '3 days'"))
   
@@ -30,7 +30,7 @@ model Boat {
   userId            Int
   length            Float
   width             Float
-  boatType          String?       // "motorboat", "dinghy" or "yacht"
+  boatType          BoatType?
   
   // Relations
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -41,7 +41,7 @@ model Transaction {
   id                Int           @id @default(autoincrement())
   userId            Int
   amount            Decimal       @db.Decimal(10, 2)
-  status            String        // "successful" or "canceled"
+  status            TransactionStatus
   transactionDate   DateTime      @default(now())
   
   // Relations
@@ -51,7 +51,7 @@ model Transaction {
 model Rule {
   id                Int           @id @default(autoincrement())
   name              String
-  type              String        // "restriction", "speed_restriction", "anchoring_restriction" or "environmental_protection"
+  type              RuleType
   description       String
   
   // Relations
@@ -63,7 +63,7 @@ model MapElement {
   id                Int           @id @default(autoincrement())
   ruleId            Int
   name              String
-  type              String        // "zone" or "point"
+  type              MapElementType
   coordinates       Json          // GeoJSON format (Polygon or Point)
   description       String?
   isActive          Boolean       @default(true)
@@ -87,4 +87,32 @@ model Notification {
   boat              Boat          @relation(fields: [boatId], references: [id], onDelete: Cascade)
   mapElement        MapElement    @relation(fields: [mapElementId], references: [id])
   rule              Rule          @relation(fields: [ruleId], references: [id])
+}
+
+enum SubscriptionPlan {
+  FREE_TRIAL
+  PAID
+}
+
+enum BoatType {
+  MOTORBOAT
+  DINGHY
+  YACHT
+}
+
+enum TransactionStatus {
+  SUCCESSFUL
+  CANCELED
+}
+
+enum RuleType {
+  RESTRICTION
+  SPEED_RESTRICTION
+  ANCHORING_RESTRICTION
+  ENVIRONMENTAL_PROTECTION
+}
+
+enum MapElementType {
+  ZONE
+  POINT
 }

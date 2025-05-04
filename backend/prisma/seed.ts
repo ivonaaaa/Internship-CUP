@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, SubscriptionPlan, BoatType, TransactionStatus, RuleType, MapElementType } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -16,7 +16,7 @@ async function main() {
       email: 'marko@gmail.com',
       username: 'markosailorman',
       passwordHash: await bcrypt.hash('password123', 10),
-      subscriptionPlan: 'free-trial',
+      subscriptionPlan: SubscriptionPlan.FREE_TRIAL,
       phoneNumber: '+38598123456',
     },
   });
@@ -26,7 +26,7 @@ async function main() {
       email: 'ana@gmail.com',
       username: 'ana_adriatic',
       passwordHash: await bcrypt.hash('securepass456', 10),
-      subscriptionPlan: 'paid',
+      subscriptionPlan: SubscriptionPlan.PAID,
       phoneNumber: '+38591234567',
       subscriptionExpiry: new Date('2026-03-15'),
     },
@@ -37,7 +37,7 @@ async function main() {
       userId: user1.id,
       length: 6.5,
       width: 2.3,
-      boatType: 'motorboat',
+      boatType: BoatType.MOTORBOAT,
     },
   });
 
@@ -46,7 +46,7 @@ async function main() {
       userId: user2.id,
       length: 12.0,
       width: 4.2,
-      boatType: 'yacht',
+      boatType: BoatType.YACHT,
     },
   });
 
@@ -55,7 +55,7 @@ async function main() {
       userId: user2.id,
       length: 4.5,
       width: 1.8,
-      boatType: 'dinghy',
+      boatType: BoatType.DINGHY,
     },
   });
 
@@ -63,7 +63,7 @@ async function main() {
     data: {
       userId: user2.id,
       amount: 9.99,
-      status: 'successful',
+      status: TransactionStatus.SUCCESSFUL,
       transactionDate: new Date('2025-03-15'),
     },
   });
@@ -71,7 +71,7 @@ async function main() {
   const rule1 = await prisma.rule.create({
     data: {
       name: 'No Entry Zone',
-      type: 'restriction',
+      type: RuleType.RESTRICTION,
       description: 'This area is completely restricted for all vessels.',
     },
   });
@@ -79,7 +79,7 @@ async function main() {
   const rule2 = await prisma.rule.create({
     data: {
       name: 'Speed Limit 5 Knots',
-      type: 'speed_restriction',
+      type: RuleType.SPEED_RESTRICTION,
       description: 'Maximum speed in this area is 5 knots.',
     },
   });
@@ -87,7 +87,7 @@ async function main() {
   const rule3 = await prisma.rule.create({
     data: {
       name: 'No Anchoring',
-      type: 'anchoring_restriction',
+      type: RuleType.ANCHORING_RESTRICTION,
       description:
         'Anchoring is not permitted in this area due to underwater cables.',
     },
@@ -96,7 +96,7 @@ async function main() {
   const rule4 = await prisma.rule.create({
     data: {
       name: 'Nature Reserve',
-      type: 'environmental_protection',
+      type: RuleType.ENVIRONMENTAL_PROTECTION,
       description: 'Protected nature area. Keep distance and minimize noise.',
     },
   });
@@ -105,7 +105,7 @@ async function main() {
     data: {
       ruleId: rule2.id, // Speed limit
       name: 'Split Harbor Entrance',
-      type: 'zone',
+      type: MapElementType.ZONE,
       coordinates: {
         type: 'Polygon',
         coordinates: [
@@ -127,7 +127,7 @@ async function main() {
     data: {
       ruleId: rule1.id, // No entry
       name: 'Vis Military Zone',
-      type: 'zone',
+      type: MapElementType.ZONE,
       coordinates: {
         type: 'Polygon',
         coordinates: [
@@ -149,7 +149,7 @@ async function main() {
     data: {
       ruleId: rule4.id, // Nature reserve
       name: 'Kornati National Park',
-      type: 'zone',
+      type: MapElementType.ZONE,
       coordinates: {
         type: 'Polygon',
         coordinates: [
@@ -172,7 +172,7 @@ async function main() {
     data: {
       ruleId: rule3.id, // No anchoring
       name: 'Underwater Cable Area - Brač Channel',
-      type: 'point',
+      type: MapElementType.POINT,
       coordinates: {
         type: 'Point',
         coordinates: [16.45, 43.4],
@@ -186,7 +186,7 @@ async function main() {
     data: {
       ruleId: rule2.id, // Speed limit
       name: 'Hvar Marina Entrance',
-      type: 'point',
+      type: MapElementType.POINT,
       coordinates: {
         type: 'Point',
         coordinates: [16.65, 43.17],
