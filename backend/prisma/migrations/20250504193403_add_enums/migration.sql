@@ -1,13 +1,3 @@
-/*
-  Warnings:
-
-  - The `boatType` column on the `Boat` table would be dropped and recreated. This will lead to data loss if there is data in the column.
-  - The `subscriptionPlan` column on the `User` table would be dropped and recreated. This will lead to data loss if there is data in the column.
-  - Changed the type of `type` on the `MapElement` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
-  - Changed the type of `type` on the `Rule` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
-  - Changed the type of `status` on the `Transaction` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
-
-*/
 -- CreateEnum
 CREATE TYPE "SubscriptionPlan" AS ENUM ('FREE_TRIAL', 'PAID');
 
