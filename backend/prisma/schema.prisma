@@ -1,0 +1,90 @@
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  Int           @id @default(autoincrement())
+  email               String        @unique
+  username            String        @unique
+  passwordHash        String
+  subscriptionPlan    String        @default("free-trial") // "free-trial" or "paid"
+  phoneNumber         String
+  subscriptionExpiry  DateTime      @default(dbgenerated("CURRENT_TIMESTAMP + interval '3 days'"))
+  
+  // Relations
+  boats               Boat[]
+  transactions        Transaction[]
+  notifications       Notification[]
+}
+
+model Boat {
+  id                Int           @id @default(autoincrement())
+  userId            Int
+  length            Float
+  width             Float
+  boatType          String?       // "motorboat", "dinghy" or "yacht"
+  
+  // Relations
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notifications     Notification[]
+}
+
+model Transaction {
+  id                Int           @id @default(autoincrement())
+  userId            Int
+  amount            Decimal       @db.Decimal(10, 2)
+  status            String        // "successful" or "canceled"
+  transactionDate   DateTime      @default(now())
+  
+  // Relations
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Rule {
+  id                Int           @id @default(autoincrement())
+  name              String
+  type              String        // "restriction", "speed_restriction", "anchoring_restriction" or "environmental_protection"
+  description       String
+  
+  // Relations
+  mapElements       MapElement[]
+  notifications     Notification[]
+}
+
+model MapElement {
+  id                Int           @id @default(autoincrement())
+  ruleId            Int
+  name              String
+  type              String        // "zone" or "point"
+  coordinates       Json          // GeoJSON format (Polygon or Point)
+  description       String?
+  isActive          Boolean       @default(true)
+  
+  // Relations
+  rule              Rule          @relation(fields: [ruleId], references: [id])
+  notifications     Notification[]
+}
+
+model Notification {
+  id                Int           @id @default(autoincrement())
+  userId            Int
+  boatId            Int
+  mapElementId      Int
+  ruleId            Int
+  timestamp         DateTime      @default(now())
+  locationCoordinates Json        // GeoJSON point
+  
+  // Relations
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  boat              Boat          @relation(fields: [boatId], references: [id], onDelete: Cascade)
+  mapElement        MapElement    @relation(fields: [mapElementId], references: [id])
+  rule              Rule          @relation(fields: [ruleId], references: [id])
+}
