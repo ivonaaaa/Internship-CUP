@@ -9,7 +9,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5173', //! ode cemo naknadno dodat varijablu za link di je FE deployan
     methods: 'GET, POST, PUT, DELETE',
     allowedHeaders: 'Content-Type, Authorization',
   });
@@ -18,6 +18,7 @@ async function bootstrap() {
     .setTitle('Bay Obey API')
     .setDescription('The API for the Internship CUP project')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('bayobey')
     .build();
 

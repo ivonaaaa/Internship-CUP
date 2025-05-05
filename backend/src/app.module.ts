@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { BoatModule } from './modules/boat/boat.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [], //ode idu svi moduli kasnije
+  imports: [AuthModule, UserModule, BoatModule],
   controllers: [AppController],
   providers: [AppService],
 })
