@@ -21,7 +21,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 export class BoatController {
   constructor(private readonly boatsService: BoatService) {}
 
-  @Get('all')
+  @Get('')
   @ApiOperation({ summary: 'Get all boats' })
   @ApiResponse({
     status: 200,

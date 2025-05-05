@@ -64,6 +64,7 @@ model MapElement {
   ruleId            Int
   name              String
   type              MapElementType
+  color             MapElementColor
   coordinates       Json          // GeoJSON format (Polygon or Point)
   description       String?
   isActive          Boolean       @default(true)
@@ -115,4 +116,15 @@ enum RuleType {
 enum MapElementType {
   ZONE
   POINT
+}
+
+enum MapElementColor {
+  RED
+  GREEN
+  BLUE
+  YELLOW
+  PURPLE
+  ORANGE
+  WHITE
+  BLACK
 }
