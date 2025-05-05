@@ -1,29 +1,24 @@
-import { IsInt, IsNotEmpty, IsObject } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateNotificationDto {
-  @IsInt()
-  @IsNotEmpty()
+export class NotificationDto {
+  @ApiProperty({ description: 'Notification ID' })
+  id: number;
+
   @ApiProperty({ description: 'User ID' })
   userId: number;
 
-  @IsInt()
-  @IsNotEmpty()
   @ApiProperty({ description: 'Boat ID' })
   boatId: number;
 
-  @IsInt()
-  @IsNotEmpty()
   @ApiProperty({ description: 'Map Element ID' })
   mapElementId: number;
 
-  @IsInt()
-  @IsNotEmpty()
   @ApiProperty({ description: 'Rule ID' })
   ruleId: number;
 
-  @IsObject()
-  @IsNotEmpty()
+  @ApiProperty({ description: 'Timestamp of notification' })
+  timestamp: Date;
+
   @ApiProperty({ description: 'Location coordinates in GeoJSON format' })
   locationCoordinates: any;
 }

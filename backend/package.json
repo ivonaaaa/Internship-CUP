@@ -23,6 +23,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@nestjs/class-transformer": "^0.4.0",
     "@nestjs/class-validator": "^0.13.4",
     "@nestjs/common": "^11.1.0",
     "@nestjs/core": "^10.0.0",
