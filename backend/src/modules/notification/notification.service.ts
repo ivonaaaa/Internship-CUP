@@ -17,7 +17,10 @@ export class NotificationService {
       mapElementId: notification.mapElementId,
       ruleId: notification.ruleId,
       timestamp: notification.timestamp,
-      locationCoordinates: notification.locationCoordinates,
+      locationCoordinates: notification.locationCoordinates as {
+        type: string;
+        coordinates: [number, number];
+      },
     };
   }
 
