@@ -2,9 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsEnum,
+  IsLowercase,
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
+  Matches,
   MinLength,
 } from '@nestjs/class-validator';
 import { SubscriptionPlan } from '@prisma/client';
@@ -16,6 +18,7 @@ export class CreateUserDto {
   })
   @IsEmail()
   @IsNotEmpty()
+  @Matches(/^[^@]+@[A-Za-z0-9.-]+\.[a-zA-Z]{2,}$/)
   email: string;
 
   @ApiProperty({
@@ -24,6 +27,8 @@ export class CreateUserDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsLowercase()
+  @Matches(/^[a-z0-9_]+$/)
   username: string;
 
   @ApiProperty({
@@ -39,7 +44,8 @@ export class CreateUserDto {
     description: 'Phone number of the user',
     example: '+1234567890',
   })
-  @IsPhoneNumber()
+  @IsNotEmpty()
+  @Matches(/^\+(\d{1,4})\d{7,14}$/)
   phoneNumber: string;
 
   @ApiProperty({

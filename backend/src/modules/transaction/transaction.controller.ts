@@ -14,12 +14,19 @@ import { TransactionService } from './transaction.service';
 import { TransactionDto } from './dto/transaction.dto';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { ApiOperation, ApiResponse, ApiTags, ApiParam } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('transactions')
 @Controller('transactions')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
@@ -28,7 +35,6 @@ export class TransactionController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved all transactions',
-    type: [TransactionDto],
   })
   async findAll(): Promise<TransactionDto[]> {
     return this.transactionService.findAll();
@@ -40,7 +46,6 @@ export class TransactionController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved the transaction',
-    type: TransactionDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -58,7 +63,6 @@ export class TransactionController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved all transactions for the specified user',
-    type: [TransactionDto],
   })
   async findByUserId(
     @Param('userId', ParseIntPipe) userId: number,
@@ -71,7 +75,6 @@ export class TransactionController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The transaction has been successfully created.',
-    type: TransactionDto,
   })
   async create(
     @Body() createTransactionDto: CreateTransactionDto,
@@ -85,7 +88,6 @@ export class TransactionController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The transaction has been successfully updated',
-    type: TransactionDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -104,7 +106,6 @@ export class TransactionController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The transaction has been successfully deleted',
-    type: TransactionDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,

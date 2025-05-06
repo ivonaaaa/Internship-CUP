@@ -6,25 +6,32 @@ import {
   Param,
   UseGuards,
   Request,
-  Put,
+  Patch,
+  HttpStatus,
 } from '@nestjs/common';
 import { BoatService } from './boat.service';
 import { CreateBoatDto } from './dto/create-boat.dto';
 import { UpdateBoatDto } from './dto/update-boat.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Boat } from '@prisma/client';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 
 @ApiTags('boats')
 @Controller('boats')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class BoatController {
   constructor(private readonly boatsService: BoatService) {}
 
   @Get('')
   @ApiOperation({ summary: 'Get all boats' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'List of all boats',
   })
   async findAll(): Promise<Boat[]> {
@@ -34,7 +41,7 @@ export class BoatController {
   @Get('allByUser')
   @ApiOperation({ summary: 'Get all boats for a specific user' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'List of boats for the user',
   })
   async findAllByUser(@Request() req): Promise<Boat[]> {
@@ -44,11 +51,11 @@ export class BoatController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a boat by ID' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Boat found',
   })
   @ApiResponse({
-    status: 404,
+    status: HttpStatus.NOT_FOUND,
     description: 'Boat not found',
   })
   async findOne(@Param('id') id: string): Promise<Boat> {
@@ -58,11 +65,11 @@ export class BoatController {
   @Post()
   @ApiOperation({ summary: 'Create a new boat' })
   @ApiResponse({
-    status: 201,
+    status: HttpStatus.CREATED,
     description: 'Boat successfully created',
   })
   @ApiResponse({
-    status: 400,
+    status: HttpStatus.BAD_REQUEST,
     description: 'Bad request, invalid data',
   })
   async create(
@@ -73,14 +80,14 @@ export class BoatController {
     return this.boatsService.create(createBoatDto);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @ApiOperation({ summary: 'Update a boat by ID' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Boat successfully updated',
   })
   @ApiResponse({
-    status: 404,
+    status: HttpStatus.NOT_FOUND,
     description: 'Boat not found',
   })
   async update(

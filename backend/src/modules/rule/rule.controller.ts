@@ -14,12 +14,19 @@ import { RuleService } from './rule.service';
 import { RuleDto } from './dto/rule.dto';
 import { CreateRuleDto } from './dto/create-rule.dto';
 import { UpdateRuleDto } from './dto/update-rule.dto';
-import { ApiOperation, ApiResponse, ApiTags, ApiParam } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('rules')
 @Controller('rules')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class RuleController {
   constructor(private readonly ruleService: RuleService) {}
 
@@ -28,7 +35,6 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved all rules',
-    type: [RuleDto],
   })
   async findAll(): Promise<RuleDto[]> {
     return this.ruleService.findAll();
@@ -40,7 +46,6 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved the rule',
-    type: RuleDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -55,7 +60,6 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The rule has been successfully created.',
-    type: RuleDto,
   })
   async create(@Body() createRuleDto: CreateRuleDto): Promise<RuleDto> {
     return this.ruleService.create(createRuleDto);
@@ -67,7 +71,6 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The rule has been successfully updated',
-    type: RuleDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -86,7 +89,6 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The rule has been successfully deleted',
-    type: RuleDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,

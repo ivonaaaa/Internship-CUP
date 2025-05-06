@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -12,11 +12,11 @@ export class AuthController {
   @Post('login')
   @ApiOperation({ summary: 'Log in the user' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'User successfully logged in',
   })
   @ApiResponse({
-    status: 401,
+    status: HttpStatus.UNAUTHORIZED,
     description: 'Invalid credentials',
   })
   login(@Body() loginDto: LoginDto) {
@@ -26,11 +26,11 @@ export class AuthController {
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({
-    status: 201,
+    status: HttpStatus.CREATED,
     description: 'User successfully registered',
   })
   @ApiResponse({
-    status: 400,
+    status: HttpStatus.BAD_REQUEST,
     description: 'Bad request, invalid data',
   })
   register(@Body() registerDto: RegisterDto) {

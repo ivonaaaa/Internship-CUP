@@ -14,12 +14,19 @@ import { MapElementService } from './map-element.service';
 import { MapElementDto } from './dto/map-element.dto';
 import { CreateMapElementDto } from './dto/create-map-element.dto';
 import { UpdateMapElementDto } from './dto/update-map-element.dto';
-import { ApiOperation, ApiResponse, ApiTags, ApiParam } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('map-elements')
 @Controller('map-elements')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class MapElementController {
   constructor(private readonly mapElementService: MapElementService) {}
 
@@ -28,7 +35,6 @@ export class MapElementController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved all map elements',
-    type: [MapElementDto],
   })
   async findAll(): Promise<MapElementDto[]> {
     return this.mapElementService.findAll();
@@ -40,7 +46,6 @@ export class MapElementController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved the map element',
-    type: MapElementDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -58,7 +63,6 @@ export class MapElementController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved all map elements for the specified rule',
-    type: [MapElementDto],
   })
   async findByRuleId(
     @Param('ruleId', ParseIntPipe) ruleId: number,
@@ -71,7 +75,6 @@ export class MapElementController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The map element has been successfully created.',
-    type: MapElementDto,
   })
   async create(
     @Body() createMapElementDto: CreateMapElementDto,
@@ -85,7 +88,6 @@ export class MapElementController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The map element has been successfully updated',
-    type: MapElementDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -104,7 +106,6 @@ export class MapElementController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The map element has been successfully deleted',
-    type: MapElementDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,

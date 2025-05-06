@@ -9,6 +9,7 @@ import {
   UseGuards,
   ParseIntPipe,
   Query,
+  HttpStatus,
 } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { NotificationDto } from './dto/notification.dto';
@@ -20,21 +21,22 @@ import {
   ApiResponse,
   ApiParam,
   ApiQuery,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('notifications')
 @Controller('notifications')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all notifications' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Return all notifications.',
-    type: [NotificationDto],
   })
   @ApiQuery({
     name: 'userId',
@@ -59,11 +61,13 @@ export class NotificationController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a notification by id' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'Return the notification.',
-    type: NotificationDto,
   })
-  @ApiResponse({ status: 404, description: 'Notification not found.' })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Notification not found.',
+  })
   @ApiParam({ name: 'id', description: 'Notification ID' })
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return this.notificationService.findOne(id);
@@ -72,11 +76,10 @@ export class NotificationController {
   @Post()
   @ApiOperation({ summary: 'Create a new notification' })
   @ApiResponse({
-    status: 201,
+    status: HttpStatus.CREATED,
     description: 'The notification has been successfully created.',
-    type: NotificationDto,
   })
-  @ApiResponse({ status: 400, description: 'Bad request.' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request.' })
   async create(@Body() createNotificationDto: CreateNotificationDto) {
     return this.notificationService.create(createNotificationDto);
   }
@@ -84,11 +87,13 @@ export class NotificationController {
   @Patch(':id')
   @ApiOperation({ summary: 'Update a notification' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'The notification has been successfully updated.',
-    type: NotificationDto,
   })
-  @ApiResponse({ status: 404, description: 'Notification not found.' })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Notification not found.',
+  })
   @ApiParam({ name: 'id', description: 'Notification ID' })
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -100,10 +105,13 @@ export class NotificationController {
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a notification' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'The notification has been successfully deleted.',
   })
-  @ApiResponse({ status: 404, description: 'Notification not found.' })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Notification not found.',
+  })
   @ApiParam({ name: 'id', description: 'Notification ID' })
   async remove(@Param('id', ParseIntPipe) id: number) {
     return this.notificationService.remove(id);
