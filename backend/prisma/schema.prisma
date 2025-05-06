@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  id                  Int           @id @default(autoincrement())
-  email               String        @unique
-  username            String        @unique
+  id                  Int              @id @default(autoincrement())
+  email               String           @unique
+  username            String           @unique
   passwordHash        String
   subscriptionPlan    SubscriptionPlan @default(FREE_TRIAL)
-  phoneNumber         String
-  subscriptionExpiry  DateTime      @default(dbgenerated("CURRENT_TIMESTAMP + interval '3 days'"))
-  
+  phoneNumber         String           @unique
+  subscriptionExpiry  DateTime         @default(dbgenerated("CURRENT_TIMESTAMP + interval '3 days'"))
+
   // Relations
   boats               Boat[]
   transactions        Transaction[]
@@ -64,6 +64,7 @@ model MapElement {
   ruleId            Int
   name              String
   type              MapElementType
+  color             MapElementColor
   coordinates       Json          // GeoJSON format (Polygon or Point)
   description       String?
   isActive          Boolean       @default(true)
@@ -115,4 +116,15 @@ enum RuleType {
 enum MapElementType {
   ZONE
   POINT
+}
+
+enum MapElementColor {
+  RED
+  GREEN
+  BLUE
+  YELLOW
+  PURPLE
+  ORANGE
+  WHITE
+  BLACK
 }
