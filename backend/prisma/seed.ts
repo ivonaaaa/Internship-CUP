@@ -1,12 +1,4 @@
-import {
-  PrismaClient,
-  SubscriptionPlan,
-  BoatType,
-  TransactionStatus,
-  RuleType,
-  MapElementType,
-  MapElementColor,
-} from '@prisma/client';
+import { PrismaClient, SubscriptionPlan, BoatType, TransactionStatus, RuleType, MapElementType } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -111,14 +103,9 @@ async function main() {
 
   const splitHarbor = await prisma.mapElement.create({
     data: {
-      rule: {
-        connect: {
-          id: rule2.id, // Speed limit
-        },
-      },
+      ruleId: rule2.id, // Speed limit
       name: 'Split Harbor Entrance',
       type: MapElementType.ZONE,
-      color: MapElementColor.BLUE,
       coordinates: {
         type: 'Polygon',
         coordinates: [
@@ -138,14 +125,9 @@ async function main() {
 
   const militaryZone = await prisma.mapElement.create({
     data: {
-      rule: {
-        connect: {
-          id: rule1.id, // No entry
-        },
-      },
+      ruleId: rule1.id, // No entry
       name: 'Vis Military Zone',
       type: MapElementType.ZONE,
-      color: MapElementColor.RED,
       coordinates: {
         type: 'Polygon',
         coordinates: [
@@ -165,14 +147,9 @@ async function main() {
 
   const kornatNationalPark = await prisma.mapElement.create({
     data: {
-      rule: {
-        connect: {
-          id: rule4.id, // Nature reserve
-        },
-      },
+      ruleId: rule4.id, // Nature reserve
       name: 'Kornati National Park',
       type: MapElementType.ZONE,
-      color: MapElementColor.GREEN,
       coordinates: {
         type: 'Polygon',
         coordinates: [
@@ -193,14 +170,9 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
-      rule: {
-        connect: {
-          id: rule3.id, // No anchoring
-        },
-      },
+      ruleId: rule3.id, // No anchoring
       name: 'Underwater Cable Area - Brač Channel',
       type: MapElementType.POINT,
-      color: MapElementColor.YELLOW,
       coordinates: {
         type: 'Point',
         coordinates: [16.45, 43.4],
@@ -212,14 +184,9 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
-      rule: {
-        connect: {
-          id: rule2.id, // Speed limit
-        },
-      },
+      ruleId: rule2.id, // Speed limit
       name: 'Hvar Marina Entrance',
       type: MapElementType.POINT,
-      color: MapElementColor.ORANGE,
       coordinates: {
         type: 'Point',
         coordinates: [16.65, 43.17],
