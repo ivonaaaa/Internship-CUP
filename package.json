@@ -1,6 +1,6 @@
 {
   "name": "internship-cup",
-  "packageManager": "yarn@4.6.0",
+"packageManager": "yarn@1.22.22",
   "private": true,
   "workspaces": [
     "frontend",
