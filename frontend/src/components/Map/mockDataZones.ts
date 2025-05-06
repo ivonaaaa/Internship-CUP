@@ -64,6 +64,6 @@ export const restrictedZones = {
       ],
     },
     fillColor: "#ff0000",
-    fillOutlineColor: "#ff0000",
+    fillOutlineColor: "white",
   },
 };

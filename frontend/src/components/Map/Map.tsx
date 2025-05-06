@@ -16,19 +16,21 @@ export const Map = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current as HTMLDivElement,
       style: MAPBOX_STYLE,
-      center: [16.4411, 43.5081],
-      zoom: 12,
+      center: [16.4, 43.5081],
+      zoom: 11.5,
       minZoom: 10,
       maxZoom: 18,
       maxBounds: [
         [16.2, 43.3],
         [16.7, 43.7],
       ],
+      attributionControl: false,
+      logoPosition: "top-right",
     });
 
     map.current.on("load", () => {
       Object.entries(restrictedZones).forEach(([key, zone]: [string, Zone]) => {
-        map.current?.addSource(`${key}-zones`, {
+        map.current?.addSource(`${key}`, {
           type: "geojson",
           data: zone as any, //neka ostane za sad
         });
@@ -36,7 +38,7 @@ export const Map = () => {
         map.current?.addLayer({
           id: `${key}-area`,
           type: "fill",
-          source: `${key}-zones`,
+          source: `${key}`,
           layout: {},
           paint: {
             "fill-color": zone.fillColor,
