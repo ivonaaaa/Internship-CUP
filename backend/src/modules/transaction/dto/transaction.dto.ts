@@ -15,7 +15,7 @@ export class TransactionDto {
     enum: TransactionStatus,
     example: TransactionStatus.SUCCESSFUL,
   })
-  status: TransactionStatus;
+  type: TransactionStatus;
 
   @ApiProperty({ example: new Date() })
   transactionDate: Date;

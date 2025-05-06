@@ -6,6 +6,7 @@ import {
 import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
 
@@ -13,17 +14,39 @@ import { User } from '@prisma/client';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(): Promise<User[]> {
-    return this.prisma.user.findMany();
+  private mapToResponseDto(user: User): UserDto {
+    const {
+      id,
+      email,
+      username,
+      passwordHash,
+      phoneNumber,
+      subscriptionPlan,
+      subscriptionExpiry,
+    } = user;
+    return {
+      id,
+      email,
+      username,
+      passwordHash,
+      phoneNumber,
+      subscriptionPlan,
+      subscriptionExpiry,
+    };
   }
 
-  async findOne(id: number): Promise<User> {
+  async findAll(): Promise<UserDto[]> {
+    const users = await this.prisma.user.findMany();
+    return users.map(this.mapToResponseDto);
+  }
+
+  async findOne(id: number): Promise<UserDto> {
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
     if (!user) throw new NotFoundException(`User with id ${id} not found`);
 
-    return user;
+    return this.mapToResponseDto(user);
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -32,7 +55,7 @@ export class UserService {
     });
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<UserDto> {
     const { password, ...userData } = createUserDto;
 
     const existingUser = await this.prisma.user.findFirst({
@@ -48,32 +71,39 @@ export class UserService {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    return this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         ...userData,
         passwordHash,
       },
     });
+
+    return this.mapToResponseDto(user);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    await this.findOne(id);
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
+    await this.ensureUserExists(id);
 
-    return this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where: { id },
       data: updateUserDto,
     });
+
+    return this.mapToResponseDto(user);
   }
 
-  async remove(id: number): Promise<User> {
-    await this.findOne(id);
+  async remove(id: number): Promise<UserDto> {
+    await this.ensureUserExists(id);
 
-    return this.prisma.user.delete({
+    const user = await this.prisma.user.delete({
       where: { id },
     });
+
+    return this.mapToResponseDto(user);
   }
 
-  async validatePassword(user: User, password: string): Promise<boolean> {
-    return bcrypt.compare(password, user.passwordHash);
+  private async ensureUserExists(id: number): Promise<void> {
+    const exists = await this.prisma.user.findUnique({ where: { id } });
+    if (!exists) throw new NotFoundException(`User with id ${id} not found`);
   }
 }

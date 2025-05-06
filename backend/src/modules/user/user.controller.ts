@@ -9,6 +9,7 @@ import {
   UseGuards,
   HttpStatus,
 } from '@nestjs/common';
+import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -19,7 +20,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { UserDto } from './dto/user.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -33,6 +33,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Successfully fetched all users',
+    type: [UserDto],
   })
   async findAll(): Promise<UserDto[]> {
     const users = await this.usersService.findAll();
@@ -43,11 +44,13 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
   @ApiOperation({ summary: 'Get user by ID' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Successfully fetched the user',
+    type: [UserDto],
   })
   async findOne(@Param('id') id: string): Promise<UserDto> {
     const user = await this.usersService.findOne(+id);
@@ -60,6 +63,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'User successfully created',
+    type: [UserDto],
   })
   async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     const user = await this.usersService.create(createUserDto);
@@ -68,11 +72,13 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Patch(':id')
   @ApiOperation({ summary: 'Update user by ID' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'User successfully updated',
+    type: [UserDto],
   })
   async update(
     @Param('id') id: string,
@@ -84,11 +90,13 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
   @ApiOperation({ summary: 'Delete user by ID' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'User successfully deleted',
+    type: [UserDto],
   })
   async remove(@Param('id') id: string): Promise<UserDto> {
     const user = await this.usersService.remove(+id);

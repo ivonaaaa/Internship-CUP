@@ -35,6 +35,7 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved all rules',
+    type: [RuleDto],
   })
   async findAll(): Promise<RuleDto[]> {
     return this.ruleService.findAll();
@@ -46,6 +47,7 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Retrieved the rule',
+    type: [RuleDto],
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -60,6 +62,7 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The rule has been successfully created.',
+    type: [RuleDto],
   })
   async create(@Body() createRuleDto: CreateRuleDto): Promise<RuleDto> {
     return this.ruleService.create(createRuleDto);
@@ -71,6 +74,7 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The rule has been successfully updated',
+    type: [RuleDto],
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -89,6 +93,7 @@ export class RuleController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The rule has been successfully deleted',
+    type: [RuleDto],
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,

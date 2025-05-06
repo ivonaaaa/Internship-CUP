@@ -37,6 +37,7 @@ export class NotificationController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Return all notifications.',
+    type: [NotificationDto],
   })
   @ApiQuery({
     name: 'userId',
@@ -51,7 +52,7 @@ export class NotificationController {
   async findAll(
     @Query('userId') userId?: string,
     @Query('boatId') boatId?: string,
-  ) {
+  ): Promise<NotificationDto[]> {
     if (userId) return this.notificationService.findByUserId(+userId);
     if (boatId) return this.notificationService.findByBoatId(+boatId);
 
@@ -63,13 +64,16 @@ export class NotificationController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Return the notification.',
+    type: NotificationDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'Notification not found.',
   })
   @ApiParam({ name: 'id', description: 'Notification ID' })
-  async findOne(@Param('id', ParseIntPipe) id: number) {
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<NotificationDto> {
     return this.notificationService.findOne(id);
   }
 
@@ -78,9 +82,12 @@ export class NotificationController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The notification has been successfully created.',
+    type: NotificationDto,
   })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request.' })
-  async create(@Body() createNotificationDto: CreateNotificationDto) {
+  async create(
+    @Body() createNotificationDto: CreateNotificationDto,
+  ): Promise<NotificationDto> {
     return this.notificationService.create(createNotificationDto);
   }
 
@@ -89,6 +96,7 @@ export class NotificationController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The notification has been successfully updated.',
+    type: NotificationDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
@@ -98,7 +106,7 @@ export class NotificationController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateNotificationDto: UpdateNotificationDto,
-  ) {
+  ): Promise<NotificationDto> {
     return this.notificationService.update(id, updateNotificationDto);
   }
 
@@ -107,13 +115,16 @@ export class NotificationController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'The notification has been successfully deleted.',
+    type: NotificationDto,
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'Notification not found.',
   })
   @ApiParam({ name: 'id', description: 'Notification ID' })
-  async remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<NotificationDto> {
     return this.notificationService.remove(id);
   }
 }

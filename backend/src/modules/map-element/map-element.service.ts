@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
+import { MapElementDto } from './dto/map-element.dto';
 import { CreateMapElementDto } from './dto/create-map-element.dto';
 import { UpdateMapElementDto } from './dto/update-map-element.dto';
-import { MapElementDto } from './dto/map-element.dto';
 import { MapElement } from '@prisma/client';
 
 @Injectable()
