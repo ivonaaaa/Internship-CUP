@@ -1,6 +1,6 @@
 {
   "name": "internship-cup",
-"packageManager": "yarn@1.22.22",
+  "packageManager": "yarn@1.22.22",
   "private": true,
   "workspaces": [
     "frontend",
@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build"
+    "build": "turbo run build",
+    "postinstall": "yarn workspaces backend prisma generate"
   },
   "devDependencies": {
     "turbo": "^2.5.2"
