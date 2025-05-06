@@ -1,0 +1,16 @@
+{
+  "name": "internship-cup",
+  "packageManager": "yarn@4.6.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.2"
+  }
+}
