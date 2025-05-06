@@ -25,5 +25,8 @@ export class CreateNotificationDto {
   @IsObject()
   @IsNotEmpty()
   @ApiProperty({ description: 'Location coordinates in GeoJSON format' })
-  locationCoordinates: any;
+  locationCoordinates: {
+    type: string;
+    coordinates: [number, number];
+  };
 }

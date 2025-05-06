@@ -41,39 +41,26 @@ export class UserService {
   }
 
   async findOne(id: number): Promise<UserDto> {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-    });
+    const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) throw new NotFoundException(`User with id ${id} not found`);
-
     return this.mapToResponseDto(user);
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.prisma.user.findUnique({
-      where: { email },
-    });
+    return this.prisma.user.findUnique({ where: { email } });
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const { password, ...userData } = createUserDto;
+    const { password, email, username, phoneNumber } = createUserDto;
 
-    const existingUser = await this.prisma.user.findFirst({
-      where: {
-        OR: [{ email: userData.email }, { username: userData.username }],
-      },
-    });
-
-    if (existingUser)
-      throw new ConflictException(
-        'User with this email or username already exists',
-      );
+    await this.ensureUniqueFields(email, username, phoneNumber);
 
     const passwordHash = await bcrypt.hash(password, 10);
-
     const user = await this.prisma.user.create({
       data: {
-        ...userData,
+        email,
+        username,
+        phoneNumber,
         passwordHash,
       },
     });
@@ -83,6 +70,10 @@ export class UserService {
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
     await this.ensureUserExists(id);
+
+    const { email, username, phoneNumber } = updateUserDto;
+
+    await this.ensureUniqueFields(email, username, phoneNumber, id);
 
     const user = await this.prisma.user.update({
       where: { id },
@@ -105,5 +96,29 @@ export class UserService {
   private async ensureUserExists(id: number): Promise<void> {
     const exists = await this.prisma.user.findUnique({ where: { id } });
     if (!exists) throw new NotFoundException(`User with id ${id} not found`);
+  }
+
+  private async ensureUniqueFields(
+    email: string,
+    username: string,
+    phoneNumber: string,
+    excludeUserId?: number,
+  ): Promise<void> {
+    const existingUser = await this.prisma.user.findFirst({
+      where: {
+        AND: [
+          {
+            OR: [{ email }, { username }, { phoneNumber }],
+          },
+          excludeUserId ? { NOT: { id: excludeUserId } } : {},
+        ],
+      },
+    });
+
+    if (existingUser) {
+      throw new ConflictException(
+        'User with this email, username, or phone number already exists',
+      );
+    }
   }
 }

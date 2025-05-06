@@ -64,7 +64,7 @@ export class BoatController {
     status: HttpStatus.NOT_FOUND,
     description: 'Boat not found',
   })
-  async findOne(@Param('id') id: string): Promise<BoatDto> {
+  async findOne(@Param('id', ParseIntPipe) id: string): Promise<BoatDto> {
     return this.boatsService.findOne(+id);
   }
 
@@ -99,7 +99,7 @@ export class BoatController {
     description: 'Boat not found',
   })
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body() updateBoatDto: UpdateBoatDto,
   ): Promise<BoatDto> {
     return this.boatsService.update(+id, updateBoatDto);

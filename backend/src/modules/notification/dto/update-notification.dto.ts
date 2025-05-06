@@ -23,5 +23,8 @@ export class UpdateNotificationDto {
     description: 'Location coordinates in GeoJSON format',
     required: false,
   })
-  locationCoordinates?: any;
+  locationCoordinates: {
+    type: string;
+    coordinates: [number, number];
+  };
 }

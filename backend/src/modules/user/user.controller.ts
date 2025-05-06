@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   HttpStatus,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
@@ -52,7 +53,7 @@ export class UserController {
     description: 'Successfully fetched the user',
     type: [UserDto],
   })
-  async findOne(@Param('id') id: string): Promise<UserDto> {
+  async findOne(@Param('id', ParseIntPipe) id: string): Promise<UserDto> {
     const user = await this.usersService.findOne(+id);
     const { passwordHash, ...result } = user;
     return result as UserDto;
@@ -81,7 +82,7 @@ export class UserController {
     type: [UserDto],
   })
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<UserDto> {
     const user = await this.usersService.update(+id, updateUserDto);
@@ -98,7 +99,7 @@ export class UserController {
     description: 'User successfully deleted',
     type: [UserDto],
   })
-  async remove(@Param('id') id: string): Promise<UserDto> {
+  async remove(@Param('id', ParseIntPipe) id: string): Promise<UserDto> {
     const user = await this.usersService.remove(+id);
     const { passwordHash, ...result } = user;
     return result as UserDto;
