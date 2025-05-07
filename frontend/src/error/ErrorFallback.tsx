@@ -7,7 +7,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
 }) => {
   return (
     <div className={styles["errorFallback"]}>
-      <h2>Uh oh, Something went wrong!</h2>
+      <h2>Uh oh, something went wrong!</h2>
       <p>We apologize for the inconvenience.</p>
       {resetErrorBoundary && (
         <button onClick={resetErrorBoundary}>Try again</button>
