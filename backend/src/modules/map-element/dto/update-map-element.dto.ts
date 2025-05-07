@@ -7,7 +7,7 @@ import {
   IsObject,
 } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { MapElementType, MapElementColor } from '@prisma/client';
+import { MapElementType } from '@prisma/client';
 
 export class UpdateMapElementDto {
   @ApiProperty({
@@ -40,13 +40,12 @@ export class UpdateMapElementDto {
 
   @ApiProperty({
     description: 'The color of the map element',
-    enum: MapElementColor,
-    example: MapElementColor.RED,
+    example: '#0000FF',
     required: false,
   })
-  @IsEnum(MapElementColor)
+  @IsString()
   @IsOptional()
-  color?: MapElementColor;
+  fillColor?: string;
 
   @ApiProperty({
     description: 'GeoJSON coordinates for the map element',
@@ -85,4 +84,13 @@ export class UpdateMapElementDto {
   @IsBoolean()
   @IsOptional()
   isActive?: boolean;
+
+  @ApiProperty({ example: 0.5 })
+  fillOpacity?: number;
+
+  @ApiProperty({ example: '#FF0000' })
+  lineColor?: string;
+
+  @ApiProperty({ example: 2 })
+  lineWidth?: number;
 }

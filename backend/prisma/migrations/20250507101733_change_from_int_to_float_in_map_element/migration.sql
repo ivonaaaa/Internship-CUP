@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "MapElement" ALTER COLUMN "fillOpacity" SET DATA TYPE DOUBLE PRECISION,
+ALTER COLUMN "lineWidth" SET DATA TYPE DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "subscriptionExpiry" SET DEFAULT CURRENT_TIMESTAMP + interval '3 days';

@@ -3,31 +3,31 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { MapElementDto } from './dto/map-element.dto';
 import { CreateMapElementDto } from './dto/create-map-element.dto';
 import { UpdateMapElementDto } from './dto/update-map-element.dto';
-import { MapElement } from '@prisma/client';
 
 @Injectable()
 export class MapElementService {
   constructor(private prisma: PrismaService) {}
 
-  private mapToResponseDto(mapElement: MapElement): MapElementDto {
-    return {
-      id: mapElement.id,
-      ruleId: mapElement.ruleId,
-      name: mapElement.name,
-      type: mapElement.type,
-      color: mapElement.color,
-      coordinates: mapElement.coordinates,
-      description: mapElement.description,
-      isActive: mapElement.isActive,
-    };
-  }
-
   async findAll(): Promise<MapElementDto[]> {
     const mapElements = await this.prisma.mapElement.findMany({
+      include: {
+        rule: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            type: true,
+          },
+        },
+      },
       orderBy: { id: 'asc' },
     });
 
-    return mapElements.map(this.mapToResponseDto);
+    return mapElements.map((element) => ({
+      ...element,
+      fillOpacity: Number(element.fillOpacity),
+      lineWidth: Number(element.lineWidth),
+    }));
   }
 
   async findOne(id: number): Promise<MapElementDto> {
@@ -39,7 +39,11 @@ export class MapElementService {
       throw new NotFoundException(`Map Element with ID ${id} not found`);
     }
 
-    return this.mapToResponseDto(mapElement);
+    return {
+      ...mapElement,
+      fillOpacity: Number(mapElement.fillOpacity),
+      lineWidth: Number(mapElement.lineWidth),
+    };
   }
 
   async findByRuleId(ruleId: number): Promise<MapElementDto[]> {
@@ -56,7 +60,11 @@ export class MapElementService {
       orderBy: { id: 'asc' },
     });
 
-    return mapElements.map(this.mapToResponseDto);
+    return mapElements.map((element) => ({
+      ...element,
+      fillOpacity: Number(element.fillOpacity),
+      lineWidth: Number(element.lineWidth),
+    }));
   }
 
   async create(
@@ -76,7 +84,11 @@ export class MapElementService {
       data: createMapElementDto,
     });
 
-    return this.mapToResponseDto(mapElement);
+    return {
+      ...mapElement,
+      fillOpacity: Number(mapElement.fillOpacity),
+      lineWidth: Number(mapElement.lineWidth),
+    };
   }
 
   async update(
@@ -102,7 +114,11 @@ export class MapElementService {
       data: updateMapElementDto,
     });
 
-    return this.mapToResponseDto(updatedMapElement);
+    return {
+      ...updatedMapElement,
+      fillOpacity: Number(updatedMapElement.fillOpacity),
+      lineWidth: Number(updatedMapElement.lineWidth),
+    };
   }
 
   async remove(id: number): Promise<MapElementDto> {
@@ -112,6 +128,10 @@ export class MapElementService {
       where: { id },
     });
 
-    return this.mapToResponseDto(deletedMapElement);
+    return {
+      ...deletedMapElement,
+      fillOpacity: Number(deletedMapElement.fillOpacity),
+      lineWidth: Number(deletedMapElement.lineWidth),
+    };
   }
 }

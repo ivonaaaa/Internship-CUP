@@ -5,7 +5,7 @@ import {
   TransactionStatus,
   RuleType,
   MapElementType,
-  MapElementColor,
+  Prisma,
 } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
@@ -118,9 +118,7 @@ async function main() {
       },
       name: 'Split Harbor Entrance',
       type: MapElementType.ZONE,
-      color: MapElementColor.BLUE,
       coordinates: {
-        type: 'Polygon',
         coordinates: [
           [
             [16.43, 43.5],
@@ -133,6 +131,10 @@ async function main() {
       },
       description: 'Harbor approach area with speed restrictions',
       isActive: true,
+      fillColor: '#0000FF',
+      fillOpacity: 0.5,
+      lineColor: '#0000FF',
+      lineWidth: 2,
     },
   });
 
@@ -145,9 +147,7 @@ async function main() {
       },
       name: 'Vis Military Zone',
       type: MapElementType.ZONE,
-      color: MapElementColor.RED,
       coordinates: {
-        type: 'Polygon',
         coordinates: [
           [
             [16.15, 43.05],
@@ -160,6 +160,10 @@ async function main() {
       },
       description: 'Military restricted area - no entry allowed',
       isActive: true,
+      fillColor: '#FF0000',
+      fillOpacity: 0.5,
+      lineColor: '#FF0000',
+      lineWidth: 2.0,
     },
   });
 
@@ -172,9 +176,7 @@ async function main() {
       },
       name: 'Kornati National Park',
       type: MapElementType.ZONE,
-      color: MapElementColor.GREEN,
       coordinates: {
-        type: 'Polygon',
         coordinates: [
           [
             [15.23, 43.8],
@@ -188,6 +190,8 @@ async function main() {
       description:
         'Protected national park area with environmental restrictions',
       isActive: true,
+      fillColor: '#00FF00',
+      fillOpacity: 1.5,
     },
   });
 
@@ -200,9 +204,7 @@ async function main() {
       },
       name: 'Underwater Cable Area - Brač Channel',
       type: MapElementType.POINT,
-      color: MapElementColor.YELLOW,
       coordinates: {
-        type: 'Point',
         coordinates: [16.45, 43.4],
       },
       description: 'Underwater telecommunications cable. No anchoring allowed.',
@@ -219,9 +221,7 @@ async function main() {
       },
       name: 'Hvar Marina Entrance',
       type: MapElementType.POINT,
-      color: MapElementColor.ORANGE,
       coordinates: {
-        type: 'Point',
         coordinates: [16.65, 43.17],
       },
       description: 'Approach to Hvar Marina. Reduce speed to 5 knots.',
