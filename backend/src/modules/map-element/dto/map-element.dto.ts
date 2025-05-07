@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { MapElementType } from '@prisma/client';
+import { RuleDto } from 'src/modules/rule/dto/rule.dto';
 
 export class MapElementDto {
   @ApiProperty({ example: 1 })
@@ -7,6 +8,9 @@ export class MapElementDto {
 
   @ApiProperty({ example: 1 })
   ruleId: number;
+
+  @ApiProperty({ type: RuleDto })
+  rule?: RuleDto;
 
   @ApiProperty({ example: 'No Fishing Zone' })
   name: string;

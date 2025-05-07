@@ -3,7 +3,6 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import c from "./Map.module.css";
 import { useEffect, useRef } from "react";
 import { MAPBOX_STYLE } from "../../constants";
-// import { restrictedZones } from "./mockDataZones";
 import { Zone } from "../../types";
 import { useFetchMapElements } from "../../api/map/useFetchMapElements";
 
@@ -35,37 +34,10 @@ export const Map = () => {
     });
 
     map.current.on("load", () => {
-      // First, add the restricted zones
-      Object.entries(mapElements).forEach(([key, zone]: [string, any]) => {
-        // Check if source already exists before adding
-        if (!map.current?.getSource(key)) {
-          map.current?.addSource(`${key}`, {
-            type: "geojson",
-            data: zone as any, //neka ostane za sad
-          });
-
-          map.current?.addLayer({
-            id: `${key}-area`,
-            type: "fill",
-            source: `${key}`,
-            layout: {},
-            paint: {
-              "fill-color": zone.fillColor,
-              "fill-opacity": zone.fillOpacity,
-            },
-          });
-
-          map.current?.addLayer({
-            id: "noAnchoring-outline",
-            type: "line",
-            source: "noAnchoring",
-            layout: {},
-            paint: {
-              "line-color": restrictedZones.noAnchoring.lineColor || "black",
-              "line-width": 2, // Adjust the width as needed
-              "line-dasharray": [1, 1], // Creates a dashed line (smaller values = more dots)
-            },
-          });
+      mapElements?.forEach((element: any) => {
+        console.log("Element", element);
+        if (element.type === "ZONE") {
+          addZone(element);
         }
       });
 
@@ -121,6 +93,38 @@ export const Map = () => {
       }
     };
   }, []);
+
+  const addZone = (zone: Zone) => {
+    const elementId = `${zone.id}-zone`;
+    if (!map.current?.getSource(elementId)) {
+      map.current?.addSource(elementId, {
+        type: "geojson",
+        data: zone as any, //neka ostane za sad
+      });
+
+      map.current?.addLayer({
+        id: elementId,
+        type: "fill",
+        source: elementId,
+        layout: {},
+        paint: {
+          "fill-color": zone.fillColor,
+          "fill-opacity": zone.fillOpacity,
+        },
+      });
+
+      map.current?.addLayer({
+        id: "noAnchoring-outline",
+        type: "line",
+        source: "noAnchoring",
+        layout: {},
+        paint: {
+          "line-color": zone.lineColor,
+          "line-width": zone.lineWidth,
+        },
+      });
+    }
+  };
 
   return <div ref={mapContainer} className={c.map}></div>;
 };
