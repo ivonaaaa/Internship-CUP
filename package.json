@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "postinstall": "yarn workspaces backend prisma generate"
+    "postinstall": "yarn workspace backend prisma generate"
   },
   "devDependencies": {
     "turbo": "^2.5.2"
