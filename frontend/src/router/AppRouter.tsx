@@ -1,50 +1,28 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ROUTES } from "../constants";
 import { HomePage } from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { ProfilePage } from "../pages/ProfilePage/ProfilePage";
-import { AuthProvider, useAuth } from "../contexts/AuthContext";
-
-const ProtectedRoute = () => {
-  const { user, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return <Outlet />;
-};
+import { ProtectedRoute } from "../hoc/ProtectedRoute";
 
 export const AppRouter = () => {
   return (
     <Router>
-      <AuthProvider>
-        <Routes>
-          {/* Public routes */}
-          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+      <Routes>
+        {/* Public routes */}
+        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+        <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
 
-          {/* Protected routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route path={ROUTES.HOME} element={<HomePage />} />
-            <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-          </Route>
+        {/* Protected routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path={ROUTES.HOME} element={<HomePage />} />
+          <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+        </Route>
 
-          {/* Fallback route */}
-          <Route path={ROUTES.NOT_FOUND} element={<div>404 Not Found</div>} />
-        </Routes>
-      </AuthProvider>
+        {/* Fallback route */}
+        <Route path={ROUTES.NOT_FOUND} element={<div>404 Not Found</div>} />
+      </Routes>
     </Router>
   );
 };
