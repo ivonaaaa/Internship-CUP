@@ -7,6 +7,7 @@ export const RegisterPage = () => {
     email: "",
     username: "",
     password: "",
+    confirmPassword: "",
     phoneNumber: "",
   });
   const [error, setError] = useState("");
@@ -25,8 +26,14 @@ export const RegisterPage = () => {
     e.preventDefault();
     setError("");
 
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
-      await register(formData);
+      const { confirmPassword, ...registerData } = formData;
+      await register(registerData);
       navigate("/login");
     } catch (err: any) {
       setError(err.message || "Registration failed");
@@ -64,6 +71,16 @@ export const RegisterPage = () => {
             type="password"
             name="password"
             value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
             onChange={handleChange}
             required
           />
