@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MapElementType, MapElementColor } from '@prisma/client';
+import { MapElementType } from '@prisma/client';
 
 export class MapElementDto {
   @ApiProperty({ example: 1 })
@@ -14,8 +14,8 @@ export class MapElementDto {
   @ApiProperty({ enum: MapElementType, example: MapElementType.ZONE })
   type: MapElementType;
 
-  @ApiProperty({ enum: MapElementColor, example: MapElementColor.RED })
-  color: MapElementColor;
+  @ApiProperty({ example: '#0000FF' })
+  fillColor?: string;
 
   @ApiProperty({
     example: {
@@ -38,4 +38,13 @@ export class MapElementDto {
 
   @ApiProperty({ example: true })
   isActive: boolean;
+
+  @ApiProperty({ example: 0.5 })
+  fillOpacity?: number;
+
+  @ApiProperty({ example: '#FF0000' })
+  lineColor?: string;
+
+  @ApiProperty({ example: 2 })
+  lineWidth?: number;
 }

@@ -15,7 +15,7 @@ export class MapElementService {
       ruleId: mapElement.ruleId,
       name: mapElement.name,
       type: mapElement.type,
-      color: mapElement.color,
+      fillColor: mapElement.fillColor,
       coordinates: mapElement.coordinates,
       description: mapElement.description,
       isActive: mapElement.isActive,

@@ -8,10 +8,10 @@ export type Zone = {
   };
   geometry: {
     type: string;
-    coordinates: number[][][];
+    coordinates: number[][][] | number[];
   };
-  fillColor: string;
-  fillOutlineColor: string;
+  fillColor?: string;
+  fillOpacity?: number;
+  lineColor?: string;
+  lineWidth?: number;
 };
-
-

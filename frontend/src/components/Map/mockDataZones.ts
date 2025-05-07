@@ -1,15 +1,16 @@
+
 export const restrictedZones = {
   noAnchoring: {
-    type: "Feature",
+    type: "Feature", //Feature
     properties: {
-      name: "Zona zabrane sidrenja",
-      description: "U ovoj zoni nije dozvoljeno sidrenje brodova.",
-      id: "no-anchoring",
-      alertColor: "#ff0000",
+      name: "Zona zabrane sidrenja", //name
+      description: "U ovoj zoni nije dozvoljeno sidrenje brodova.", //description
+      id: "no-anchoring", //id
     },
     geometry: {
-      type: "Polygon",
+      type: "Polygon", //jsonb type
       coordinates: [
+        //jsonb coordinates
         [
           [16.4412, 43.4985],
           [16.4435, 43.4992],
@@ -29,8 +30,10 @@ export const restrictedZones = {
         ],
       ],
     },
-    fillColor: "#ff0000",
-    fillOutlineColor: "#ff0000",
+    fillColor: "#ff0000", //fillColor
+    fillOpacity: 0.5, //fillOpacity
+    lineColor: "#ff0000", //lineColor
+    lineWidth: 2, //lineWidth
   },
   noSpeedboat: {
     type: "Feature",
@@ -38,7 +41,6 @@ export const restrictedZones = {
       name: "Zona zabrane glisiranja",
       description: "U ovoj zoni nije dozvoljeno glisiranje.",
       id: "no-speedboat",
-      alertColor: "#0000ff",
     },
     geometry: {
       type: "Polygon",
@@ -64,6 +66,6 @@ export const restrictedZones = {
       ],
     },
     fillColor: "#ff0000",
-    fillOutlineColor: "white",
+    fillOpacity: 0.5,
   },
 };
