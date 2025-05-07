@@ -1,12 +1,16 @@
-export type Zone = {
+export type MapElement = {
   type: string;
-  name: string;
-  description: string;
-  id: number;
-  alertColor: string;
-  coordinates: number[][][] | number[];
-  fillColor?: string;
-  fillOpacity?: number;
-  lineColor?: string;
-  lineWidth?: number;
+  properties: {
+    name: string;
+    description: string;
+    id: number;
+    fillColor?: string;
+    fillOpacity?: number;
+    lineColor?: string;
+    lineWidth?: number;
+  };
+  geometry: {
+    type: string;
+    coordinates: number[][][] | number[];
+  };
 };

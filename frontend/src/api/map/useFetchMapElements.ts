@@ -15,15 +15,38 @@ type MapElementsResponseDto = {
   isActive: boolean;
   name: string;
   type: string;
-  coordinates: number[][][] | number[][] | number[];
+  coordinates: { coordinates: number[][][] | number[] };
   fillColor?: string;
   fillOpacity?: number;
   lineColor?: string;
   lineWidth?: number;
 };
 
-const fetchMapElements = () => {
-  return api.get<never, MapElementsResponseDto[]>(MAP_ELEMENTS_PATH);
+const fetchMapElements = async () => {
+  const response = await api.get<never, MapElementsResponseDto[]>(
+    MAP_ELEMENTS_PATH
+  );
+
+  return response.map((element: MapElementsResponseDto) => {
+    const geometryType = element.type === "ZONE" ? "Polygon" : element.type;
+
+    return {
+      type: "Feature" as string,
+      properties: {
+        name: element.name,
+        description: element.description,
+        id: element.id,
+        fillColor: element.fillColor,
+        fillOpacity: element.fillOpacity,
+        lineColor: element.lineColor,
+        lineWidth: element.lineWidth,
+      },
+      geometry: {
+        type: geometryType,
+        coordinates: parseCoordinates(element.coordinates),
+      },
+    };
+  });
 };
 
 export const useFetchMapElements = () => {
@@ -33,4 +56,22 @@ export const useFetchMapElements = () => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+};
+
+const parseCoordinates = (coordinates: {
+  coordinates: number[][][] | number[];
+}) => {
+  const parsedCoordinates = coordinates.coordinates;
+
+  if (Array.isArray(parsedCoordinates) && parsedCoordinates.length === 2) {
+    return [parsedCoordinates[0], parsedCoordinates[1]];
+  }
+
+  if (
+    Array.isArray(parsedCoordinates) &&
+    Array.isArray(parsedCoordinates[0]) &&
+    Array.isArray(parsedCoordinates[0][0])
+  ) {
+    return [...parsedCoordinates];
+  }
 };
