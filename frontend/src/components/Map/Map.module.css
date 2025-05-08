@@ -64,3 +64,15 @@
   height: 40px;
   cursor: pointer;
 }
+
+.notificationButton {
+  position: absolute;
+  top: 20px;
+  left: 80px;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}

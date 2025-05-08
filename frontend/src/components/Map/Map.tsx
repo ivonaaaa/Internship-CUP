@@ -10,6 +10,7 @@ import { MapElementTypes } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants";
 import { RuleChecker } from "../RuleChecker";
+import { NotificationPanel } from "../NotificationPanel";
 
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -18,8 +19,10 @@ export const Map = () => {
   const [userLocation, setUserLocation] = useState<[number, number] | null>(
     null
   );
-  const [mapLoaded, setMapLoaded] = useState(false);
-  const [isTracking, setIsTracking] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+  const [isTracking, setIsTracking] = useState<boolean>(false);
+  const [areNotificationsVisible, setAreNotificationsVisible] =
+    useState<boolean>(false);
   const watchId = useRef<number | null>(null);
   const { data: mapElements } = useFetchMapElements();
 
@@ -83,9 +86,10 @@ export const Map = () => {
   const addPoint = (point: MapElement) => {
     const elementId = `${point.properties.id}-point`;
     const iconName = point.properties.name;
+    const objectType = point.properties.objectType;
 
     if (!map.current?.hasImage(iconName)) {
-      const iconPath = MapIcons[iconName as keyof typeof MapIcons];
+      const iconPath = MapIcons[objectType as unknown as keyof typeof MapIcons];
 
       map.current?.loadImage(iconPath, (error, image) => {
         if (error) {
@@ -127,7 +131,7 @@ export const Map = () => {
                 ["linear"],
                 ["zoom"],
                 10,
-                0.10,
+                0.1,
                 18,
                 0.15,
               ],
@@ -241,7 +245,6 @@ export const Map = () => {
       }
     };
   }, [mapElements]);
-  console.log("Map elements", mapElements);
 
   return (
     <>
@@ -271,6 +274,13 @@ export const Map = () => {
         onClick={() => navigate(ROUTES.PROFILE)}
       ></div>
       <div className={c.emergencyButton}></div>
+
+      <div
+        className={c.notificationButton}
+        onClick={() => setAreNotificationsVisible(!areNotificationsVisible)}
+      ></div>
+
+      {areNotificationsVisible && <NotificationPanel />}
       <button
         className={c.trackerButton}
         onClick={isTracking ? stopTracking : startTracking}

@@ -2,6 +2,8 @@ import { MapElement } from "../../types";
 import * as turf from "@turf/turf";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { Notification } from "../Notification/Notification";
+import { RuleType } from "../../api/map/useFetchMapElements";
 
 type RuleCheckerProps = {
   userLocation: [number, number] | null;
@@ -19,8 +21,6 @@ export const RuleChecker = ({
   const calculateDistance = () => {
     const userPoint = turf.point(userLocation);
 
-    console.log(mapElements);
-
     mapElements?.forEach((element: MapElement) => {
       if (element.geometry.type === "ZONE") {
         const zone = turf.polygon(element.geometry.coordinates as [number[][]]);
@@ -29,7 +29,11 @@ export const RuleChecker = ({
         });
 
         if (distance < 10.1) {
-          toast.custom((t) => <div></div>);
+          showNotification(
+            element.rule?.type || "INFO",
+            element.properties.name,
+            element.rule?.description || "Caution! You are near a zone."
+          );
         }
       } else if (element.geometry.type === "POINT") {
         const point = turf.point(
@@ -40,10 +44,29 @@ export const RuleChecker = ({
         });
 
         if (distance < 0.1) {
-          toast.error(`${element.rule.description}`);
+          showNotification(
+            element.rule?.type || "INFO",
+            element.properties.name,
+            element.rule?.description || "You're near a point of interest."
+          );
         }
       }
     });
+  };
+
+  const showNotification = (
+    type: RuleType | string,
+    title: string,
+    message: string
+  ) => {
+    toast.custom(
+      () => (
+        <Notification type={type as RuleType} title={title} message={message} />
+      ),
+      {
+        duration: 15000,
+      }
+    );
   };
 
   useEffect(() => {

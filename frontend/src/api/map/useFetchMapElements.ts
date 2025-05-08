@@ -1,6 +1,13 @@
 import { api } from "../base";
 import { useQuery } from "@tanstack/react-query";
 import { MAP_ELEMENTS_PATH } from "../../constants";
+import { ObjectType } from "../../types";
+
+export enum RuleType {
+  INFO = "INFO",
+  WARNING = "WARNING",
+  RESTRICTION = "RESTRICTION",
+}
 
 type MapElementsResponseDto = {
   id: number;
@@ -9,11 +16,13 @@ type MapElementsResponseDto = {
     id: number;
     name: string;
     description: string;
+    type: RuleType;
   };
   description?: string;
   isActive: boolean;
   name: string;
   type: string;
+  objectType: ObjectType;
   coordinates: { coordinates: number[][][] | number[] };
   fillColor?: string;
   fillOpacity?: number;
@@ -37,6 +46,7 @@ const fetchMapElements = async () => {
         fillOpacity: element.fillOpacity,
         lineColor: element.lineColor,
         lineWidth: element.lineWidth,
+        objectType: element.objectType,
       },
       geometry: {
         type: element.type,
@@ -46,6 +56,7 @@ const fetchMapElements = async () => {
         id: element.rule?.id,
         name: element.rule?.name,
         description: element.rule?.description,
+        type: element.rule?.type,
       },
     };
   });

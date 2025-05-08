@@ -8,7 +8,7 @@ export class RuleDto {
   @ApiProperty({ example: 'No Fishing' })
   name: string;
 
-  @ApiProperty({ enum: RuleType, example: RuleType.ENVIRONMENTAL_PROTECTION })
+  @ApiProperty({ enum: RuleType, example: RuleType.WARNING })
   type: RuleType;
 
   @ApiProperty({ example: 'Protection of marine wildlife in this area' })

@@ -1,3 +1,13 @@
+import { RuleType } from "../api/map/useFetchMapElements";
+
+export enum ObjectType {
+  ANCHOR,
+  LIGHTHOUSE,
+  FUEL_DOCK,
+  RIDGE,
+  HARBOR_MASTER,
+}
+
 export type MapElement = {
   type: string;
   properties: {
@@ -8,15 +18,17 @@ export type MapElement = {
     fillOpacity?: number;
     lineColor?: string;
     lineWidth?: number;
+    objectType?: ObjectType;
   };
   geometry: {
     type: string;
     coordinates?: (number | number[][])[];
   };
-  rule: {
-    id: number;
-    description: string;
-    name: string;
+  rule?: {
+    id?: number;
+    description?: string;
+    name?: string;
+    type?: RuleType;
   };
 };
 

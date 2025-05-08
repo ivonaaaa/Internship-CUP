@@ -14,7 +14,7 @@ export class UpdateRuleDto {
   @ApiProperty({
     description: 'The type of rule',
     enum: RuleType,
-    example: RuleType.ENVIRONMENTAL_PROTECTION,
+    example: RuleType.WARNING,
     required: false,
   })
   @IsEnum(RuleType)
