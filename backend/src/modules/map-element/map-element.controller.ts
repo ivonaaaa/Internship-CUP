@@ -25,7 +25,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('map-elements')
 @Controller('map-elements')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class MapElementController {
   constructor(private readonly mapElementService: MapElementService) {}

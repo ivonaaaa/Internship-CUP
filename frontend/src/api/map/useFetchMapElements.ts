@@ -9,7 +9,6 @@ type MapElementsResponseDto = {
     id: number;
     name: string;
     description: string;
-    alertColor: string;
   };
   description?: string;
   isActive: boolean;
@@ -42,6 +41,11 @@ const fetchMapElements = async () => {
       geometry: {
         type: element.type,
         coordinates: parseCoordinates(element.coordinates),
+      },
+      rule: {
+        id: element.rule?.id,
+        name: element.rule?.name,
+        description: element.rule?.description,
       },
     };
   });

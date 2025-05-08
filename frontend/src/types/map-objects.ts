@@ -2,7 +2,7 @@ export type MapElement = {
   type: string;
   properties: {
     name: string;
-    description: string;
+    description?: string;
     id: number;
     fillColor?: string;
     fillOpacity?: number;
@@ -11,7 +11,12 @@ export type MapElement = {
   };
   geometry: {
     type: string;
-    coordinates: number[][][] | number[];
+    coordinates?: (number | number[][])[];
+  };
+  rule: {
+    id: number;
+    description: string;
+    name: string;
   };
 };
 

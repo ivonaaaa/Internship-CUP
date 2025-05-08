@@ -1,5 +1,8 @@
-import anchorIcon from "../assets/anchor.png";
-import lighthouseIcon from "../assets/lighthouse.png";
+import anchorIcon from "../assets/sidriste.png";
+import lighthouseIcon from "../assets/svjetionik.png";
+import fuelDockIcon from "../assets/pumpa.png";
+import ridgeIcon from "../assets/greben.png";
+import marinaIcon from "../assets/lucka_kapetanija.png";
 
 export const MapIcons = {
   "Kaštel Bay": anchorIcon,

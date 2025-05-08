@@ -7,6 +7,9 @@ import { MapElement } from "../../types";
 import { useFetchMapElements } from "../../api/map/useFetchMapElements";
 import { MapIcons } from "../../constants/map-icons";
 import { MapElementTypes } from "../../types";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants";
+import { RuleChecker } from "../RuleChecker";
 
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -16,9 +19,11 @@ export const Map = () => {
     null
   );
   const [mapLoaded, setMapLoaded] = useState(false);
-  const [isTracked, setIsTracked] = useState(false);
+  const [isTracking, setIsTracking] = useState(false);
   const watchId = useRef<number | null>(null);
   const { data: mapElements } = useFetchMapElements();
+
+  const navigate = useNavigate();
 
   const handleMapLoad = useCallback(() => {
     if (!mapElements) return;
@@ -30,51 +35,6 @@ export const Map = () => {
         addPoint(element);
       }
     });
-  }, [mapElements]);
-
-  useEffect(() => {
-    if (!mapElements) return;
-
-    if (!map.current) {
-      mapboxgl.accessToken = import.meta.env.VITE_ACCESS_TOKEN as string;
-
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current as HTMLDivElement,
-        style: MAPBOX_STYLE,
-        center: [16.4, 43.5081],
-        zoom: 11.5,
-        minZoom: 10,
-        maxZoom: 18,
-        maxBounds: [
-          [16.2, 43.3],
-          [16.7, 43.7],
-        ],
-        attributionControl: false,
-        logoPosition: "top-right",
-      });
-    }
-
-    if (map.current) {
-      if (map.current.loaded()) {
-        handleMapLoad();
-      } else {
-        map.current.once("load", handleMapLoad);
-      }
-    }
-
-    if (map.current) {
-      map.current.on("load", () => {
-        setMapLoaded(true);
-      });
-    }
-
-    return () => {
-      if (map.current) {
-        map.current.off("load", handleMapLoad);
-        map.current.remove();
-        map.current = null;
-      }
-    };
   }, [mapElements]);
 
   const addZone = (zone: MapElement) => {
@@ -92,7 +52,7 @@ export const Map = () => {
 
       map.current?.addSource(elementId, {
         type: "geojson",
-        data: geoJsonData,
+        data: geoJsonData as any,
       });
 
       map.current?.addLayer({
@@ -152,7 +112,7 @@ export const Map = () => {
 
           map.current?.addSource(elementId, {
             type: "geojson",
-            data: geoJsonData,
+            data: geoJsonData as any,
           });
 
           //stavi ovo u options i importaj iz drugog fajla
@@ -167,9 +127,9 @@ export const Map = () => {
                 ["linear"],
                 ["zoom"],
                 10,
-                0.04,
+                0.10,
                 18,
-                0.08,
+                0.15,
               ],
               "icon-allow-overlap": true,
             },
@@ -180,7 +140,7 @@ export const Map = () => {
   };
 
   const startTracking = () => {
-    setIsTracked(true);
+    setIsTracking(true);
 
     watchId.current = navigator.geolocation.watchPosition(
       (position) => {
@@ -191,6 +151,7 @@ export const Map = () => {
 
         if (!map.current || !mapLoaded) return;
 
+        //vidi jel moze ovo bolje
         if (!userMarker.current) {
           const el = document.createElement("div");
           el.className = "user-location-marker";
@@ -233,26 +194,94 @@ export const Map = () => {
       userMarker.current = null;
     }
     setUserLocation(null);
-    setIsTracked(false);
+    setIsTracking(false);
   };
+
+  useEffect(() => {
+    if (!mapElements) return;
+
+    if (!map.current) {
+      mapboxgl.accessToken = import.meta.env.VITE_ACCESS_TOKEN as string;
+
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current as HTMLDivElement,
+        style: MAPBOX_STYLE,
+        center: [16.4, 43.5081],
+        zoom: 11.5,
+        minZoom: 10,
+        maxZoom: 18,
+        maxBounds: [
+          [16.2, 43.3],
+          [16.7, 43.7],
+        ],
+        attributionControl: false,
+        logoPosition: "top-right",
+      });
+    }
+
+    if (map.current) {
+      if (map.current.loaded()) {
+        handleMapLoad();
+      } else {
+        map.current.once("load", handleMapLoad);
+      }
+    }
+
+    if (map.current) {
+      map.current.on("load", () => {
+        setMapLoaded(true);
+      });
+    }
+
+    return () => {
+      if (map.current) {
+        map.current.off("load", handleMapLoad);
+        map.current.remove();
+        map.current = null;
+      }
+    };
+  }, [mapElements]);
+  console.log("Map elements", mapElements);
 
   return (
     <>
       <div ref={mapContainer} className={c.map}></div>
+
       <div className={c.customNav}>
-        <button onClick={() => map.current?.zoomIn()} className={c.zoomBtn}>
-          +
-        </button>
-        <button onClick={() => map.current?.zoomOut()} className={c.zoomBtn}>
-          −
-        </button>
+        <div
+          onClick={() => map.current?.zoomIn()}
+          className={c.navButton}
+        ></div>
+        <div
+          onClick={() => map.current?.zoomOut()}
+          className={c.navButton}
+        ></div>
+        <div
+          onClick={() => map.current?.resetNorth()}
+          className={c.navButton}
+        ></div>
       </div>
+
+      <div
+        className={c.profileButton}
+        onClick={() => navigate(ROUTES.PROFILE)}
+      ></div>
+      <div
+        className={c.infoButton}
+        onClick={() => navigate(ROUTES.PROFILE)}
+      ></div>
+      <div className={c.emergencyButton}></div>
       <button
         className={c.trackerButton}
-        onClick={isTracked ? stopTracking : startTracking}
+        onClick={isTracking ? stopTracking : startTracking}
       >
-        {isTracked ? "Stop" : "Start"}
+        {isTracking ? "Stop" : "Start"}
       </button>
+      <RuleChecker
+        userLocation={userLocation}
+        isTracking={isTracking}
+        mapElements={mapElements}
+      />
     </>
   );
 };
