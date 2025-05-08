@@ -54,6 +54,10 @@ export const RuleChecker = ({
     });
   };
 
+  const onClose = () => {
+    toast.dismiss();
+  };
+
   const showNotification = (
     type: RuleType | string,
     title: string,
@@ -61,7 +65,12 @@ export const RuleChecker = ({
   ) => {
     toast.custom(
       () => (
-        <Notification type={type as RuleType} title={title} message={message} />
+        <Notification
+          type={type as RuleType}
+          title={title}
+          message={message}
+          onClose={onClose}
+        />
       ),
       {
         duration: 15000,

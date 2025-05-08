@@ -141,48 +141,6 @@ async function main() {
     },
   });
 
-  const splitHarbor = await prisma.mapElement.create({
-    data: {
-      rule: {
-        connect: {
-          id: rule2.id, // Speed limit
-        },
-      },
-      name: 'Split Harbor Entrance',
-      type: MapElementType.ZONE,
-      coordinates: {
-        coordinates: [
-          [
-            [16.435979862756994, 43.50104451328326],
-            [16.44133013821417, 43.50163685261833],
-            [16.44251890943525, 43.50356427304965],
-            [16.4416797768084, 43.50533947426962],
-            [16.44126021049547, 43.50635385152927],
-            [16.43849806559797, 43.50632849230527],
-            [16.438183390863514, 43.50678495670323],
-            [16.439337198224848, 43.50716534106405],
-            [16.43776382454959, 43.50779930967198],
-            [16.43664498104806, 43.50797681968956],
-            [16.43465204105877, 43.50767251648307],
-            [16.433568161416105, 43.50703854654344],
-            [16.43318355896193, 43.50645528831734],
-            [16.43122615241859, 43.505388734767195],
-            [16.427666105029544, 43.50250274835625],
-            [16.427561397752243, 43.5018040151123],
-            [16.430095313836773, 43.500877421598574],
-            [16.435979862756994, 43.50104451328326],
-          ],
-        ],
-      },
-      description: 'Harbor approach area with speed restrictions',
-      isActive: true,
-      fillColor: '#0000FF',
-      fillOpacity: 0.5,
-      lineColor: '#0000FF',
-      lineWidth: 2,
-    },
-  });
-
   const noAnchoringZone = await prisma.mapElement.create({
     data: {
       rule: {
@@ -491,7 +449,7 @@ async function main() {
     data: {
       userId: user1.id,
       boatId: boat1.id,
-      mapElementId: splitHarbor.id,
+      mapElementId: kornatNationalPark.id,
       ruleId: rule2.id,
       timestamp: new Date('2025-04-03T14:23:15Z'),
       locationCoordinates: {

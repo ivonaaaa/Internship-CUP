@@ -120,6 +120,7 @@ export const Map = () => {
           });
 
           //stavi ovo u options i importaj iz drugog fajla
+
           map.current?.addLayer({
             id: elementId,
             type: "symbol",
@@ -201,6 +202,24 @@ export const Map = () => {
     setIsTracking(false);
   };
 
+  const removeLayers = () => {
+    map.current?.getStyle().layers.forEach((layer) => {
+      if (layer.id.includes("poi") || layer.id.includes("park")) {
+        map.current?.setLayoutProperty(layer.id, "visibility", "none");
+      }
+    });
+    map.current?.setLayoutProperty("airport-label", "visibility", "none");
+    map.current?.setLayoutProperty("road-label", "visibility", "none");
+
+    map.current?.setLayoutProperty("road-number-shield", "visibility", "none");
+    map.current?.setLayoutProperty(
+      "settlement-subdivision-label",
+      "visibility",
+      "none"
+    );
+    map.current?.setLayoutProperty("transit-label", "visibility", "none");
+  };
+
   useEffect(() => {
     if (!mapElements) return;
 
@@ -224,16 +243,15 @@ export const Map = () => {
     }
 
     if (map.current) {
-      if (map.current.loaded()) {
-        handleMapLoad();
-      } else {
-        map.current.once("load", handleMapLoad);
-      }
+      map.current.loaded()
+        ? handleMapLoad()
+        : map.current.once("load", handleMapLoad);
     }
 
     if (map.current) {
       map.current.on("load", () => {
         setMapLoaded(true);
+        removeLayers();
       });
     }
 
@@ -266,19 +284,19 @@ export const Map = () => {
       </div>
 
       <div
-        className={c.profileButton}
+        className={`${c.profileButton} ${c.generalButton}`}
         onClick={() => navigate(ROUTES.PROFILE)}
       ></div>
       <div
-        className={c.infoButton}
+        className={`${c.infoButton} ${c.generalButton}`}
         onClick={() => navigate(ROUTES.PROFILE)}
       ></div>
-      <div className={c.emergencyButton}></div>
+      <div className={`${c.emergencyButton} ${c.generalButton}`}></div>
 
-      <div
-        className={c.notificationButton}
+      {/* <div
+        className={`${c.notificationButton} ${c.generalButton}`}
         onClick={() => setAreNotificationsVisible(!areNotificationsVisible)}
-      ></div>
+      ></div> */}
 
       {areNotificationsVisible && <NotificationPanel />}
       <button
