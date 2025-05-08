@@ -5,7 +5,7 @@ import {
   TransactionStatus,
   RuleType,
   MapElementType,
-  Prisma,
+  ObjectType,
 } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
@@ -87,7 +87,7 @@ async function main() {
   const rule2 = await prisma.rule.create({
     data: {
       name: 'Speed Limit 5 Knots',
-      type: RuleType.SPEED_RESTRICTION,
+      type: RuleType.WARNING,
       description: 'Maximum speed in this area is 5 knots.',
     },
   });
@@ -95,7 +95,7 @@ async function main() {
   const rule3 = await prisma.rule.create({
     data: {
       name: 'No Anchoring',
-      type: RuleType.ANCHORING_RESTRICTION,
+      type: RuleType.RESTRICTION,
       description:
         'Anchoring is not permitted in this area due to underwater cables.',
     },
@@ -104,8 +104,40 @@ async function main() {
   const rule4 = await prisma.rule.create({
     data: {
       name: 'Nature Reserve',
-      type: RuleType.ENVIRONMENTAL_PROTECTION,
+      type: RuleType.WARNING,
       description: 'Protected nature area. Keep distance and minimize noise.',
+    },
+  });
+
+  const rule5 = await prisma.rule.create({
+    data: {
+      name: 'No Fishing',
+      type: RuleType.RESTRICTION,
+      description: 'Fishing is not allowed in this area.',
+    },
+  });
+
+  const rule6 = await prisma.rule.create({
+    data: {
+      name: 'Common Swimming Area',
+      type: RuleType.INFO,
+      description: 'Swimming is allowed in this area.',
+    },
+  });
+
+  const rule7 = await prisma.rule.create({
+    data: {
+      name: 'Clean Water Zone',
+      type: RuleType.INFO,
+      description: 'Clean water zone',
+    },
+  });
+
+  const rule8 = await prisma.rule.create({
+    data: {
+      name: 'Common anchoring area',
+      type: RuleType.INFO,
+      description: 'Anchoring is allowed in this area.',
     },
   });
 
@@ -301,11 +333,12 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule3.id, // No anchoring
+          id: rule8.id,
         },
       },
       name: 'Ciovo Anchoring Area',
       type: MapElementType.POINT,
+      objectType: ObjectType.ANCHOR,
       coordinates: {
         coordinates: [16.331010051824677, 43.50588039602954],
       },
@@ -318,11 +351,12 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule3.id, // No anchoring
+          id: rule7.id, // Clean water zone
         },
       },
       name: 'Ciovo Lighthouse',
       type: MapElementType.POINT,
+      objectType: ObjectType.LIGHTHOUSE,
       coordinates: {
         coordinates: [16.391666737020813, 43.48923719439853],
       },
@@ -336,11 +370,12 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule3.id, // No anchoring
+          id: rule7.id, // Clean water zone
         },
       },
       name: 'Marjan Lighthouse',
       type: MapElementType.POINT,
+      objectType: ObjectType.LIGHTHOUSE,
       coordinates: {
         coordinates: [16.38879372168188, 43.50856375565189],
       },
@@ -354,11 +389,12 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule3.id, // No anchoring
+          id: rule6.id, // Common swimming area
         },
       },
       name: 'Split Breakwater Lighthouse',
       type: MapElementType.POINT,
+      objectType: ObjectType.LIGHTHOUSE,
       coordinates: {
         coordinates: [16.441, 43.503],
       },
@@ -372,15 +408,81 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule2.id, // Speed limit
+          id: rule8.id, // Common anchoring area
         },
       },
-      name: 'Kaštel Bay',
+      name: 'Kaštel Area',
       type: MapElementType.POINT,
+      objectType: ObjectType.ANCHOR,
       coordinates: {
         coordinates: [16.364137504105486, 43.546240911927924],
       },
-      description: 'Anchoring allowed - speed limit of 5 knots',
+      description: 'Anchoring allowed',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Trogir ridge',
+      type: MapElementType.POINT,
+      objectType: ObjectType.RIDGE,
+      coordinates: {
+        coordinates: [16.269146611584745, 43.52116817399565],
+      },
+      description: 'Ridge area - caution advised',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Ciovo Ridge',
+      type: MapElementType.POINT,
+      objectType: ObjectType.RIDGE,
+      coordinates: {
+        coordinates: [16.395086572572495, 43.48780897697486],
+      },
+      description: 'Ridge area - caution advised',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Trogir fuel dock',
+      type: MapElementType.POINT,
+      objectType: ObjectType.FUEL_DOCK,
+      coordinates: {
+        coordinates: [16.271802350123693, 43.49205998369948],
+      },
+      description: 'Fill up your tank here',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Split Harbor Master',
+      type: MapElementType.POINT,
+      objectType: ObjectType.HARBOR_MASTER,
+      coordinates: {
+        coordinates: [16.440529324152692, 43.507113552631324],
+      },
+      description: 'Harbor master office',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Fuel Dock - Split',
+      type: MapElementType.POINT,
+      objectType: ObjectType.FUEL_DOCK,
+      coordinates: {
+        coordinates: [16.439, 43.508],
+      },
+      description: 'Fuel dock available',
       isActive: true,
     },
   });
