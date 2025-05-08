@@ -14,3 +14,8 @@ export type MapElement = {
     coordinates: number[][][] | number[];
   };
 };
+
+export enum MapElementTypes {
+  ZONE = "ZONE",
+  POINT = "POINT",
+}

@@ -1,24 +1,32 @@
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import c from "./Map.module.css";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { MAPBOX_STYLE } from "../../constants";
 import { MapElement } from "../../types";
 import { useFetchMapElements } from "../../api/map/useFetchMapElements";
 import { MapIcons } from "../../constants/map-icons";
+import { MapElementTypes } from "../../types";
 
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const userMarker = useRef<mapboxgl.Marker | null>(null);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(
+    null
+  );
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [isTracked, setIsTracked] = useState(false);
+  const watchId = useRef<number | null>(null);
   const { data: mapElements } = useFetchMapElements();
 
   const handleMapLoad = useCallback(() => {
     if (!mapElements) return;
 
     mapElements.forEach((element: MapElement) => {
-      if (element.geometry.type === "Polygon") {
+      if (element.geometry.type === MapElementTypes.ZONE) {
         addZone(element);
-      } else if (element.geometry.type === "POINT") {
+      } else if (element.geometry.type === MapElementTypes.POINT) {
         addPoint(element);
       }
     });
@@ -54,6 +62,12 @@ export const Map = () => {
       }
     }
 
+    if (map.current) {
+      map.current.on("load", () => {
+        setMapLoaded(true);
+      });
+    }
+
     return () => {
       if (map.current) {
         map.current.off("load", handleMapLoad);
@@ -61,7 +75,7 @@ export const Map = () => {
         map.current = null;
       }
     };
-  }, [mapElements, handleMapLoad]);
+  }, [mapElements]);
 
   const addZone = (zone: MapElement) => {
     const elementId = `${zone.properties.id}-zone`;
@@ -141,6 +155,7 @@ export const Map = () => {
             data: geoJsonData,
           });
 
+          //stavi ovo u options i importaj iz drugog fajla
           map.current?.addLayer({
             id: elementId,
             type: "symbol",
@@ -164,5 +179,80 @@ export const Map = () => {
     }
   };
 
-  return <div ref={mapContainer} className={c.map}></div>;
+  const startTracking = () => {
+    setIsTracked(true);
+
+    watchId.current = navigator.geolocation.watchPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const lngLat = new mapboxgl.LngLat(longitude, latitude);
+
+        setUserLocation([longitude, latitude]);
+
+        if (!map.current || !mapLoaded) return;
+
+        if (!userMarker.current) {
+          const el = document.createElement("div");
+          el.className = "user-location-marker";
+          el.style.width = "20px";
+          el.style.height = "20px";
+          el.style.borderRadius = "50%";
+          el.style.background = "#1da1f2";
+          el.style.border = "3px solid white";
+          el.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.3)";
+
+          userMarker.current = new mapboxgl.Marker({
+            element: el,
+            anchor: "center",
+          })
+            .setLngLat(lngLat)
+            .addTo(map.current as mapboxgl.Map);
+        } else {
+          userMarker.current.setLngLat(lngLat);
+        }
+      },
+      (error) => {
+        console.error("Error getting user location:", error);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 10000,
+        timeout: 5000,
+      }
+    );
+  };
+
+  const stopTracking = () => {
+    if (watchId.current !== null) {
+      navigator.geolocation.clearWatch(watchId.current);
+      watchId.current = null;
+    }
+
+    if (userMarker.current) {
+      userMarker.current.remove();
+      userMarker.current = null;
+    }
+    setUserLocation(null);
+    setIsTracked(false);
+  };
+
+  return (
+    <>
+      <div ref={mapContainer} className={c.map}></div>
+      <div className={c.customNav}>
+        <button onClick={() => map.current?.zoomIn()} className={c.zoomBtn}>
+          +
+        </button>
+        <button onClick={() => map.current?.zoomOut()} className={c.zoomBtn}>
+          −
+        </button>
+      </div>
+      <button
+        className={c.trackerButton}
+        onClick={isTracked ? stopTracking : startTracking}
+      >
+        {isTracked ? "Stop" : "Start"}
+      </button>
+    </>
+  );
 };

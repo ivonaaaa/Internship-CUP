@@ -2,3 +2,40 @@
   min-height: 100dvh;
   width: 100%;
 }
+
+.trackerButton {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  bottom: 20px;
+}
+
+.customNav {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1;
+}
+
+.zoomBtn {
+  background-color: #ffffff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+}
+
+.zoomBtn:hover {
+  background-color: #333;
+  transform: scale(1.1);
+}

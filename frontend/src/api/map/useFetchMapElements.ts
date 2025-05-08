@@ -28,8 +28,6 @@ const fetchMapElements = async () => {
   );
 
   return response.map((element: MapElementsResponseDto) => {
-    const geometryType = element.type === "ZONE" ? "Polygon" : element.type;
-
     return {
       type: "Feature" as string,
       properties: {
@@ -42,7 +40,7 @@ const fetchMapElements = async () => {
         lineWidth: element.lineWidth,
       },
       geometry: {
-        type: geometryType,
+        type: element.type,
         coordinates: parseCoordinates(element.coordinates),
       },
     };
