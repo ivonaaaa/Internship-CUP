@@ -1,0 +1,22 @@
+.errorFallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 2rem;
+  background-color: var(--color-cloud);
+  color: var(--color-ocean);
+  font-family: var(--font-primary);
+  text-align: center;
+}
+
+.errorFallback h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.errorFallback p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
