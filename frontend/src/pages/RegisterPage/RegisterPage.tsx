@@ -1,5 +1,10 @@
 import { AuthForm } from "../../components/AuthForm";
+import "../../App.css";
 
 export function RegisterPage() {
-  return <AuthForm mode="register" />;
+  return (
+    <div className="page-container">
+      <AuthForm mode="register" />
+    </div>
+  );
 }

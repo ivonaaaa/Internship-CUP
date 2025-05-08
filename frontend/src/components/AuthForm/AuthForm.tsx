@@ -28,10 +28,52 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
     });
   };
 
+  const getErrorMessage = (err: any): string[] => {
+    const errorData = err?.response?.data;
+    const status = err?.response?.status;
+
+    switch (status) {
+      case 401:
+        return [
+          "Invalid email or password. Please check your credentials and try again.",
+        ];
+
+      case 400:
+        return ["Invalid input data. Please check your details and try again."];
+
+      case 409:
+        return [
+          "This email or username is already registered. Please use different credentials.",
+        ];
+
+      case 500:
+        return [
+          "The server encountered an error. Please try again in a moment.",
+        ];
+    }
+
+    if (Array.isArray(errorData?.message)) return errorData.message;
+
+    if (typeof errorData?.message === "string") return [errorData.message];
+
+    if (err.message) {
+      if (err.message.includes("Network Error")) {
+        return [
+          "Unable to connect to the server. Please check your internet connection.",
+        ];
+      }
+      if (err.message.includes("timeout"))
+        return ["The request timed out. Please try again later."];
+
+      return [err.message];
+    }
+
+    return ["An unknown error occurred."];
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Client-side validation using the util function
     const isRegisterMode = mode === "register";
     const validationErrors = validateAuthForm(formData, isRegisterMode);
     if (validationErrors.length > 0) {
@@ -54,40 +96,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         await login(formData.email, formData.password);
       }
     } catch (err: any) {
-      // Don't log expected authentication errors
-
-      // Handle 401 unauthorized errors specifically for login
-      if (err?.response?.status === 401 && mode === "login") {
-        setErrors([
-          "Invalid email or password. Please check your credentials and try again.",
-        ]);
-        return;
-      }
-
-      // Get detailed error message from response if available
-      const errorData = err?.response?.data;
-
-      if (Array.isArray(errorData?.message)) {
-        // If the server returns an array of error messages
-        setErrors(errorData.message);
-      } else if (typeof errorData?.message === "string") {
-        // If the server returns a single error message string
-        setErrors([errorData.message]);
-      } else if (err.message) {
-        // Map common error codes to user-friendly messages
-        if (err.message.includes("Network Error")) {
-          setErrors([
-            "Unable to connect to the server. Please check your internet connection.",
-          ]);
-        } else if (err.message.includes("timeout")) {
-          setErrors(["The request timed out. Please try again later."]);
-        } else {
-          setErrors([err.message]);
-        }
-      } else {
-        // Fallback for any other error format
-        setErrors(["An unknown error occurred."]);
-      }
+      setErrors(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -143,9 +152,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
               onChange={handleChange}
               required
             />
-            <small className={styles["helper-text"]}>
-              Format: +[country code][number] (e.g. +12345678901)
-            </small>
           </div>
         </>
       )}
@@ -161,9 +167,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           onChange={handleChange}
           required
         />
-        {!isLogin && (
-          <small className={styles["helper-text"]}>Minimum 8 characters</small>
-        )}
       </div>
 
       {!isLogin && (

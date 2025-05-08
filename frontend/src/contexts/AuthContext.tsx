@@ -9,6 +9,12 @@ import React, {
 import axios from "axios";
 import { User } from "../types";
 
+export type AuthError = {
+  status: number;
+  message: string;
+  code?: string;
+};
+
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
@@ -37,7 +43,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
-
   return context;
 };
 
@@ -175,6 +180,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => clearInterval(intervalId);
   }, [user, logout]);
 
+  const handleApiError = (error: any): never => {
+    if (error.response?.status === 500) {
+      console.warn(
+        `Server error during API call to ${error.config?.url || "unknown endpoint"}`
+      );
+    }
+    throw error;
+  };
+
   const login = async (email: string, password: string) => {
     try {
       const response = await axios.post("/api/auth/login", {
@@ -186,9 +200,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setToken(access_token);
 
       await validateToken();
-    } catch (error: any) {
-      if (error.response?.status === 401) throw error;
-      else throw error;
+    } catch (error) {
+      handleApiError(error);
     }
   };
 
@@ -199,11 +212,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         subscriptionPlan: "FREE_TRIAL",
       };
       await axios.post("/api/auth/register", requestData);
-    } catch (error: any) {
-      if (error.response?.status !== 400 && error.response?.status !== 409)
-        throw error;
-
-      throw error;
+    } catch (error) {
+      handleApiError(error);
     }
   };
 

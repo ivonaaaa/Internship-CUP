@@ -1,9 +1,9 @@
-import { AuthForm } from "../../components/AuthForm/AuthForm";
-import styles from "./LoginPage.module.css";
+import { AuthForm } from "../../components/AuthForm";
+import "../../App.css";
 
 export function LoginPage() {
   return (
-    <div className={styles["pageContainer"]}>
+    <div className="page-container">
       <AuthForm mode="login" />
     </div>
   );
