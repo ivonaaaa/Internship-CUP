@@ -10,24 +10,22 @@ export class RegisterDto extends CreateUserDto {
   email: string;
 
   @ApiProperty({
-    description:
-      'User username can only contain lowercase letters, numbers, and underscores',
-    example: 'john_doe',
+    description: 'User name',
+    example: 'John',
   })
-  username: string;
+  name: string;
+
+  @ApiProperty({
+    description: 'User surname',
+    example: 'Doe',
+  })
+  surname: string;
 
   @ApiProperty({
     description: 'Password must have at least 8 characters',
     example: 'strongpassword123',
   })
   password: string;
-
-  @ApiProperty({
-    description:
-      'User phone number must be in the format +[country code][number]',
-    example: '+385912345678',
-  })
-  phoneNumber: string;
 
   @ApiProperty({
     description: 'Chosen subscription plan',

@@ -7,12 +7,23 @@ import {
 } from '@nestjs/class-validator';
 import { BoatType } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class CreateBoatDto {
   @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   userId: number;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  registration: string;
 
   @ApiProperty()
   @IsNumber()
