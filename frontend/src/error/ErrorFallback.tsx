@@ -1,12 +1,12 @@
 import React from "react";
 import { ErrorFallbackProps } from "../types/errors";
-import styles from "./ErrorFallback.module.css";
+import c from "./ErrorFallback.module.css";
 
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   resetErrorBoundary,
 }) => {
   return (
-    <div className={styles["errorFallback"]}>
+    <div className={c.errorFallback}>
       <h2>Uh oh, something went wrong!</h2>
       <p>We apologize for the inconvenience.</p>
       {resetErrorBoundary && (

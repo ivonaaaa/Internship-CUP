@@ -21,14 +21,20 @@ export class CreateUserDto {
   email: string;
 
   @ApiProperty({
-    description: 'Username for the user',
-    example: 'john_doe',
+    description: 'First name of the user',
+    example: 'John',
   })
   @IsString()
   @IsNotEmpty()
-  @IsLowercase()
-  @Matches(/^[a-z0-9_]+$/)
-  username: string;
+  name: string;
+
+  @ApiProperty({
+    description: 'Last name of the user',
+    example: 'Doe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  surname: string;
 
   @ApiProperty({
     description: 'Password for the user, must be at least 8 characters long',
@@ -38,14 +44,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   @MinLength(8)
   password: string;
-
-  @ApiProperty({
-    description: 'Phone number of the user',
-    example: '+1234567890',
-  })
-  @IsNotEmpty()
-  @Matches(/^\+(\d{1,4})\d{7,14}$/)
-  phoneNumber: string;
 
   @ApiProperty({
     description: 'Subscription plan of the user',
