@@ -2,24 +2,24 @@ import { Exclude } from '@nestjs/class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
-  @ApiProperty()
+  @ApiProperty({ example: 1 })
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'user@example.com' })
   email: string;
 
-  @ApiProperty()
-  username: string;
+  @ApiProperty({ example: 'John' })
+  name: string;
+
+  @ApiProperty({ example: 'Doe' })
+  surname: string;
 
   @Exclude()
   passwordHash: string;
 
-  @ApiProperty()
-  phoneNumber: string;
-
-  @ApiProperty()
+  @ApiProperty({ example: 'FREE_TRIAL' })
   subscriptionPlan?: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: '2025-05-10T00:00:00Z' })
   subscriptionExpiry: Date;
 }

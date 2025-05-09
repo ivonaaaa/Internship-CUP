@@ -18,18 +18,18 @@ export class UserService {
     const {
       id,
       email,
-      username,
+      name,
+      surname,
       passwordHash,
-      phoneNumber,
       subscriptionPlan,
       subscriptionExpiry,
     } = user;
     return {
       id,
       email,
-      username,
+      name,
+      surname,
       passwordHash,
-      phoneNumber,
       subscriptionPlan,
       subscriptionExpiry,
     };
@@ -51,16 +51,16 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const { password, email, username, phoneNumber } = createUserDto;
+    const { password, email, name, surname } = createUserDto;
 
-    await this.ensureUniqueFields(email, username, phoneNumber);
+    await this.ensureUniqueFields(email);
 
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await this.prisma.user.create({
       data: {
         email,
-        username,
-        phoneNumber,
+        name,
+        surname,
         passwordHash,
       },
     });
@@ -71,9 +71,9 @@ export class UserService {
   async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
     await this.ensureUserExists(id);
 
-    const { email, username, phoneNumber } = updateUserDto;
+    const { email, name, surname } = updateUserDto;
 
-    await this.ensureUniqueFields(email, username, phoneNumber, id);
+    await this.ensureUniqueFields(email, id);
 
     const user = await this.prisma.user.update({
       where: { id },
@@ -100,15 +100,13 @@ export class UserService {
 
   private async ensureUniqueFields(
     email: string,
-    username: string,
-    phoneNumber: string,
     excludeUserId?: number,
   ): Promise<void> {
     const existingUser = await this.prisma.user.findFirst({
       where: {
         AND: [
           {
-            OR: [{ email }, { username }, { phoneNumber }],
+            OR: [{ email }],
           },
           excludeUserId ? { NOT: { id: excludeUserId } } : {},
         ],
@@ -117,7 +115,7 @@ export class UserService {
 
     if (existingUser) {
       throw new ConflictException(
-        'User with this email, username, or phone number already exists',
+        'User with this email already exists',
       );
     }
   }

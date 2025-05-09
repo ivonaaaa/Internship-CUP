@@ -9,6 +9,12 @@ import React, {
 import axios from "axios";
 import { User } from "../types";
 
+export type AuthError = {
+  status: number;
+  message: string;
+  code?: string;
+};
+
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
@@ -19,15 +25,18 @@ type AuthContextType = {
 
 interface RegisterData {
   email: string;
-  username: string;
+  name: string;
+  surname: string;
   password: string;
-  phoneNumber: string;
 }
 
 interface TokenPayload {
   sub: number;
   email: string;
-  username: string;
+  name: string;
+  surname: string;
+  subscriptionPlan: string;
+  createdAt: string;
   exp: number;
   iat: number;
 }
@@ -36,9 +45,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
 
@@ -79,8 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       return JSON.parse(jsonPayload);
     } catch (error) {
-      console.error("Error decoding token:", error);
-      return null;
+      throw error;
     }
   };
 
@@ -89,18 +95,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return payload.exp <= currentTime;
   };
 
-  const isTokenExpiringSoon = (
-    payload: TokenPayload,
-    thresholdSeconds = 300
-  ): boolean => {
-    const currentTime = Math.floor(Date.now() / 1000);
-    return payload.exp - currentTime < thresholdSeconds;
-  };
-
   const logout = useCallback(() => {
     clearToken();
     setUser(null);
-    console.log("Logged out.");
   }, []);
 
   const validateToken = useCallback(async () => {
@@ -117,14 +114,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (!payload) {
         logout();
-        console.log("Invalid session. Please log in again.");
         setIsLoading(false);
         return false;
       }
 
       if (isTokenExpired(payload)) {
         logout();
-        console.log("Your session has expired. Please log in again.");
         setIsLoading(false);
         return false;
       }
@@ -132,13 +127,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser({
         id: payload.sub,
         email: payload.email,
-        username: payload.username,
+        name: payload.name,
+        surname: payload.surname,
       });
 
       setIsLoading(false);
       return true;
     } catch (error) {
-      console.error("Token validation error:", error);
       logout();
       setIsLoading(false);
       return false;
@@ -150,9 +145,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       validateToken();
-    } else {
-      setIsLoading(false);
-    }
+    } else setIsLoading(false);
   }, [validateToken]);
 
   useEffect(() => {
@@ -162,10 +155,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (error.response?.status === 401) {
           const errorMessage = error.response?.data?.message;
           const isTokenError = errorMessage === "Invalid token.";
-          if (isTokenError && user) {
-            logout();
-            console.log("Your session has expired. Please log in again.");
-          }
+          if (isTokenError && user) logout();
         }
         return Promise.reject(error);
       }
@@ -186,18 +176,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const payload = decodeToken(token);
       if (!payload) return;
 
-      if (isTokenExpired(payload)) {
-        logout();
-        console.log("Your session has expired. Please log in again.");
-      } else if (isTokenExpiringSoon(payload)) {
-        console.log("Your session will expire soon.");
-      }
+      if (isTokenExpired(payload)) logout();
     };
 
     const intervalId = setInterval(checkTokenExpiration, 60000);
 
     return () => clearInterval(intervalId);
   }, [user, logout]);
+
+  const handleApiError = (error: any): never => {
+    if (error.response?.status === 500) {
+      console.warn(
+        `Server error during API call to ${error.config?.url || "unknown endpoint"}`
+      );
+    }
+    throw error;
+  };
 
   const login = async (email: string, password: string) => {
     try {
@@ -210,13 +204,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setToken(access_token);
 
       await validateToken();
-      console.log("Login successful");
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message ||
-        "Login failed. Please check your credentials.";
-      console.log(errorMessage);
-      throw new Error(errorMessage);
+    } catch (error) {
+      handleApiError(error);
     }
   };
 
@@ -227,13 +216,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         subscriptionPlan: "FREE_TRIAL",
       };
       await axios.post("/api/auth/register", requestData);
-      console.log("Registration successful. Please sign in.");
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message ||
-        "Registration failed. Please try again.";
-      console.log(errorMessage);
-      throw new Error(errorMessage);
+    } catch (error) {
+      handleApiError(error);
     }
   };
 

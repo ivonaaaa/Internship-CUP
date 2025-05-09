@@ -13,10 +13,10 @@ datasource db {
 model User {
   id                  Int              @id @default(autoincrement())
   email               String           @unique
-  username            String           @unique
+  name                String
+  surname             String
   passwordHash        String
   subscriptionPlan    SubscriptionPlan @default(FREE_TRIAL)
-  phoneNumber         String           @unique
   subscriptionExpiry  DateTime         @default(dbgenerated("CURRENT_TIMESTAMP + interval '3 days'"))
 
   // Relations
@@ -27,6 +27,8 @@ model User {
 
 model Boat {
   id                Int           @id @default(autoincrement())
+  name              String
+  registration      String        @unique
   userId            Int
   length            Float
   width             Float
