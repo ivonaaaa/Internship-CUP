@@ -224,6 +224,47 @@ export const Map = () => {
     });
   };
 
+  const addPopups = () => {
+    if (!map.current) return;
+
+    const popup = new mapboxgl.Popup({
+      closeButton: true,
+      closeOnClick: true,
+    });
+
+    mapElements?.forEach((element) => {
+      let elementType: string = "";
+      if (element.geometry.type === MapElementTypes.ZONE) {
+        elementType = "zone";
+      } else if (element.geometry.type === MapElementTypes.POINT) {
+        elementType = "point";
+      }
+
+      map.current?.on(
+        "click",
+        `${element.properties.id}-${elementType}`,
+        (e) => {
+          if (map.current) map.current.getCanvas().style.cursor = "pointer";
+
+          const coordinates = e.lngLat;
+          const properties = e.features?.[0].properties;
+
+          const description = `
+    <div class={c.customPopup}>
+      <h3>${properties?.name}</h3>
+      <p>${properties?.description}</p>
+    </div>
+  `;
+
+          popup
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map.current as mapboxgl.Map);
+        }
+      );
+    });
+  };
+
   useEffect(() => {
     if (!mapContainer.current) return;
 
@@ -252,6 +293,7 @@ export const Map = () => {
       map.current.on("load", () => {
         removeLayers();
         handleMapLoad();
+        addPopups();
         setMapLoaded(true);
       });
     }
