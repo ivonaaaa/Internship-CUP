@@ -5,6 +5,7 @@ import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { ProfilePage } from "../pages/ProfilePage/ProfilePage";
 import { ProtectedRoute } from "../hoc/ProtectedRoute";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 
 export const AppRouter = () => {
   return (
@@ -21,7 +22,7 @@ export const AppRouter = () => {
         </Route>
 
         {/* Fallback route */}
-        <Route path={ROUTES.NOT_FOUND} element={<div>404 Not Found</div>} />
+        <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
