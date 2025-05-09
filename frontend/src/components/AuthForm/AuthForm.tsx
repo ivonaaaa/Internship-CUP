@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateAuthForm } from "../../utils/AuthFormValidation";
-import styles from "./AuthForm.module.css";
+import c from "./AuthForm.module.css";
 import { useNavigate } from "react-router-dom";
 
 type AuthFormProps = {
@@ -110,12 +110,12 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   const title = isLogin ? "Sign In" : "Sign Up";
 
   return (
-    <form onSubmit={handleSubmit} className={styles["auth-form"]}>
+    <form onSubmit={handleSubmit} className={c.authForm}>
       <h2>{title}</h2>
 
       {!isLogin && (
         <>
-          <div className={styles["form-group"]}>
+          <div className={c.formGroup}>
             <label htmlFor="name">First Name</label>
             <input
               type="text"
@@ -128,7 +128,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             />
           </div>
 
-          <div className={styles["form-group"]}>
+          <div className={c.formGroup}>
             <label htmlFor="surname">Last Name</label>
             <input
               type="text"
@@ -143,7 +143,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         </>
       )}
 
-      <div className={styles["form-group"]}>
+      <div className={c.formGroup}>
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -156,7 +156,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         />
       </div>
 
-      <div className={styles["form-group"]}>
+      <div className={c.formGroup}>
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -170,7 +170,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       </div>
 
       {!isLogin && (
-        <div className={styles["form-group"]}>
+        <div className={c.formGroup}>
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             type="password"
@@ -185,20 +185,16 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       )}
 
       {errors.length > 0 && (
-        <ul className={styles.errorList}>
+        <ul className={c.errorList}>
           {errors.map((msg, index) => (
-            <li key={index} className={styles.error}>
+            <li key={index} className={c.error}>
               {msg}
             </li>
           ))}
         </ul>
       )}
 
-      <button
-        type="submit"
-        className={styles["submit-button"]}
-        disabled={isLoading}
-      >
+      <button type="submit" className={c.submitButton} disabled={isLoading}>
         {isLoading ? "Processing..." : title}
       </button>
     </form>
