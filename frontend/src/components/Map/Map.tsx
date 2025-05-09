@@ -250,9 +250,9 @@ export const Map = () => {
       });
 
       map.current.on("load", () => {
-        setMapLoaded(true);
         removeLayers();
         handleMapLoad();
+        setMapLoaded(true);
       });
     }
 

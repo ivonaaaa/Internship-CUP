@@ -82,4 +82,6 @@ const parseCoordinates = (coordinates: {
   ) {
     return [...parsedCoordinates];
   }
+
+  return [];
 };
