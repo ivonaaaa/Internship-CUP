@@ -1,8 +1,7 @@
 import c from "./notification.module.css";
 import { AlertCircle, AlertTriangle, Info } from "lucide-react";
-import { RuleType } from "../../api/map/useFetchMapElements";
-
-//poopravi ovaj rule type da bude u types
+import { RuleType } from "../../types";
+import closeButton from "../../assets/closeButton.svg";
 
 type NotificationProps = {
   type: RuleType;
@@ -69,21 +68,7 @@ export const Notification = ({
         <div className={c.message}>{message}</div>
       </div>
       <div className={c.closeIcon} onClick={onClose}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="feather feather-x-circle"
-        >
-          <line x1="15" y1="9" x2="9" y2="15"></line>
-          <line x1="9" y1="9" x2="15" y2="15"></line>
-        </svg>
+        <img src={closeButton} alt="Close" />
       </div>
     </div>
   );

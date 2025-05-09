@@ -1,5 +1,5 @@
 .map {
-  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
 }
 
@@ -58,4 +58,13 @@
   width: 35px;
   height: 35px;
   cursor: pointer;
+}
+
+.userLocationMarker {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1da1f2;
+  border: 3px solid white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

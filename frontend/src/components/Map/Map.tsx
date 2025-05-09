@@ -10,7 +10,6 @@ import { MapElementTypes } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants";
 import { RuleChecker } from "../RuleChecker";
-import { NotificationPanel } from "../NotificationPanel";
 
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -21,8 +20,7 @@ export const Map = () => {
   );
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
   const [isTracking, setIsTracking] = useState<boolean>(false);
-  const [areNotificationsVisible, setAreNotificationsVisible] =
-    useState<boolean>(false);
+  useState<boolean>(false);
   const watchId = useRef<number | null>(null);
   const { data: mapElements } = useFetchMapElements();
 
@@ -41,9 +39,11 @@ export const Map = () => {
   }, [mapElements]);
 
   const addZone = (zone: MapElement) => {
+    if (!map.current) return;
+
     const elementId = `${zone.properties.id}-zone`;
 
-    if (!map.current?.getSource(elementId)) {
+    if (!map.current.getSource(elementId)) {
       const geoJsonData = {
         type: "Feature",
         properties: zone.properties,
@@ -53,12 +53,12 @@ export const Map = () => {
         },
       };
 
-      map.current?.addSource(elementId, {
+      map.current.addSource(elementId, {
         type: "geojson",
         data: geoJsonData as any,
       });
 
-      map.current?.addLayer({
+      map.current.addLayer({
         id: elementId,
         type: "fill",
         source: elementId,
@@ -70,7 +70,7 @@ export const Map = () => {
       });
 
       if (zone.properties.lineColor) {
-        map.current?.addLayer({
+        map.current.addLayer({
           id: `${elementId}-outline`,
           type: "line",
           source: elementId,
@@ -84,27 +84,31 @@ export const Map = () => {
   };
 
   const addPoint = (point: MapElement) => {
+    if (!map.current) return;
+
     const elementId = `${point.properties.id}-point`;
     const iconName = point.properties.name;
     const objectType = point.properties.objectType;
 
-    if (!map.current?.hasImage(iconName)) {
+    if (!map.current.hasImage(iconName)) {
       const iconPath = MapIcons[objectType as unknown as keyof typeof MapIcons];
 
-      map.current?.loadImage(iconPath, (error, image) => {
+      map.current.loadImage(iconPath, (error, image) => {
         if (error) {
           console.error("Error loading image:", error);
           return;
         }
 
-        if (!image) {
-          console.error("Image loaded but is undefined");
+        if (!image || !map.current) {
+          console.error(
+            "Image loaded but is undefined or map is no longer available"
+          );
           return;
         }
 
-        map.current?.addImage(iconName, image);
+        map.current.addImage(iconName, image);
 
-        if (!map.current?.getSource(elementId)) {
+        if (!map.current.getSource(elementId)) {
           const geoJsonData = {
             type: "Feature",
             properties: point.properties,
@@ -114,14 +118,12 @@ export const Map = () => {
             },
           };
 
-          map.current?.addSource(elementId, {
+          map.current.addSource(elementId, {
             type: "geojson",
             data: geoJsonData as any,
           });
 
-          //stavi ovo u options i importaj iz drugog fajla
-
-          map.current?.addLayer({
+          map.current.addLayer({
             id: elementId,
             type: "symbol",
             source: elementId,
@@ -156,16 +158,9 @@ export const Map = () => {
 
         if (!map.current || !mapLoaded) return;
 
-        //vidi jel moze ovo bolje
         if (!userMarker.current) {
           const el = document.createElement("div");
-          el.className = "user-location-marker";
-          el.style.width = "20px";
-          el.style.height = "20px";
-          el.style.borderRadius = "50%";
-          el.style.background = "#1da1f2";
-          el.style.border = "3px solid white";
-          el.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.3)";
+          el.className = c.userLocationMarker;
 
           userMarker.current = new mapboxgl.Marker({
             element: el,
@@ -179,6 +174,7 @@ export const Map = () => {
       },
       (error) => {
         console.error("Error getting user location:", error);
+        stopTracking();
       },
       {
         enableHighAccuracy: true,
@@ -203,34 +199,42 @@ export const Map = () => {
   };
 
   const removeLayers = () => {
-    map.current?.getStyle().layers.forEach((layer) => {
-      if (layer.id.includes("poi") || layer.id.includes("park")) {
+    if (!map.current) return;
+
+    const layers = map.current.getStyle().layers || [];
+
+    layers.forEach((layer) => {
+      if (layer.id && (layer.id.includes("poi") || layer.id.includes("park"))) {
         map.current?.setLayoutProperty(layer.id, "visibility", "none");
       }
     });
-    map.current?.setLayoutProperty("airport-label", "visibility", "none");
-    map.current?.setLayoutProperty("road-label", "visibility", "none");
 
-    map.current?.setLayoutProperty("road-number-shield", "visibility", "none");
-    map.current?.setLayoutProperty(
+    const layersToHide = [
+      "airport-label",
+      "road-label",
+      "road-number-shield",
       "settlement-subdivision-label",
-      "visibility",
-      "none"
-    );
-    map.current?.setLayoutProperty("transit-label", "visibility", "none");
+      "transit-label",
+    ];
+
+    layersToHide.forEach((layerId) => {
+      if (map.current?.getLayer(layerId)) {
+        map.current.setLayoutProperty(layerId, "visibility", "none");
+      }
+    });
   };
 
   useEffect(() => {
-    if (!mapElements) return;
+    if (!mapContainer.current) return;
 
     if (!map.current) {
       mapboxgl.accessToken = import.meta.env.VITE_ACCESS_TOKEN as string;
 
       map.current = new mapboxgl.Map({
-        container: mapContainer.current as HTMLDivElement,
+        container: mapContainer.current,
         style: MAPBOX_STYLE,
-        center: [16.4, 43.5081],
-        zoom: 11.5,
+        center: [16.43, 43.5081],
+        zoom: 12.5,
         minZoom: 10,
         maxZoom: 18,
         maxBounds: [
@@ -239,25 +243,25 @@ export const Map = () => {
         ],
         attributionControl: false,
         logoPosition: "top-right",
+        antialias: true,
+        touchZoomRotate: true,
+        fadeDuration: 300,
+        pitchWithRotate: true,
       });
-    }
 
-    if (map.current) {
-      map.current.loaded()
-        ? handleMapLoad()
-        : map.current.once("load", handleMapLoad);
-    }
-
-    if (map.current) {
       map.current.on("load", () => {
         setMapLoaded(true);
         removeLayers();
+        handleMapLoad();
       });
     }
 
     return () => {
+      if (watchId.current !== null) {
+        navigator.geolocation.clearWatch(watchId.current);
+      }
+
       if (map.current) {
-        map.current.off("load", handleMapLoad);
         map.current.remove();
         map.current = null;
       }
@@ -268,48 +272,44 @@ export const Map = () => {
     <>
       <div ref={mapContainer} className={c.map}></div>
 
-      <div className={c.customNav}>
+      <>
+        <div className={c.customNav}>
+          <div
+            onClick={() => map.current?.zoomIn()}
+            className={c.navButton}
+          ></div>
+          <div
+            onClick={() => map.current?.zoomOut()}
+            className={c.navButton}
+          ></div>
+          <div
+            onClick={() => map.current?.resetNorth()}
+            className={c.navButton}
+          ></div>
+        </div>
+
         <div
-          onClick={() => map.current?.zoomIn()}
-          className={c.navButton}
+          className={`${c.profileButton} ${c.generalButton}`}
+          onClick={() => navigate(ROUTES.PROFILE)}
         ></div>
         <div
-          onClick={() => map.current?.zoomOut()}
-          className={c.navButton}
+          className={`${c.infoButton} ${c.generalButton}`}
+          onClick={() => navigate(ROUTES.PROFILE)}
         ></div>
-        <div
-          onClick={() => map.current?.resetNorth()}
-          className={c.navButton}
-        ></div>
-      </div>
+        <div className={`${c.emergencyButton} ${c.generalButton}`}></div>
 
-      <div
-        className={`${c.profileButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.PROFILE)}
-      ></div>
-      <div
-        className={`${c.infoButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.PROFILE)}
-      ></div>
-      <div className={`${c.emergencyButton} ${c.generalButton}`}></div>
-
-      {/* <div
-        className={`${c.notificationButton} ${c.generalButton}`}
-        onClick={() => setAreNotificationsVisible(!areNotificationsVisible)}
-      ></div> */}
-
-      {areNotificationsVisible && <NotificationPanel />}
-      <button
-        className={c.trackerButton}
-        onClick={isTracking ? stopTracking : startTracking}
-      >
-        {isTracking ? "Stop" : "Start"}
-      </button>
-      <RuleChecker
-        userLocation={userLocation}
-        isTracking={isTracking}
-        mapElements={mapElements}
-      />
+        <button
+          className={c.trackerButton}
+          onClick={isTracking ? stopTracking : startTracking}
+        >
+          {isTracking ? "Stop" : "Start"}
+        </button>
+        <RuleChecker
+          userLocation={userLocation}
+          isTracking={isTracking}
+          mapElements={mapElements}
+        />
+      </>
     </>
   );
 };

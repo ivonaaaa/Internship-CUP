@@ -1,4 +1,7 @@
-import { RuleType } from "../api/map/useFetchMapElements";
+export enum MapElementTypes {
+  ZONE = "ZONE",
+  POINT = "POINT",
+}
 
 export enum ObjectType {
   ANCHOR,
@@ -6,6 +9,11 @@ export enum ObjectType {
   FUEL_DOCK,
   RIDGE,
   HARBOR_MASTER,
+}
+export enum RuleType {
+  INFO = "INFO",
+  WARNING = "WARNING",
+  RESTRICTION = "RESTRICTION",
 }
 
 export type MapElement = {
@@ -31,8 +39,3 @@ export type MapElement = {
     type?: RuleType;
   };
 };
-
-export enum MapElementTypes {
-  ZONE = "ZONE",
-  POINT = "POINT",
-}

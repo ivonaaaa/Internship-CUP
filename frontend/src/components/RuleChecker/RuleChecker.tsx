@@ -3,7 +3,7 @@ import * as turf from "@turf/turf";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Notification } from "../Notification/Notification";
-import { RuleType } from "../../api/map/useFetchMapElements";
+import { RuleType } from "../../types";
 
 type RuleCheckerProps = {
   userLocation: [number, number] | null;
@@ -73,7 +73,7 @@ export const RuleChecker = ({
         />
       ),
       {
-        duration: 15000,
+        duration: 5000,
       }
     );
   };

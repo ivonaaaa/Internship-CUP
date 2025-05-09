@@ -2,12 +2,7 @@ import { api } from "../base";
 import { useQuery } from "@tanstack/react-query";
 import { MAP_ELEMENTS_PATH } from "../../constants";
 import { ObjectType } from "../../types";
-
-export enum RuleType {
-  INFO = "INFO",
-  WARNING = "WARNING",
-  RESTRICTION = "RESTRICTION",
-}
+import { RuleType } from "../../types/";
 
 type MapElementsResponseDto = {
   id: number;
