@@ -90,26 +90,30 @@
   position: relative;
   border: 1px solid var(--color-ocean);
   animation: fadeIn 0.3s ease forwards;
+  width: 90%;
 }
 
 :global(.mapboxgl-popup-content h3) {
   font-family: var(--font-primary);
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--color-ocean);
 }
 
 :global(.mapboxgl-popup-content p) {
   font-family: var(--font-primary);
-  font-size: 14px;
   opacity: 0.8;
   color: var(--color-ocean);
 }
 
 :global(.mapboxgl-popup-tip) {
-  border-top-color: var(--color-ocean) !important;
-  border-bottom-color: var(--color-ocean) !important;
+  border-color: transparent transparent transparent transparent !important;
+}
+
+:global(*:focus) {
+  outline: none;
+  box-shadow: none;
 }
 
 @keyframes fadeIn {

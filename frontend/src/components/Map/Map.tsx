@@ -18,7 +18,7 @@ export const Map = () => {
   const [userLocation, setUserLocation] = useState<[number, number] | null>(
     null
   );
-  const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
   const [isTracking, setIsTracking] = useState<boolean>(false);
   useState<boolean>(false);
   const watchId = useRef<number | null>(null);
@@ -134,11 +134,17 @@ export const Map = () => {
                 ["linear"],
                 ["zoom"],
                 10,
-                0.1,
-                18,
-                0.15,
+                0.08,
+                15,
+                0.12,
               ],
-              "icon-allow-overlap": true,
+              "icon-allow-overlap": false,
+              "icon-ignore-placement": false,
+              "text-field": ["get", "name"],
+              "text-offset": [0, 1.5],
+              "text-anchor": "top",
+              "text-size": 8,
+              "text-optional": true,
             },
           });
         }
@@ -147,6 +153,11 @@ export const Map = () => {
   };
 
   const startTracking = () => {
+    if (!navigator.geolocation) {
+      console.error("Geolocation is not supported by this browser.");
+      return;
+    }
+
     setIsTracking(true);
 
     watchId.current = navigator.geolocation.watchPosition(
@@ -156,7 +167,7 @@ export const Map = () => {
 
         setUserLocation([longitude, latitude]);
 
-        if (!map.current || !mapLoaded) return;
+        if (!map.current || !isMapLoaded) return;
 
         if (!userMarker.current) {
           const el = document.createElement("div");
@@ -185,6 +196,10 @@ export const Map = () => {
   };
 
   const stopTracking = () => {
+    if (!confirm("Are you sure you want to stop tracking your location?")) {
+      return;
+    }
+
     if (watchId.current !== null) {
       navigator.geolocation.clearWatch(watchId.current);
       watchId.current = null;
@@ -294,7 +309,7 @@ export const Map = () => {
         removeLayers();
         handleMapLoad();
         addPopups();
-        setMapLoaded(true);
+        setIsMapLoaded(true);
       });
     }
 
@@ -314,44 +329,48 @@ export const Map = () => {
     <>
       <div ref={mapContainer} className={c.map}></div>
 
-      <>
-        <div className={c.customNav}>
-          <div
-            onClick={() => map.current?.zoomIn()}
-            className={c.navButton}
-          ></div>
-          <div
-            onClick={() => map.current?.zoomOut()}
-            className={c.navButton}
-          ></div>
-          <div
-            onClick={() => map.current?.resetNorth()}
-            className={c.navButton}
-          ></div>
-        </div>
-
+      <div className={c.customNav}>
         <div
-          className={`${c.profileButton} ${c.generalButton}`}
-          onClick={() => navigate(ROUTES.PROFILE)}
+          onClick={() => map.current?.zoomIn()}
+          className={c.navButton}
         ></div>
         <div
-          className={`${c.infoButton} ${c.generalButton}`}
-          onClick={() => navigate(ROUTES.PROFILE)}
+          onClick={() => map.current?.zoomOut()}
+          className={c.navButton}
         ></div>
-        <div className={`${c.emergencyButton} ${c.generalButton}`}></div>
+        <div
+          onClick={() => map.current?.resetNorth()}
+          className={c.navButton}
+        ></div>
+      </div>
 
-        <button
-          className={c.trackerButton}
-          onClick={isTracking ? stopTracking : startTracking}
-        >
-          {isTracking ? "Stop" : "Start"}
-        </button>
-        <RuleChecker
-          userLocation={userLocation}
-          isTracking={isTracking}
-          mapElements={mapElements}
-        />
-      </>
+      <div
+        className={`${c.profileButton} ${c.generalButton}`}
+        onClick={() => navigate(ROUTES.PROFILE)}
+      ></div>
+      <div
+        className={`${c.infoButton} ${c.generalButton}`}
+        onClick={() => navigate(ROUTES.PROFILE)}
+      ></div>
+      <div
+        className={`${c.emergencyButton} ${c.generalButton}`}
+        onClick={() => {
+          confirm("Confirm to call emergency services");
+        }}
+      ></div>
+
+      <button
+        className={c.trackerButton}
+        onClick={isTracking ? stopTracking : startTracking}
+      >
+        {isTracking ? "Stop" : "Start"}
+      </button>
+
+      <RuleChecker
+        userLocation={userLocation}
+        isTracking={isTracking}
+        mapElements={mapElements}
+      />
     </>
   );
 };

@@ -18,8 +18,7 @@ export class UserService {
     const {
       id,
       email,
-      name,
-      surname,
+
       passwordHash,
       subscriptionPlan,
       subscriptionExpiry,
@@ -27,8 +26,7 @@ export class UserService {
     return {
       id,
       email,
-      name,
-      surname,
+
       passwordHash,
       subscriptionPlan,
       subscriptionExpiry,
@@ -51,7 +49,7 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const { password, email, name, surname } = createUserDto;
+    const { password, email } = createUserDto;
 
     await this.ensureUniqueFields(email);
 
@@ -59,9 +57,9 @@ export class UserService {
     const user = await this.prisma.user.create({
       data: {
         email,
-        name,
-        surname,
         passwordHash,
+        username: 'fmei',
+        phoneNumber: '123456789',
       },
     });
 
@@ -114,9 +112,7 @@ export class UserService {
     });
 
     if (existingUser) {
-      throw new ConflictException(
-        'User with this email already exists',
-      );
+      throw new ConflictException('User with this email already exists');
     }
   }
 }

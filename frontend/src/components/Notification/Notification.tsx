@@ -6,6 +6,7 @@ import closeButton from "../../assets/closeButton.svg";
 type NotificationProps = {
   type: RuleType;
   title: string;
+  distance?: number;
   message: string;
   onClose: () => void;
 };
@@ -13,6 +14,7 @@ type NotificationProps = {
 export const Notification = ({
   type,
   title,
+  distance,
   message,
   onClose,
 }: NotificationProps) => {
@@ -66,9 +68,10 @@ export const Notification = ({
       <div className={c.contentContainer}>
         <div className={`${c.title} ${classes.title}`}>{title}</div>
         <div className={c.message}>{message}</div>
+        {distance && <div className={c.distance}>{distance.toFixed(2)} m</div>}
       </div>
       <div className={c.closeIcon} onClick={onClose}>
-        <img src={closeButton} alt="Close" />
+        <img src={closeButton} alt="close button" />
       </div>
     </div>
   );

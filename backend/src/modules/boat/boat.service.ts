@@ -13,8 +13,7 @@ export class BoatService {
     return {
       id: boat.id,
       userId: boat.userId,
-      name: boat.name,
-      registration: boat.registration,
+ 
       length: boat.length,
       width: boat.width,
       boatType: boat.boatType,

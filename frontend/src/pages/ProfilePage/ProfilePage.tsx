@@ -20,7 +20,7 @@ export const ProfilePage = () => {
       <div>
         <h3>User Information</h3>
         <p>ID: {user.id}</p>
-        <p>Username: {user.username}</p>
+        <p>Username: {user.surname}</p>
         <p>Email: {user.email}</p>
       </div>
       <button onClick={handleLogout}>Logout</button>

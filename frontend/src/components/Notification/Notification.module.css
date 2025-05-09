@@ -71,14 +71,18 @@
 .infoTitle {
   color: rgb(9, 109, 217);
 }
+.distance {
+  font-size: 14px;
+  font-weight: 600;
+}
 
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
+    transform: translateY(-100%);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
   }
 }
