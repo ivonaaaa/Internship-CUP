@@ -9,13 +9,15 @@ import { Boat } from '@prisma/client';
 export class BoatService {
   constructor(private prisma: PrismaService) {}
 
-  private mapToResponseDto(rule: Boat): BoatDto {
+  private mapToResponseDto(boat: Boat): BoatDto {
     return {
-      id: rule.id,
-      userId: rule.userId,
-      length: rule.length,
-      width: rule.width,
-      boatType: rule.boatType,
+      id: boat.id,
+      userId: boat.userId,
+      name: boat.name,
+      registration: boat.registration,
+      length: boat.length,
+      width: boat.width,
+      boatType: boat.boatType,
     };
   }
 
@@ -54,7 +56,11 @@ export class BoatService {
   }
 
   async update(id: number, updateBoatDto: UpdateBoatDto): Promise<BoatDto> {
-    await this.findOne(id);
+    const existingBoat = await this.prisma.boat.findUnique({
+      where: { id },
+    });
+    if (!existingBoat)
+      throw new NotFoundException(`Boat with ID ${id} not found`);
 
     const updatedBoat = await this.prisma.boat.update({
       where: { id },

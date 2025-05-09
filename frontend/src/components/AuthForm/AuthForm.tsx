@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateAuthForm } from "../../utils/AuthFormValidation";
 import styles from "./AuthForm.module.css";
+import { useNavigate } from "react-router-dom";
 
 type AuthFormProps = {
   mode: "login" | "register";
@@ -9,11 +10,12 @@ type AuthFormProps = {
 
 export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   const { login, register } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
-    phoneNumber: "",
+    name: "",
+    surname: "",
     password: "",
     confirmPassword: "",
   });
@@ -87,13 +89,15 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
     try {
       if (isRegisterMode) {
         await register({
-          username: formData.username,
+          name: formData.name,
+          surname: formData.surname,
           email: formData.email,
-          phoneNumber: formData.phoneNumber,
           password: formData.password,
         });
+        navigate("/"); //! ode cu trebat stavit endpoint za bord pa placanje
       } else {
         await login(formData.email, formData.password);
+        navigate("/");
       }
     } catch (err: any) {
       setErrors(getErrorMessage(err));
@@ -112,13 +116,26 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       {!isLogin && (
         <>
           <div className={styles["form-group"]}>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="name">First Name</label>
             <input
               type="text"
-              id="username"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
+              id="name"
+              name="name"
+              placeholder="First Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles["form-group"]}>
+            <label htmlFor="surname">Last Name</label>
+            <input
+              type="text"
+              id="surname"
+              name="surname"
+              placeholder="Last Name"
+              value={formData.surname}
               onChange={handleChange}
               required
             />
@@ -138,23 +155,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           required
         />
       </div>
-
-      {!isLogin && (
-        <>
-          <div className={styles["form-group"]}>
-            <label htmlFor="phoneNumber">Phone Number</label>
-            <input
-              type="text"
-              id="phoneNumber"
-              name="phoneNumber"
-              placeholder="Phone Number (e.g. +12345678901)"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </>
-      )}
 
       <div className={styles["form-group"]}>
         <label htmlFor="password">Password</label>

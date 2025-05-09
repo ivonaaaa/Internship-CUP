@@ -5,7 +5,6 @@ import {
   TransactionStatus,
   RuleType,
   MapElementType,
-  Prisma,
 } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
@@ -22,26 +21,39 @@ async function main() {
   const user1 = await prisma.user.create({
     data: {
       email: 'marko@gmail.com',
-      username: 'markosailorman',
+      name: 'Marko',
+      surname: 'Marinović',
       passwordHash: await bcrypt.hash('password123', 10),
       subscriptionPlan: SubscriptionPlan.FREE_TRIAL,
-      phoneNumber: '+38598123456',
     },
   });
 
   const user2 = await prisma.user.create({
     data: {
-      email: 'ana@gmail.com',
-      username: 'ana_adriatic',
+      email: 'anne@gmail.com',
+      name: 'Anne',
+      surname: 'Smith',
       passwordHash: await bcrypt.hash('securepass456', 10),
       subscriptionPlan: SubscriptionPlan.PAID,
-      phoneNumber: '+38591234567',
+      subscriptionExpiry: new Date('2026-03-15'),
+    },
+  });
+
+  const user3 = await prisma.user.create({
+    data: {
+      email: 'sime@gmail.com',
+      name: 'Šime',
+      surname: 'Šimić',
+      passwordHash: await bcrypt.hash('securepass456', 10),
+      subscriptionPlan: SubscriptionPlan.PAID,
       subscriptionExpiry: new Date('2026-03-15'),
     },
   });
 
   const boat1 = await prisma.boat.create({
     data: {
+      name: 'Mala Sirena',
+      registration: 'HR-1234',
       userId: user1.id,
       length: 6.5,
       width: 2.3,
@@ -51,6 +63,8 @@ async function main() {
 
   const boat2 = await prisma.boat.create({
     data: {
+      name: 'Sea Breeze',
+      registration: 'HR-5678',
       userId: user2.id,
       length: 12.0,
       width: 4.2,
@@ -60,9 +74,22 @@ async function main() {
 
   const boat3 = await prisma.boat.create({
     data: {
+      name: 'Dolphin Explorer',
+      registration: 'HR-9101',
       userId: user2.id,
       length: 4.5,
       width: 1.8,
+      boatType: BoatType.DINGHY,
+    },
+  });
+
+  const boat4 = await prisma.boat.create({
+    data: {
+      name: 'Orca 37',
+      registration: 'HR-4953',
+      userId: user3.id,
+      length: 6.5,
+      width: 2.5,
       boatType: BoatType.DINGHY,
     },
   });

@@ -8,6 +8,12 @@ export class BoatDto {
   @ApiProperty({ example: 1 })
   userId: number;
 
+  @ApiProperty({ example: 'My Boat' })
+  name: string;
+
+  @ApiProperty({ example: 'HR-8523' })
+  registration: string;
+
   @ApiProperty({ example: 10.5 })
   length: number;
 

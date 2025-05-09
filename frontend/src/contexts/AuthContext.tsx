@@ -25,15 +25,18 @@ type AuthContextType = {
 
 interface RegisterData {
   email: string;
-  username: string;
+  name: string;
+  surname: string;
   password: string;
-  phoneNumber: string;
 }
 
 interface TokenPayload {
   sub: number;
   email: string;
-  username: string;
+  name: string;
+  surname: string;
+  subscriptionPlan: string;
+  createdAt: string;
   exp: number;
   iat: number;
 }
@@ -124,7 +127,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser({
         id: payload.sub,
         email: payload.email,
-        username: payload.username,
+        name: payload.name,
+        surname: payload.surname,
       });
 
       setIsLoading(false);

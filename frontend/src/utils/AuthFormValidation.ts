@@ -7,11 +7,6 @@ export const validatePassword = (password: string, minLength = 8): boolean => {
   return password.length >= minLength;
 };
 
-export const validatePhoneNumber = (phoneNumber: string): boolean => {
-  const phoneRegex = /^\+(\d{1,4})\d{7,14}$/;
-  return phoneRegex.test(phoneNumber);
-};
-
 export const validateMatch = (value: string, confirmValue: string): boolean => {
   return value === confirmValue;
 };
@@ -22,9 +17,9 @@ export const validateRequired = (value: string): boolean => {
 
 export const validateAuthForm = (
   formData: {
-    username: string;
     email: string;
-    phoneNumber: string;
+    name: string;
+    surname: string;
     password: string;
     confirmPassword: string;
   },
@@ -39,14 +34,11 @@ export const validateAuthForm = (
     errors.push("Password must be at least 8 characters long.");
 
   if (isRegisterMode) {
-    if (!validateRequired(formData.username))
-      errors.push("Username is required.");
+    if (!validateRequired(formData.name))
+      errors.push("First name is required.");
 
-    if (!validatePhoneNumber(formData.phoneNumber)) {
-      errors.push(
-        "Phone number must start with + followed by country code and 7-14 digits."
-      );
-    }
+    if (!validateRequired(formData.surname))
+      errors.push("Last name is required.");
 
     if (!validateMatch(formData.password, formData.confirmPassword))
       errors.push("Passwords do not match.");

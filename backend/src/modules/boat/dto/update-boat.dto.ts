@@ -6,8 +6,19 @@ import {
 } from '@nestjs/class-validator';
 import { BoatType } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class UpdateBoatDto {
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  registration?: string;
+
   @ApiProperty({ required: false })
   @IsNumber()
   @IsPositive()

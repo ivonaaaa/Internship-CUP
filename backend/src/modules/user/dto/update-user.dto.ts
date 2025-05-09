@@ -21,14 +21,20 @@ export class UpdateUserDto {
   email?: string;
 
   @ApiPropertyOptional({
-    description: 'Username for the user',
-    example: 'john_doe_updated',
+    description: 'First name of the user',
+    example: 'John',
   })
   @IsOptional()
   @IsString()
-  @IsLowercase()
-  @Matches(/^[a-z0-9_]+$/)
-  username?: string;
+  name?: string;
+
+  @ApiPropertyOptional({
+    description: 'Last name of the user',
+    example: 'Doe',
+  })
+  @IsOptional()
+  @IsString()
+  surname?: string;
 
   @ApiPropertyOptional({
     description: 'Password for the user, must be at least 8 characters long',
@@ -38,14 +44,6 @@ export class UpdateUserDto {
   @IsString()
   @MinLength(8)
   password?: string;
-
-  @ApiPropertyOptional({
-    description: 'Phone number of the user',
-    example: '+1234567890',
-  })
-  @IsOptional()
-  @Matches(/^\+(\d{1,4})\d{7,14}$/)
-  phoneNumber?: string;
 
   @ApiPropertyOptional({
     description: 'Subscription plan of the user',
