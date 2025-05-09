@@ -1,4 +1,70 @@
 .map {
-  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
+}
+
+.trackerButton {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  bottom: 20px;
+}
+
+.customNav {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+
+.navButton {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.profileButton {
+  bottom: 20px;
+  right: 20px;
+}
+
+.infoButton {
+  bottom: 20px;
+  left: 20px;
+}
+
+.emergencyButton {
+  top: 20px;
+  left: 20px;
+}
+
+.notificationButton {
+  top: 20px;
+  left: 80px;
+}
+
+.generalButton {
+  position: absolute;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.userLocationMarker {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1da1f2;
+  border: 3px solid white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

@@ -13,7 +13,7 @@ export class CreateRuleDto {
   @ApiProperty({
     description: 'The type of rule',
     enum: RuleType,
-    example: RuleType.ENVIRONMENTAL_PROTECTION,
+    example: RuleType.WARNING,
   })
   @IsEnum(RuleType)
   type: RuleType;

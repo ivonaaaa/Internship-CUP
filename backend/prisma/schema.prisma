@@ -63,9 +63,10 @@ model Rule {
 
 model MapElement {
   id                Int           @id @default(autoincrement())
-  ruleId            Int
+  ruleId            Int?
   name              String
   type              MapElementType
+  objectType ObjectType?
   coordinates       Json          // GeoJSON format (Polygon or Point)
   description       String?
   isActive          Boolean       @default(true)
@@ -75,7 +76,7 @@ model MapElement {
   lineWidth Decimal? @db.Decimal(10, 2)
 
   // Relations
-  rule              Rule          @relation(fields: [ruleId], references: [id])
+  rule              Rule?          @relation(fields: [ruleId], references: [id])
   notifications     Notification[]
 }
 
@@ -113,9 +114,8 @@ enum TransactionStatus {
 
 enum RuleType {
   RESTRICTION
-  SPEED_RESTRICTION
-  ANCHORING_RESTRICTION
-  ENVIRONMENTAL_PROTECTION
+  INFO
+  WARNING
 }
 
 enum MapElementType {
@@ -123,3 +123,10 @@ enum MapElementType {
   POINT
 }
 
+enum ObjectType {
+  ANCHOR
+  LIGHTHOUSE
+  FUEL_DOCK
+  RIDGE
+  HARBOR_MASTER
+}

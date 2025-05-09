@@ -7,7 +7,7 @@ import {
   IsObject,
 } from '@nestjs/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { MapElementType } from '@prisma/client';
+import { MapElementType, ObjectType } from '@prisma/client';
 
 export class UpdateMapElementDto {
   @ApiProperty({
@@ -93,4 +93,11 @@ export class UpdateMapElementDto {
 
   @ApiProperty({ example: 2 })
   lineWidth?: number;
+
+  @ApiProperty({
+    description: 'The type of object the map element is associated with',
+    enum: ObjectType,
+    example: ObjectType.ANCHOR,
+  })
+  objectType?: ObjectType;
 }

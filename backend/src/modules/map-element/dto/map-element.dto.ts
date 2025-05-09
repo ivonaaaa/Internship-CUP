@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MapElementType } from '@prisma/client';
+import { MapElementType, ObjectType } from '@prisma/client';
 import { RuleDto } from 'src/modules/rule/dto/rule.dto';
 
 export class MapElementDto {
@@ -51,4 +51,11 @@ export class MapElementDto {
 
   @ApiProperty({ example: 2 })
   lineWidth?: number;
+
+  @ApiProperty({
+    description: 'The type of object the map element is associated with',
+    enum: ObjectType,
+    example: ObjectType.ANCHOR,
+  })
+  objectType?: ObjectType;
 }

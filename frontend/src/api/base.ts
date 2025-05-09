@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 import { BASE_URL } from "../constants";
 
 export const api = axios.create({
@@ -8,31 +8,31 @@ export const api = axios.create({
   },
 });
 
-api.interceptors.request.use(async (config) => {
-  // const tokenItem = localStorage.getItem("jwt");
-  // if (tokenItem) {
-  // const token = JSON.parse(tokenItem);
-  config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIwLCJlbWFpbCI6Im1hcmtvQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoibWFya29zYWlsb3JtYW4iLCJzdWJzY3JpcHRpb25QbGFuIjoiRlJFRV9UUklBTCIsImlhdCI6MTc0NjYxNjMxMSwiZXhwIjoxNzQ2NzAyNzExfQ.X8-ZVAo3kSO3c5JAvdNRHykTQIV6fyhRTDo0Ku_3gJw`;
-  // }
+api.interceptors.request.use((config) => {
+  try {
+    const tokenItem = localStorage.getItem("access_token");
+    if (tokenItem) {
+      config.headers.Authorization = `Bearer ${tokenItem}`;
+    }
+  } catch {
+    console.log("Failed to parse token from localStorage");
+  }
   return config;
 });
 
-type ErrorResponse = AxiosError & {
-  response: AxiosResponse<{
-    statusCode: number;
-    message: string;
-    error: string;
-  }>;
-};
+interface ApiErrorResponse {
+  statusCode: number;
+  message: string;
+  error: string;
+}
 
 api.interceptors.response.use(
   (response) => response.data,
-
-  (error: ErrorResponse) => {
-    if (error.response) {
-      return Promise.reject(error.response.data.message || error.message);
+  (error: Error) => {
+    if (axios.isAxiosError<ApiErrorResponse>(error)) {
+      const apiError = error.response?.data;
+      return Promise.reject(apiError?.message || error.message);
     }
-
     return Promise.reject("Network error");
   }
 );
