@@ -1,19 +1,33 @@
-export interface Boat {
-  id: number;
-  userId: number;
-  length: number;
-  width: number;
-  boatType?: "MOTORBOAT" | "SAILBOAT" | "JET_SKI" | "YACHT" | "OTHER";
+export enum BoatType {
+  MOTORBOAT = "MOTORBOAT",
+  DINGHY = "DINGHY",
+  YACHT = "YACHT",
 }
 
-export interface CreateBoatDto {
+export type Boat = {
+  id: number;
+  userId: number;
+  name: string;
+  registration: string;
   length: number;
   width: number;
-  boatType?: "MOTORBOAT" | "SAILBOAT" | "JET_SKI" | "YACHT" | "OTHER";
+  boatType?: BoatType;
+};
+
+export interface CreateBoatDto {
+  userId: number;
+  name: string;
+  registration: string;
+  length: number;
+  width: number;
+  boatType?: "MOTORBOAT" | "DINGHY" | "YACHT";
 }
 
 export interface UpdateBoatDto {
+  userId: number;
+  name?: string;
+  registration?: string;
   length?: number;
   width?: number;
-  boatType?: "MOTORBOAT" | "SAILBOAT" | "JET_SKI" | "YACHT" | "OTHER";
+  boatType?: "MOTORBOAT" | "DINGHY" | "YACHT";
 }
