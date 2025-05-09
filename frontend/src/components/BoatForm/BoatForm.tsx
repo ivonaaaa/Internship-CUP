@@ -4,6 +4,7 @@ import { useCreateBoat } from "../../api/boat/useBoatQueries";
 import { BoatType } from "../../types/boats";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateBoatForm } from "../../utils/BoatFormValidation";
+import c from "./BoatForm.module.css";
 
 export const BoatForm: React.FC = () => {
   const navigate = useNavigate();
@@ -81,10 +82,10 @@ export const BoatForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={c.boatForm}>
       <h2>Boat information</h2>
 
-      <div>
+      <div className={c.formGroup}>
         <label htmlFor="name">Boat Name</label>
         <input
           type="text"
@@ -97,7 +98,7 @@ export const BoatForm: React.FC = () => {
         />
       </div>
 
-      <div>
+      <div className={c.formGroup}>
         <select
           id="boatType"
           name="boatType"
@@ -112,35 +113,43 @@ export const BoatForm: React.FC = () => {
         </select>
       </div>
 
-      <div>
-        <label htmlFor="length">Length</label>
-        <input
-          type="number"
-          step="0.01"
-          id="length"
-          name="length"
-          placeholder="Enter length in meters"
-          value={formData.length}
-          onChange={handleChange}
-          required
-        />
+      <div className={c.rowGroup}>
+        <div className={c.mInputGroup}>
+          <label htmlFor="length">Length</label>
+          <div className={c.inputWithPrefix}>
+            <span>m</span>
+            <input
+              type="number"
+              step="0.1"
+              id="length"
+              name="length"
+              placeholder="10"
+              value={formData.length}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className={c.mInputGroup}>
+          <label htmlFor="width">Width</label>
+          <div className={c.inputWithPrefix}>
+            <span>m</span>
+            <input
+              type="number"
+              step="0.1"
+              id="width"
+              name="width"
+              placeholder="3"
+              value={formData.width}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="width">Width</label>
-        <input
-          type="number"
-          step="0.01"
-          id="width"
-          name="width"
-          placeholder="Enter width in meters"
-          value={formData.width}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div>
+      <div className={c.formGroup}>
         <label htmlFor="registration">Registration</label>
         <input
           type="text"
@@ -154,14 +163,16 @@ export const BoatForm: React.FC = () => {
       </div>
 
       {errors.length > 0 && (
-        <ul>
+        <ul className={c.errorList}>
           {errors.map((msg, index) => (
-            <li key={index}>{msg}</li>
+            <li key={index} className={c.error}>
+              {msg}
+            </li>
           ))}
         </ul>
       )}
 
-      <button type="submit" disabled={isPending}>
+      <button type="submit" className={c.submitButton} disabled={isPending}>
         {isPending ? "Processing..." : "Next"}
       </button>
     </form>

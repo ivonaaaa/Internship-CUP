@@ -1,0 +1,98 @@
+.boatForm {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.boatForm h2 {
+  margin-top: 0;
+  margin-bottom: 3rem;
+  color: var(--color-navy);
+  font-size: 2rem;
+  text-align: center;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  outline: none;
+}
+
+.errorList {
+  background-color: #fff1f0;
+  border: 1px solid var(--color-red);
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin: 16px 0;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.error {
+  color: var(--color-red);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.submitButton {
+  display: block;
+  width: 150px;
+  margin: 1rem auto 0 auto;
+  margin-top: 30px;
+}
+
+.rowGroup {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.mInputGroup {
+  width: 40%;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.inputWithPrefix {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.inputWithPrefix span {
+  padding: 0.75rem;
+  background-color: #eee;
+  border-right: 1px solid #ddd;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  color: #333;
+}
+
+.inputWithPrefix input {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background: transparent;
+}
