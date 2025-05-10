@@ -350,7 +350,7 @@ export const Map = () => {
       ></div>
       <div
         className={`${c.infoButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.PROFILE)}
+        onClick={() => navigate(ROUTES.INFO)}
       ></div>
       <div
         className={`${c.emergencyButton} ${c.generalButton}`}

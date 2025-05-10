@@ -6,6 +6,7 @@ import { RegisterPage } from "../pages/RegisterPage/RegisterPage";
 import { ProfilePage } from "../pages/ProfilePage/ProfilePage";
 import { ProtectedRoute } from "../hoc/ProtectedRoute";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import { InfoPage } from "../pages/InfoPage";
 
 export const AppRouter = () => {
   return (
@@ -19,6 +20,7 @@ export const AppRouter = () => {
         <Route element={<ProtectedRoute />}>
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+          <Route path={ROUTES.INFO} element={<InfoPage />} />
         </Route>
 
         {/* Fallback route */}
