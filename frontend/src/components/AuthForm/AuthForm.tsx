@@ -94,7 +94,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           email: formData.email,
           password: formData.password,
         });
-        navigate("/"); //! ode cu trebat stavit endpoint za bord pa placanje
+        navigate("/register-boat");
       } else {
         await login(formData.email, formData.password);
         navigate("/");

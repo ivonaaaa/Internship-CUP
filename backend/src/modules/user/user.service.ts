@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -67,15 +68,34 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
+    // ove dvi linije bi trebale biti bolje
     await this.ensureUserExists(id);
+    const existingUser = await this.prisma.user.findUnique({ where: { id } });
 
-    const { email, name, surname } = updateUserDto;
+    const { email, password, ...restOfDto } = updateUserDto;
 
-    await this.ensureUniqueFields(email, id);
+    if (email) await this.ensureUniqueFields(email, id);
+
+    const updateData: any = { ...restOfDto };
+    if (email) updateData.email = email;
+
+    if (password) {
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        existingUser.passwordHash,
+      );
+
+      if (!isPasswordValid)
+        throw new BadRequestException('Current password is incorrect');
+
+      updateData.passwordHash = await bcrypt.hash(password, 10);
+    }
+
+    delete updateData.password;
 
     const user = await this.prisma.user.update({
       where: { id },
-      data: updateUserDto,
+      data: updateData,
     });
 
     return this.mapToResponseDto(user);
@@ -111,8 +131,7 @@ export class UserService {
       },
     });
 
-    if (existingUser) {
+    if (existingUser)
       throw new ConflictException('User with this email already exists');
-    }
   }
 }
