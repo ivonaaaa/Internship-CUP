@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./NotFoundPage.module.css";
 
-const NotFoundPage = () => {
+export const NotFoundPage = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -16,5 +16,3 @@ const NotFoundPage = () => {
     </div>
   );
 };
-
-export default NotFoundPage;
