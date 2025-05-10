@@ -1,20 +1,30 @@
 .infoPage {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100dvh;
-  padding: 20px;
+  padding: 60px 16px;
+  gap: 68px;
+  font-family: var(--primary-font);
+  background-color: var(--color-cloud);
+  position: relative;
 }
 
-.infoPageSection {
+.infoPageHeader {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: -2px;
+  text-align: center;
+  color: var(--color-ocean);
+}
+
+.infoPageContent {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  max-width: 800px;
-  height: 100px;
-  margin: 20px auto;
-  border: 2px solid #000000;
+  gap: 24px;
+}
+.homeButton {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
 }
