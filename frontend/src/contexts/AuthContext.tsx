@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import { User } from "../types";
+import { useUser } from "../api/user/useUserQueries";
 
 export type AuthError = {
   status: number;
@@ -54,8 +55,15 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  
+  const { 
+    data: userData, 
+    isLoading: isLoadingUser 
+  } = useUser(userId || 0);
+  
+  const isLoading = isLoadingAuth || (userId !== null && isLoadingUser);
 
   const getToken = (): string | null => {
     return localStorage.getItem("access_token");
@@ -97,15 +105,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = useCallback(() => {
     clearToken();
-    setUser(null);
+    setUserId(null);
   }, []);
 
-  const validateToken = useCallback(async () => {
+  const validateToken = useCallback(() => {
     const token = getToken();
 
     if (!token) {
-      setUser(null);
-      setIsLoading(false);
+      setUserId(null);
+      setIsLoadingAuth(false);
       return false;
     }
 
@@ -114,28 +122,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (!payload) {
         logout();
-        setIsLoading(false);
+        setIsLoadingAuth(false);
         return false;
       }
 
       if (isTokenExpired(payload)) {
         logout();
-        setIsLoading(false);
+        setIsLoadingAuth(false);
         return false;
       }
 
-      setUser({
-        id: payload.sub,
-        email: payload.email,
-        name: payload.name,
-        surname: payload.surname,
-      });
-
-      setIsLoading(false);
+      setUserId(payload.sub);
+      setIsLoadingAuth(false);
       return true;
     } catch (error) {
       logout();
-      setIsLoading(false);
+      setIsLoadingAuth(false);
       return false;
     }
   }, [logout]);
@@ -145,7 +147,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       validateToken();
-    } else setIsLoading(false);
+    } else setIsLoadingAuth(false);
   }, [validateToken]);
 
   useEffect(() => {
@@ -155,7 +157,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (error.response?.status === 401) {
           const errorMessage = error.response?.data?.message;
           const isTokenError = errorMessage === "Invalid token.";
-          if (isTokenError && user) logout();
+          if (isTokenError && userId) logout();
         }
         return Promise.reject(error);
       }
@@ -164,10 +166,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => {
       axios.interceptors.response.eject(interceptor);
     };
-  }, [user, logout]);
+  }, [userId, logout]);
 
   useEffect(() => {
-    if (!user) return;
+    if (!userId) return;
 
     const checkTokenExpiration = () => {
       const token = getToken();
@@ -182,7 +184,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const intervalId = setInterval(checkTokenExpiration, 60000);
 
     return () => clearInterval(intervalId);
-  }, [user, logout]);
+  }, [userId, logout]);
 
   const handleApiError = (error: any): never => {
     if (error.response?.status === 500) {
@@ -203,7 +205,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const { access_token } = response.data;
       setToken(access_token);
 
-      await validateToken();
+      validateToken();
     } catch (error) {
       handleApiError(error);
     }
@@ -224,7 +226,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user,
+        user: userData || null,
         isLoading,
         login,
         register,

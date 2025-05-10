@@ -3,5 +3,14 @@ export type User = {
   email: string;
   name: string;
   surname: string;
-  subscriptionExpiry?: Date;
+  subscriptionPlan: "FREE_TRIAL" | "PAID";
+  subscriptionExpiry: Date;
 };
+
+export interface UpdateUserDto {
+  name?: string;
+  surname?: string;
+  email?: string;
+  currentPassword?: string;
+  newPassword?: string;
+}

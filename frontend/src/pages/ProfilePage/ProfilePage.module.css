@@ -1,0 +1,206 @@
+.profilePage {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-primary);
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--color-ocean);
+  padding: 0;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.profileHeader h2 {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 20px;
+  margin: 0;
+}
+
+.profileContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  position: relative;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(138, 92, 246, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #8a5cf6;
+  font-weight: 600;
+}
+
+.userDetails {
+  flex-grow: 1;
+}
+
+.userDetails h3 {
+  font-size: 18px;
+  margin: 0 0 4px 0;
+}
+
+.userDetails p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.editButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--color-ocean);
+  font-size: 14px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.section {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  margin: 0 0 16px 0;
+  color: #555;
+}
+
+.boatList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.boatItem {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.boatNumber {
+  width: 24px;
+  height: 24px;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-right: 12px;
+}
+
+.boatName {
+  flex-grow: 1;
+}
+
+.editBoatButton {
+  background: none;
+  border: none;
+  color: var(--color-ocean);
+  font-size: 14px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #666;
+  padding: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.addButton span {
+  font-size: 18px;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 12px;
+}
+
+.subscriptionDetails {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.subscriptionRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.subscriptionRow:last-child {
+  border-bottom: none;
+}
+
+.price {
+  font-weight: 500;
+  text-align: right;
+}
+
+.pricePeriod {
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+}
+
+.logoutButton {
+  background-color: #f8f9fa;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

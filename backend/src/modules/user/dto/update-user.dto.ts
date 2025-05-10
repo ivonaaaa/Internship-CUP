@@ -46,6 +46,14 @@ export class UpdateUserDto {
   password?: string;
 
   @ApiPropertyOptional({
+    description: 'Current password (required when changing password)',
+    example: 'oldPassword123',
+  })
+  @IsOptional()
+  @IsString()
+  currentPassword?: string;
+
+  @ApiPropertyOptional({
     description: 'Subscription plan of the user',
     enum: SubscriptionPlan,
     example: SubscriptionPlan.PAID,
