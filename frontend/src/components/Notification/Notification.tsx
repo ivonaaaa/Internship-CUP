@@ -1,6 +1,6 @@
 import c from "./notification.module.css";
 import { RuleType } from "../../types";
-import closeButton from "../../assets/closeButton.svg";
+import closeButton from "../../assets/x.svg";
 
 type NotificationProps = {
   type: RuleType;

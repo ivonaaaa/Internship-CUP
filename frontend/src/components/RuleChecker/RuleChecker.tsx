@@ -92,7 +92,7 @@ export const RuleChecker = ({
 
         const distanceInMeters = distance * 1000;
 
-        if (distanceInMeters < 100) {
+        if (distanceInMeters < 1000000) {
           showNotification(
             element.rule?.type || "INFO",
             element.properties.name,
