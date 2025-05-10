@@ -11,6 +11,14 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants";
 import { RuleChecker } from "../RuleChecker";
 
+import {
+  infoButton,
+  sosButton,
+  plusButton,
+  minusButton,
+  profileButton,
+  compassButton,
+} from "./buttons";
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -330,41 +338,47 @@ export const Map = () => {
       <div ref={mapContainer} className={c.map}></div>
 
       <div className={c.customNav}>
-        <div
+        <img
+          src={plusButton}
           onClick={() => map.current?.zoomIn()}
           className={c.navButton}
-        ></div>
-        <div
+        ></img>
+        <img
+          src={minusButton}
           onClick={() => map.current?.zoomOut()}
           className={c.navButton}
-        ></div>
-        <div
+        ></img>
+        <img
+          src={compassButton}
           onClick={() => map.current?.resetNorth()}
           className={c.navButton}
-        ></div>
+        ></img>
       </div>
 
-      <div
+      <img
+        src={profileButton}
         className={`${c.profileButton} ${c.generalButton}`}
         onClick={() => navigate(ROUTES.PROFILE)}
-      ></div>
-      <div
+      ></img>
+      <img
+        src={infoButton}
         className={`${c.infoButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.PROFILE)}
-      ></div>
-      <div
+        onClick={() => navigate(ROUTES.INFO)}
+      ></img>
+      <img
+        src={sosButton}
         className={`${c.emergencyButton} ${c.generalButton}`}
         onClick={() => {
           confirm("Confirm to call emergency services");
         }}
-      ></div>
+      ></img>
 
-      <button
-        className={c.trackerButton}
+      <div
+        className={`${c.trackerButton} ${!isTracking ? `${c.trackerButtonStart}` : `${c.trackerButtonStop}`}`}
         onClick={isTracking ? stopTracking : startTracking}
       >
         {isTracking ? "Stop" : "Start"}
-      </button>
+      </div>
 
       <RuleChecker
         userLocation={userLocation}

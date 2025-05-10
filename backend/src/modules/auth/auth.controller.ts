@@ -23,17 +23,17 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  @Post('register')
-  @ApiOperation({ summary: 'Register a new user' })
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: 'User successfully registered',
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Bad request, invalid data',
-  })
-  register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
-  }
+  // @Post('register')
+  // @ApiOperation({ summary: 'Register a new user' })
+  // @ApiResponse({
+  //   status: HttpStatus.CREATED,
+  //   description: 'User successfully registered',
+  // })
+  // @ApiResponse({
+  //   status: HttpStatus.BAD_REQUEST,
+  //   description: 'Bad request, invalid data',
+  // })
+  // register(@Body() registerDto: RegisterDto) {
+  //   return this.authService.register(registerDto);
+  // }
 }

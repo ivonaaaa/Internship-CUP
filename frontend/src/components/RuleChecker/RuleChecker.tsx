@@ -67,9 +67,7 @@ export const RuleChecker = ({
 
     mapElements?.forEach((element: MapElement) => {
       if (element.geometry.type === "ZONE") {
-        const zone = turf.polygon(
-          element.geometry.coordinates as [number[][]]
-        );
+        const zone = turf.polygon(element.geometry.coordinates as [number[][]]);
         const distance = turf.pointToPolygonDistance(userPoint, zone, {
           units: "kilometers",
         });

@@ -48,23 +48,23 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const { password, email } = createUserDto;
+  // async create(createUserDto: CreateUserDto): Promise<UserDto> {
+  //   const { password, email } = createUserDto;
 
-    await this.ensureUniqueFields(email);
+  //   await this.ensureUniqueFields(email);
 
-    const passwordHash = await bcrypt.hash(password, 10);
-    const user = await this.prisma.user.create({
-      data: {
-        email,
-        passwordHash,
-        username: 'fmei',
-        phoneNumber: '123456789',
-      },
-    });
+  //   const passwordHash = await bcrypt.hash(password, 10);
+  //   const user = await this.prisma.user.create({
+  //     data: {
+  //       email,
+  //       passwordHash,
+  //       username: 'fmei',
+  //       phoneNumber: '123456789',
+  //     },
+  //   });
 
-    return this.mapToResponseDto(user);
-  }
+  //   return this.mapToResponseDto(user);
+  // }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
     await this.ensureUserExists(id);

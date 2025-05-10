@@ -8,6 +8,7 @@
   margin-bottom: 8px;
   animation: slideIn 0.3s ease-out;
   font-family: var(--font-primary);
+  gap: 8px;
 }
 
 .iconContainer {
@@ -35,7 +36,6 @@
 
 .restriction {
   background-color: rgb(255, 241, 240);
-  border-left: 4px solid rgb(255, 77, 79);
 }
 
 .restrictionIcon {
@@ -48,7 +48,6 @@
 
 .warning {
   background-color: rgb(255, 251, 230);
-  border-left: 4px solid rgb(250, 173, 20);
 }
 
 .warningIcon {
@@ -61,7 +60,6 @@
 
 .info {
   background-color: rgb(230, 247, 255);
-  border-left: 4px solid rgb(24, 144, 255);
 }
 
 .infoIcon {
@@ -72,7 +70,7 @@
   color: rgb(9, 109, 217);
 }
 .distance {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
 }
 
