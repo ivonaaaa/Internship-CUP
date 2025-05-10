@@ -7,6 +7,7 @@ import { ProfilePage } from "../pages/ProfilePage/ProfilePage";
 import { ProtectedRoute } from "../hoc/ProtectedRoute";
 import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
 import { RegisterBoatPage } from "../pages/RegisterPages/RegisterBoatPage";
+import { SubscriptionPage } from "../pages/RegisterPages/SubscriptionPage";
 
 export const AppRouter = () => {
   return (
@@ -19,6 +20,10 @@ export const AppRouter = () => {
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route path={ROUTES.REGISTERBOAT} element={<RegisterBoatPage />} />
+          <Route
+            path={ROUTES.REGISTERSUBSCRIPTION}
+            element={<SubscriptionPage />}
+          />
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         </Route>

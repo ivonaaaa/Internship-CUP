@@ -65,7 +65,7 @@ export const BoatForm: React.FC = () => {
 
       createBoat(boatData, {
         onSuccess: () => {
-          navigate("/"); //! ode cu stavit za na placanje da ide
+          navigate("/register-subscription");
         },
         onError: (error: any) => {
           const errorMessage =
