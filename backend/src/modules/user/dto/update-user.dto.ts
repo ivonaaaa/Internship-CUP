@@ -6,7 +6,6 @@ import {
   IsString,
   Matches,
   MinLength,
-  IsLowercase,
 } from '@nestjs/class-validator';
 import { SubscriptionPlan } from '@prisma/client';
 
@@ -44,14 +43,6 @@ export class UpdateUserDto {
   @IsString()
   @MinLength(8)
   password?: string;
-
-  @ApiPropertyOptional({
-    description: 'Current password (required when changing password)',
-    example: 'oldPassword123',
-  })
-  @IsOptional()
-  @IsString()
-  currentPassword?: string;
 
   @ApiPropertyOptional({
     description: 'Subscription plan of the user',

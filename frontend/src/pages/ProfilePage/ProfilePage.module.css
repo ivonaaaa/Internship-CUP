@@ -1,137 +1,128 @@
 .profilePage {
-  max-width: 600px;
+  max-width: 425px;
+  width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2rem 1rem;
   font-family: var(--font-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .profileHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
   position: relative;
-}
-
-.backButton {
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: var(--color-ocean);
-  padding: 0;
-  margin-right: 16px;
-  cursor: pointer;
-}
-
-.profileHeader h2 {
-  flex-grow: 1;
-  text-align: center;
-  font-size: 20px;
-  margin: 0;
 }
 
 .profileContent {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 2rem;
 }
 
 .userInfo {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background-color: #f8f9fa;
-  border-radius: 12px;
+  gap: 0.5rem;
+  padding: 1rem;
   position: relative;
 }
 
 .avatar {
-  width: 80px;
-  height: 80px;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
-  background-color: rgba(138, 92, 246, 0.2);
+  background-color: #eaeff5;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  color: #8a5cf6;
-  font-weight: 600;
+  font-size: 0;
+  color: #1e3a5f;
+  margin-bottom: 0.5rem;
+}
+
+.avatar::before {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231E3A5F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .userDetails {
-  flex-grow: 1;
+  text-align: center;
 }
 
 .userDetails h3 {
-  font-size: 18px;
-  margin: 0 0 4px 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: #1e3a5f;
 }
 
 .userDetails p {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #666;
   margin: 0;
 }
 
 .editButton {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 1rem;
+  right: 1rem;
   background: none;
   border: none;
-  color: var(--color-ocean);
-  font-size: 14px;
+  color: #1e3a5f;
+  font-size: 0.875rem;
   padding: 0;
   cursor: pointer;
 }
 
-.section {
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  padding: 16px;
-}
-
-.sectionTitle {
-  font-size: 16px;
-  margin: 0 0 16px 0;
-  color: #555;
-}
-
-.boatList {
+.boatListContainer {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.5rem;
 }
 
 .boatItem {
   display: flex;
   align-items: center;
-  padding: 12px;
-  background-color: white;
-  border-radius: 8px;
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
 }
 
 .boatNumber {
-  width: 24px;
-  height: 24px;
-  background-color: #f0f0f0;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #eaeff5;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  margin-right: 12px;
+  font-size: 0.875rem;
+  color: #1e3a5f;
+  margin-right: 0.75rem;
 }
 
 .boatName {
   flex-grow: 1;
+  font-size: 0.875rem;
+  color: #333;
 }
 
 .editBoatButton {
   background: none;
   border: none;
-  color: var(--color-ocean);
-  font-size: 14px;
+  color: #1e3a5f;
+  font-size: 0.875rem;
   padding: 0;
   cursor: pointer;
 }
@@ -139,63 +130,73 @@
 .addButton {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   background: none;
   border: none;
   color: #666;
-  padding: 8px;
-  font-size: 14px;
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
   cursor: pointer;
 }
 
-.addButton span {
-  font-size: 18px;
+.plusIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #eaeff5;
+  border-radius: 50%;
+  color: #1e3a5f;
+  font-size: 1.125rem;
 }
 
-.emptyMessage {
-  text-align: center;
-  color: #888;
-  font-style: italic;
-  padding: 12px;
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 0.75rem 0;
 }
 
-.subscriptionDetails {
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
+.subscriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .subscriptionRow {
   display: flex;
   justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid #f0f0f0;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #333;
 }
 
-.subscriptionRow:last-child {
-  border-bottom: none;
+.priceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .price {
   font-weight: 500;
-  text-align: right;
 }
 
 .pricePeriod {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #888;
-  text-align: right;
 }
 
 .logoutButton {
-  background-color: #f8f9fa;
-  color: #333;
+  background: none;
   border: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 16px;
+  color: #333;
+  font-size: 1rem;
+  padding: 1rem 0;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
+  margin-top: 1rem;
 }
 
 .loadingContainer {

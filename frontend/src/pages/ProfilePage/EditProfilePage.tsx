@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useUpdateUser } from "../../api/user/useUserQueries";
+import { validateProfileForm } from "../../utils/ProfileValidation";
 import styles from "./EditProfilePage.module.css";
 
 export const EditProfilePage = () => {
@@ -39,42 +40,10 @@ export const EditProfilePage = () => {
     setErrors([]);
   };
 
-  const validateForm = () => {
-    const newErrors: string[] = [];
-
-    if (!formData.name.trim()) {
-      newErrors.push("Name is required");
-    }
-
-    if (!formData.surname.trim()) {
-      newErrors.push("Surname is required");
-    }
-
-    if (showPasswordChange) {
-      if (!formData.currentPassword) {
-        newErrors.push("Current password is required");
-      }
-
-      if (!formData.newPassword) {
-        newErrors.push("New password is required");
-      }
-
-      if (formData.newPassword !== formData.confirmPassword) {
-        newErrors.push("Passwords don't match");
-      }
-
-      if (formData.newPassword && formData.newPassword.length < 8) {
-        newErrors.push("Password must be at least 8 characters");
-      }
-    }
-
-    return newErrors;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const validationErrors = validateForm();
+    const validationErrors = validateProfileForm(formData, showPasswordChange);
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
       return;
@@ -151,16 +120,16 @@ export const EditProfilePage = () => {
             value="••••••••••"
             disabled
             className={styles.passwordField}
+            readOnly
           />
+          <button
+            type="button"
+            className={styles.changePasswordButton}
+            onClick={() => setShowPasswordChange(!showPasswordChange)}
+          >
+            {showPasswordChange ? "Cancel password change" : "Change password"}
+          </button>
         </div>
-
-        <button
-          type="button"
-          className={styles.editPasswordButton}
-          onClick={() => setShowPasswordChange(!showPasswordChange)}
-        >
-          {showPasswordChange ? "Cancel password change" : "Edit password"}
-        </button>
 
         {showPasswordChange && (
           <>
@@ -212,15 +181,13 @@ export const EditProfilePage = () => {
           </ul>
         )}
 
-        <div className={styles.buttonGroup}>
-          <button
-            type="submit"
-            className={styles.confirmButton}
-            disabled={updateUser.isPending}
-          >
-            {updateUser.isPending ? "Updating..." : "Confirm"}
-          </button>
-        </div>
+        <button
+          type="submit"
+          className={styles.confirmButton}
+          disabled={updateUser.isPending}
+        >
+          {updateUser.isPending ? "Updating..." : "Confirm"}
+        </button>
       </form>
     </div>
   );

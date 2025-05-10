@@ -74,36 +74,26 @@ export class UserService {
     await this.ensureUserExists(id);
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
 
-    const { email, password, currentPassword, ...restOfDto } = updateUserDto;
+    const { email, password, ...restOfDto } = updateUserDto;
 
-    if (email) {
-      await this.ensureUniqueFields(email, id);
-    }
+    if (email) await this.ensureUniqueFields(email, id);
 
     const updateData: any = { ...restOfDto };
     if (email) updateData.email = email;
 
     if (password) {
-      if (!currentPassword) {
-        throw new BadRequestException(
-          'Current password is required to update password',
-        );
-      }
-
       const isPasswordValid = await bcrypt.compare(
-        currentPassword,
+        password,
         existingUser.passwordHash,
       );
 
-      if (!isPasswordValid) {
+      if (!isPasswordValid)
         throw new BadRequestException('Current password is incorrect');
-      }
 
       updateData.passwordHash = await bcrypt.hash(password, 10);
     }
 
     delete updateData.password;
-    delete updateData.currentPassword;
 
     const user = await this.prisma.user.update({
       where: { id },
@@ -143,8 +133,7 @@ export class UserService {
       },
     });
 
-    if (existingUser) {
+    if (existingUser)
       throw new ConflictException('User with this email already exists');
-    }
   }
 }

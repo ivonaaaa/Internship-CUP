@@ -13,4 +13,5 @@ export interface UpdateUserDto {
   email?: string;
   currentPassword?: string;
   newPassword?: string;
+  subscriptionPlan?: "FREE_TRIAL" | "PAID";
 }

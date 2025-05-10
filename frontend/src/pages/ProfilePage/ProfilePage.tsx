@@ -24,9 +24,10 @@ export const ProfilePage = () => {
   return (
     <div className={styles.profilePage}>
       <div className={styles.profileHeader}>
-        <h2>Profile</h2>
+        <button className={styles.editButton} onClick={handleEditProfile}>
+          Edit profile
+        </button>
       </div>
-
       <div className={styles.profileContent}>
         <div className={styles.userInfo}>
           <div className={styles.avatar}>
@@ -39,53 +40,53 @@ export const ProfilePage = () => {
               {user.name} {user.surname}
             </h3>
             <p>{user.email}</p>
-            <button className={styles.editButton} onClick={handleEditProfile}>
-              Edit
-            </button>
           </div>
         </div>
 
-        <div className={styles.section}>
-          <h4 className={styles.sectionTitle}>Boats</h4>
-          <div className={styles.boatList}>
-            {boatsLoading ? (
-              <p>Loading boats...</p>
-            ) : boats && boats.length > 0 ? (
-              boats.map((boat, index) => (
-                <div key={boat.id} className={styles.boatItem}>
-                  <div className={styles.boatNumber}>{index + 1}</div>
-                  <div className={styles.boatName}>
-                    {boat.name || `Boat ${index + 1}`}
-                  </div>
-                  <button className={styles.editBoatButton}>Edit</button>
+        <div className={styles.boatListContainer}>
+          {boatsLoading ? (
+            <p>Loading boats...</p>
+          ) : boats && boats.length > 0 ? (
+            boats.map((boat, index) => (
+              <div key={boat.id} className={styles.boatItem}>
+                <div className={styles.boatNumber}>{index + 1}</div>
+                <div className={styles.boatName}>
+                  {boat.name || `Boat ${index + 1}`}
                 </div>
-              ))
-            ) : (
-              <p className={styles.emptyMessage}>No boats added yet</p>
-            )}
-            <button className={styles.addButton}>
-              <span>+</span> Add boat
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <h4 className={styles.sectionTitle}>Subscription plan</h4>
-          <div className={styles.subscriptionDetails}>
-            <div className={styles.subscriptionRow}>
-              <span>Duration</span>
-              <span>
-                {user.subscriptionExpiry ? new Date(user.subscriptionExpiry).toLocaleDateString() : 'No expiry date'}
-              </span>
-            </div>
-            <div className={styles.subscriptionRow}>
-              <span>Price</span>
-              <div>
-                <div className={styles.price}>
-                  {user.subscriptionPlan === "PAID" ? "9.99" : "0.00"}€
-                </div>
-                <div className={styles.pricePeriod}>Price per month</div>
+                <button
+                  className={styles.editBoatButton}
+                  onClick={() => console.log("Edit boat", boat.id)}
+                >
+                  Edit
+                </button>
               </div>
+            ))
+          ) : null}
+          <button
+            className={styles.addButton}
+            onClick={() => console.log("Add boat")}
+          >
+            <span className={styles.plusIcon}>+</span> Add boat
+          </button>
+        </div>
+
+        <div className={styles.subscriptionContainer}>
+          <h3 className={styles.sectionTitle}>Subscription plan</h3>
+          <div className={styles.subscriptionRow}>
+            <span>Duration</span>
+            <span>
+              {user.subscriptionExpiry
+                ? new Date(user.subscriptionExpiry).toLocaleDateString()
+                : "No expiry date"}
+            </span>
+          </div>
+          <div className={styles.subscriptionRow}>
+            <span>Price EUR</span>
+            <div className={styles.priceContainer}>
+              <span className={styles.price}>
+                {user.subscriptionPlan === "PAID" ? "9.99" : "0.00"}€
+              </span>
+              <span className={styles.pricePeriod}>per month</span>
             </div>
           </div>
         </div>
