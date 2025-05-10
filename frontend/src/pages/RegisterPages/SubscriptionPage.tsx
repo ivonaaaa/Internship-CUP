@@ -14,8 +14,8 @@ export const SubscriptionPage: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const planOptions: PlanOption[] = [
-    { id: "weekly", period: "Weekly", price: 25.0 },
-    { id: "yearly", period: "Yearly", price: 49.0 },
+    { id: "weekly", period: "7 days", price: 25.0 },
+    { id: "yearly", period: "12 months", price: 49.0 },
   ];
 
   const handlePlanSelect = (planId: string) => {
@@ -31,7 +31,7 @@ export const SubscriptionPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.headline}>Choose Your Plan</h1>
+      <h1 className={styles.headline}>Choose your plan</h1>
       <p className={styles.trialText}>3 day free trial!</p>
 
       <div className={styles.plansContainer}>

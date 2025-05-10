@@ -31,12 +31,14 @@ export const PlanButton: React.FC<PlanButtonProps> = ({
             cx="12"
             cy="12"
             r="10"
-            fill={isSelected ? "#4CAF50" : "#e0e0e0"}
+            fill={isSelected ? "#000000" : "#e0e0e0"}
           />
           {isSelected && (
             <path
               d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
               fill="white"
+              transform="scale(0.6)"
+              style={{ transformOrigin: "center" }}
             />
           )}
         </svg>
