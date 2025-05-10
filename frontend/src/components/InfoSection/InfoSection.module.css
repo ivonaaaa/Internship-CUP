@@ -1,0 +1,51 @@
+.infoSectionBox {
+  border: 1px solid #d5d7da;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.infoSectionBox:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.infoSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoSectionHeader h1 {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0;
+}
+
+.arrow {
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+.contentWrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.3s ease;
+  opacity: 0;
+}
+
+.open {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.content {
+  margin-top: 24px;
+  font-size: 16px;
+  color: #717680;
+  line-height: 1.5;
+}
