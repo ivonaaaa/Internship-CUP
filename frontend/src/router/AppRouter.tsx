@@ -9,6 +9,7 @@ import { EditProfilePage } from "../pages/ProfilePage/EditProfilePage";
 import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
 import { RegisterBoatPage } from "../pages/RegisterPages/RegisterBoatPage";
 import { SubscriptionPage } from "../pages/RegisterPages/SubscriptionPage";
+import { InfoPage } from "../pages/InfoPage";
 
 export const AppRouter = () => {
   return (
@@ -28,6 +29,7 @@ export const AppRouter = () => {
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
           <Route path={ROUTES.PROFILE_EDIT} element={<EditProfilePage />} />
+          <Route path={ROUTES.INFO} element={<InfoPage />} />
         </Route>
 
         {/* Fallback route */}
