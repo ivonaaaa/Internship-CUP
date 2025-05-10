@@ -21,6 +21,22 @@ export class CreateUserDto {
   email: string;
 
   @ApiProperty({
+    description: 'First name of the user',
+    example: 'John',
+  })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty({
+    description: 'Last name of the user',
+    example: 'Doe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  surname: string;
+
+  @ApiProperty({
     description: 'Password for the user, must be at least 8 characters long',
     example: 'password123',
   })

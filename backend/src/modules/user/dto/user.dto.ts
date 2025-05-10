@@ -8,6 +8,12 @@ export class UserDto {
   @ApiProperty({ example: 'user@example.com' })
   email: string;
 
+  @ApiProperty({ example: 'John' })
+  name: string;
+
+  @ApiProperty({ example: 'Doe' })
+  surname: string;
+
   @Exclude()
   passwordHash: string;
 
