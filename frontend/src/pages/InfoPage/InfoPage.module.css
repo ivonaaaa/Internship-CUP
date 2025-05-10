@@ -1,0 +1,30 @@
+.infoPage {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: 60px 16px;
+  gap: 68px;
+  font-family: var(--primary-font);
+  background-color: var(--color-cloud);
+  position: relative;
+}
+
+.infoPageHeader {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: -2px;
+  text-align: center;
+  color: var(--color-ocean);
+}
+
+.infoPageContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.homeButton {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}

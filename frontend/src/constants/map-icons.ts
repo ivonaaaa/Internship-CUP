@@ -1,8 +1,8 @@
-import anchorIcon from "../assets/sidriste.png";
-import lighthouseIcon from "../assets/svjetionik.png";
-import fuelDockIcon from "../assets/pumpa.png";
-import ridgeIcon from "../assets/greben.png";
-import harborMaster from "../assets/lucka_kapetanija.png";
+import anchorIcon from "../assets/anchor.png";
+import lighthouseIcon from "../assets/lighthouse.png";
+import fuelDockIcon from "../assets/petrol.png";
+import ridgeIcon from "../assets/ridge.png";
+import harborMaster from "../assets/harborMaster.png";
 
 export const MapIcons = {
   ANCHOR: anchorIcon,
