@@ -11,7 +11,7 @@ export class BoatDto {
   @ApiProperty({ example: 'My Boat' })
   name: string;
 
-  @ApiProperty({ example: 'HR-8523' })
+  @ApiProperty({ example: 'ST-1234' })
   registration: string;
 
   @ApiProperty({ example: 10.5 })
