@@ -6,5 +6,6 @@ export const ROUTES = {
   REGISTERSUBSCRIPTION: "/register-subscription",
   REGISTERPAYMENT: "/register-payment",
   PROFILE: "/profile",
+  PROFILE_EDIT: "/profile/edit",
   NOT_FOUND: "*",
 };

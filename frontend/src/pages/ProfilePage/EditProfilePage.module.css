@@ -1,0 +1,130 @@
+.editProfilePage {
+  max-width: 425px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: var(--font-primary);
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  font-size: 1.125rem;
+  color: #333;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.header h2 {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1e3a5f;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.formGroup input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+  background-color: #fff;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #1e3a5f;
+}
+
+.passwordField {
+  letter-spacing: 2px;
+  cursor: not-allowed;
+  background-color: #f5f5f5 !important;
+}
+
+.changePasswordButton {
+  background: none;
+  border: none;
+  color: #1e3a5f;
+  text-align: left;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 0.25rem;
+  text-decoration: none;
+}
+
+.errorList {
+  background-color: #fff1f0;
+  border: 1px solid #ff4d4f;
+  border-radius: 0.375rem;
+  padding: 0.625rem 0.9375rem;
+  margin: 0.5rem 0;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.error {
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.confirmButton {
+  background-color: #1e3a5f;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.875rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.confirmButton:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

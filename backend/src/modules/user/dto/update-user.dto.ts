@@ -6,7 +6,6 @@ import {
   IsString,
   Matches,
   MinLength,
-  IsLowercase,
 } from '@nestjs/class-validator';
 import { SubscriptionPlan } from '@prisma/client';
 

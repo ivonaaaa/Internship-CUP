@@ -8,7 +8,6 @@ export type Boat = {
   id: number;
   userId: number;
   name: string;
-  registration: string;
   length: number;
   width: number;
   boatType?: BoatType;
