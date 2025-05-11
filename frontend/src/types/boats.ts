@@ -11,6 +11,7 @@ export type Boat = {
   length: number;
   width: number;
   boatType?: BoatType;
+  registration: string;
 };
 
 export interface CreateBoatDto {
@@ -19,7 +20,7 @@ export interface CreateBoatDto {
   registration: string;
   length: number;
   width: number;
-  boatType?: "MOTORBOAT" | "DINGHY" | "YACHT";
+  boatType?: BoatType;
 }
 
 export interface UpdateBoatDto {
@@ -28,5 +29,5 @@ export interface UpdateBoatDto {
   registration?: string;
   length?: number;
   width?: number;
-  boatType?: "MOTORBOAT" | "DINGHY" | "YACHT";
+  boatType?: BoatType;
 }

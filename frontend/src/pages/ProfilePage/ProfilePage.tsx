@@ -17,6 +17,14 @@ export const ProfilePage = () => {
     navigate("/profile/edit");
   };
 
+  const handleAddBoat = () => {
+    navigate("/boat/add");
+  };
+
+  const handleEditBoat = (boatId: number) => {
+    navigate(`/boat/edit/${boatId}`);
+  };
+
   if (!user) {
     return <div className={styles.loadingContainer}>Loading...</div>;
   }
@@ -55,17 +63,14 @@ export const ProfilePage = () => {
                 </div>
                 <button
                   className={styles.editBoatButton}
-                  onClick={() => console.log("Edit boat", boat.id)}
+                  onClick={() => handleEditBoat(boat.id)}
                 >
                   Edit
                 </button>
               </div>
             ))
           ) : null}
-          <button
-            className={styles.addButton}
-            onClick={() => console.log("Add boat")}
-          >
+          <button className={styles.addButton} onClick={handleAddBoat}>
             <span className={styles.plusIcon}>+</span> Add boat
           </button>
         </div>
