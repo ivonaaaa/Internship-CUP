@@ -5,15 +5,36 @@
 
 .trackerButton {
   position: absolute;
-  width: 100px;
-  height: 40px;
+  width: 80px;
+  height: 50px;
   bottom: 20px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.trackerButtonStart {
+  background-color: var(--color-ocean);
+}
+
+.trackerButtonStop {
+  background-color: var(--color-cloud);
+  color: var(--color-ocean);
 }
 
 .customNav {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 34px;
+  right: 15px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -21,43 +42,35 @@
 }
 
 .navButton {
-  background-color: white;
-  border: none;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
   cursor: pointer;
   margin-bottom: 5px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .profileButton {
-  bottom: 20px;
-  right: 20px;
+  bottom: 25px;
+  right: 15px;
 }
 
 .infoButton {
-  bottom: 20px;
-  left: 20px;
+  bottom: 25px;
+  left: 15px;
 }
 
 .emergencyButton {
-  top: 20px;
-  left: 20px;
+  top: 34px;
+  left: 15px;
 }
 
 .notificationButton {
-  top: 20px;
+  top: 34px;
   left: 80px;
 }
 
 .generalButton {
   position: absolute;
-  background-color: white;
-  border: none;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .userLocationMarker {
@@ -82,22 +95,19 @@
 }
 
 :global(.mapboxgl-popup-content) {
-  background-color: var(--color-cloud);
   color: var(--color-ocean);
-  border-radius: 12px;
-  padding: 18px 22px;
-  font-size: 14px;
+  border-radius: 8px;
+  padding: 24px 28px;
   position: relative;
-  border: 1px solid var(--color-ocean);
   animation: fadeIn 0.3s ease forwards;
   width: 90%;
 }
 
 :global(.mapboxgl-popup-content h3) {
   font-family: var(--font-primary);
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: 700;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--color-ocean);
 }
 
@@ -105,10 +115,9 @@
   font-family: var(--font-primary);
   opacity: 0.8;
   color: var(--color-ocean);
-}
-
-:global(.mapboxgl-popup-tip) {
-  border-color: transparent transparent transparent transparent !important;
+  font-size: 12px;
+  line-height: 2;
+  font-weight: 400;
 }
 
 :global(*:focus) {

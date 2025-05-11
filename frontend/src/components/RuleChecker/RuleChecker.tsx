@@ -67,9 +67,7 @@ export const RuleChecker = ({
 
     mapElements?.forEach((element: MapElement) => {
       if (element.geometry.type === "ZONE") {
-        const zone = turf.polygon(
-          element.geometry.coordinates as [number[][]]
-        );
+        const zone = turf.polygon(element.geometry.coordinates as [number[][]]);
         const distance = turf.pointToPolygonDistance(userPoint, zone, {
           units: "kilometers",
         });
@@ -94,7 +92,7 @@ export const RuleChecker = ({
 
         const distanceInMeters = distance * 1000;
 
-        if (distanceInMeters < 100) {
+        if (distanceInMeters < 1000000) {
           showNotification(
             element.rule?.type || "INFO",
             element.properties.name,

@@ -1,10 +1,10 @@
 import { BoatForm } from "../../components/BoatForm";
 import "../../App.css";
 
-export function RegisterBoatPage() {
+export function AddBoatPage() {
   return (
     <div className="page-container">
-      <BoatForm context="registration" />
+      <BoatForm context="profile" />
     </div>
   );
 }

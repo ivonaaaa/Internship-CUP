@@ -59,18 +59,18 @@ export class UserController {
     return result as UserDto;
   }
 
-  @Post()
-  @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: 'User successfully created',
-    type: [UserDto],
-  })
-  async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
-    const user = await this.usersService.create(createUserDto);
-    const { passwordHash, ...result } = user;
-    return result as UserDto;
-  }
+  // @Post()
+  // @ApiOperation({ summary: 'Create a new user' })
+  // @ApiResponse({
+  //   status: HttpStatus.CREATED,
+  //   description: 'User successfully created',
+  //   type: [UserDto],
+  // })
+  // async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
+  //   const user = await this.usersService.create(createUserDto);
+  //   const { passwordHash, ...result } = user;
+  //   return result as UserDto;
+  // }
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
