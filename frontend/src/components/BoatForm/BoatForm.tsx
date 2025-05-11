@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateBoat } from "../../api/boat/useBoatQueries";
+import {
+  useCreateBoat,
+  useUpdateBoat,
+  useBoat,
+} from "../../api/boat/useBoatQueries";
 import { BoatType } from "../../types/boats";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateBoatForm } from "../../utils/BoatFormValidation";
@@ -8,16 +12,23 @@ import c from "./BoatForm.module.css";
 
 interface BoatFormProps {
   context?: "registration" | "profile";
+  mode?: "create" | "edit";
+  boatId?: number;
 }
 
 export const BoatForm: React.FC<BoatFormProps> = ({
   context = "registration",
+  mode = "create",
+  boatId,
 }) => {
   const navigate = useNavigate();
-  const { mutate: createBoat, isPending } = useCreateBoat();
-  const { user } = useAuth();
+  const { mutate: createBoat, isPending: isCreating } = useCreateBoat();
+  const { mutate: updateBoat, isPending: isUpdating } = useUpdateBoat();
+  const { data: boatData, isLoading: isLoadingBoat } = useBoat(
+    mode === "edit" && boatId ? boatId : 0
+  );
 
-  if (!user) return null;
+  const { user } = useAuth();
 
   const [formData, setFormData] = useState<{
     userId: number;
@@ -27,7 +38,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     length: string;
     width: string;
   }>({
-    userId: user.id,
+    userId: user?.id || 0,
     name: "",
     registration: "",
     boatType: "",
@@ -36,6 +47,25 @@ export const BoatForm: React.FC<BoatFormProps> = ({
   });
 
   const [errors, setErrors] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (mode === "edit" && boatData) {
+      setFormData({
+        userId: boatData.userId,
+        name: boatData.name || "",
+        registration: boatData.registration || "",
+        boatType: boatData.boatType || "",
+        length: boatData.length ? String(boatData.length) : "",
+        width: boatData.width ? String(boatData.width) : "",
+      });
+    }
+  }, [mode, boatData]);
+
+  if (!user) return null;
+
+  if (mode === "edit" && isLoadingBoat) {
+    return <div className={c.loadingMessage}>Loading boat data...</div>;
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -69,24 +99,45 @@ export const BoatForm: React.FC<BoatFormProps> = ({
         width: Number(formData.width),
       };
 
-      createBoat(boatData, {
-        onSuccess: () => {
-          // Conditionally navigate based on context
-          if (context === "profile") {
-            navigate("/profile");
-          } else {
-            navigate("/register-subscription");
+      if (mode === "edit" && boatId) {
+        updateBoat(
+          {
+            id: boatId,
+            data: boatData,
+          },
+          {
+            onSuccess: () => {
+              navigate("/profile");
+            },
+            onError: (error: any) => {
+              const errorMessage =
+                error?.response?.data?.message ||
+                "Failed to update boat. Please try again.";
+              setErrors(
+                Array.isArray(errorMessage) ? errorMessage : [errorMessage]
+              );
+            },
           }
-        },
-        onError: (error: any) => {
-          const errorMessage =
-            error?.response?.data?.message ||
-            "Failed to register boat. Please try again.";
-          setErrors(
-            Array.isArray(errorMessage) ? errorMessage : [errorMessage]
-          );
-        },
-      });
+        );
+      } else {
+        createBoat(boatData, {
+          onSuccess: () => {
+            if (context === "profile") {
+              navigate("/profile");
+            } else {
+              navigate("/register-subscription");
+            }
+          },
+          onError: (error: any) => {
+            const errorMessage =
+              error?.response?.data?.message ||
+              "Failed to register boat. Please try again.";
+            setErrors(
+              Array.isArray(errorMessage) ? errorMessage : [errorMessage]
+            );
+          },
+        });
+      }
     } catch (err: any) {
       setErrors([err?.message || "An unexpected error occurred"]);
     }
@@ -94,7 +145,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className={c.boatForm}>
-      <h2>Boat information</h2>
+      <h2>{mode === "edit" ? "Edit Boat" : "Boat information"}</h2>
 
       <div className={c.formGroup}>
         <label htmlFor="name">Boat Name</label>
@@ -183,8 +234,18 @@ export const BoatForm: React.FC<BoatFormProps> = ({
         </ul>
       )}
 
-      <button type="submit" className={c.submitButton} disabled={isPending}>
-        {isPending ? "Processing..." : "Next"}
+      <button
+        type="submit"
+        className={c.submitButton}
+        disabled={isCreating || isUpdating}
+      >
+        {mode === "edit"
+          ? isUpdating
+            ? "Updating..."
+            : "Update Boat"
+          : isCreating
+            ? "Processing..."
+            : "Next"}
       </button>
     </form>
   );
