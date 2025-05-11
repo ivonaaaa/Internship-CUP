@@ -10,6 +10,7 @@ import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
 import { RegisterBoatPage } from "../pages/RegisterPages/RegisterBoatPage";
 import { SubscriptionPage } from "../pages/RegisterPages/SubscriptionPage";
 import { InfoPage } from "../pages/InfoPage";
+import { AddBoatPage } from "../pages/BoatPage/AddBoatPage";
 
 export const AppRouter = () => {
   return (
@@ -22,6 +23,7 @@ export const AppRouter = () => {
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route path={ROUTES.REGISTERBOAT} element={<RegisterBoatPage />} />
+          <Route path={ROUTES.ADD_BOAT} element={<AddBoatPage />} />
           <Route
             path={ROUTES.REGISTERSUBSCRIPTION}
             element={<SubscriptionPage />}

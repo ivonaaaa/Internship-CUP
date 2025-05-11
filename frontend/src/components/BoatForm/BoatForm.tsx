@@ -6,7 +6,13 @@ import { useAuth } from "../../contexts/AuthContext";
 import { validateBoatForm } from "../../utils/BoatFormValidation";
 import c from "./BoatForm.module.css";
 
-export const BoatForm: React.FC = () => {
+interface BoatFormProps {
+  context?: "registration" | "profile";
+}
+
+export const BoatForm: React.FC<BoatFormProps> = ({
+  context = "registration",
+}) => {
   const navigate = useNavigate();
   const { mutate: createBoat, isPending } = useCreateBoat();
   const { user } = useAuth();
@@ -65,7 +71,12 @@ export const BoatForm: React.FC = () => {
 
       createBoat(boatData, {
         onSuccess: () => {
-          navigate("/register-subscription");
+          // Conditionally navigate based on context
+          if (context === "profile") {
+            navigate("/profile");
+          } else {
+            navigate("/register-subscription");
+          }
         },
         onError: (error: any) => {
           const errorMessage =
