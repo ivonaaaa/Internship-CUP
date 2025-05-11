@@ -1,4 +1,4 @@
-import c from "./notification.module.css";
+import c from "./Notification.module.css";
 import { RuleType } from "../../types";
 import closeButton from "../../assets/x.svg";
 
