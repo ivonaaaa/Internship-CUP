@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { BoatModule } from './modules/boat/boat.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
@@ -16,6 +18,9 @@ import { NotificationModule } from './modules/notification/notification.module';
     NotificationModule,
     RuleModule,
     TransactionModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', '..', 'frontend', 'dist'),
+    }),
   ],
 })
 export class AppModule {}
