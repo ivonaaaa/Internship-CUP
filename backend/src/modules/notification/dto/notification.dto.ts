@@ -8,7 +8,7 @@ export class NotificationDto {
   userId: number;
 
   @ApiProperty({ description: 'Boat ID' })
-  boatId: number;
+  boatId?: number;
 
   @ApiProperty({ description: 'Map Element ID' })
   mapElementId: number;

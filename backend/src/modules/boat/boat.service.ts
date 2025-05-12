@@ -37,12 +37,12 @@ export class BoatService {
     return this.mapToResponseDto(boat);
   }
 
-  async findAllByUser(userId: number): Promise<BoatDto[]> {
+  async findAllByUser(id: number): Promise<BoatDto[]> {
     const boatByUser = await this.prisma.boat.findMany({
-      where: { userId },
+      where: { userId: id },
     });
-    if (!boatByUser)
-      throw new NotFoundException(`No boats found for user ID ${userId}`);
+
+    if (!boatByUser) return [];
 
     return boatByUser.map(this.mapToResponseDto);
   }

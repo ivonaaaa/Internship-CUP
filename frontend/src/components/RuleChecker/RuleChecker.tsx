@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Notification } from "../Notification/Notification";
 import { RuleType } from "../../types";
+import { useCreateNotification } from "../../api/notification/useCreateNotification";
+import { useUserBoats } from "../../api/boat/useBoatQueries";
+import { useAuth } from "../../contexts/AuthContext";
 
 type RuleCheckerProps = {
   userLocation: [number, number] | null;
@@ -14,7 +17,7 @@ type RuleCheckerProps = {
 type NotificationType = {
   type: RuleType;
   title: string;
-  message: string;
+  message: string | undefined;
 };
 
 export const RuleChecker = ({
@@ -31,6 +34,11 @@ export const RuleChecker = ({
 
   const previousLocationRef = useRef<[number, number] | null>(null);
   const previousTimeRef = useRef<number | null>(null);
+  const { mutate: createNotification } = useCreateNotification();
+
+  const { user } = useAuth();
+
+  const { data: userBoats } = useUserBoats(user?.id || 0);
 
   const calculateSpeed = () => {
     if (!userLocation) return;
@@ -49,12 +57,7 @@ export const RuleChecker = ({
       console.log("Speed (km/h):", speedKmh.toFixed(2));
 
       if (speedKmh > 100) {
-        showNotification(
-          "WARNING",
-          "High Speed Alert",
-          `You are moving too fast! (${speedKmh.toFixed(1)} km/h)`,
-          speedKmh
-        );
+        console.log("Speed limit exceeded!");
       }
     }
 
@@ -75,12 +78,7 @@ export const RuleChecker = ({
         const distanceInMeters = distance * 1000;
 
         if (distanceInMeters < 200) {
-          showNotification(
-            element.rule?.type || "INFO",
-            element.properties.name,
-            element.rule?.description || "Caution! You are near a zone.",
-            distanceInMeters
-          );
+          showNotification(element, distanceInMeters);
         }
       } else if (element.geometry.type === "POINT") {
         const point = turf.point(
@@ -93,12 +91,7 @@ export const RuleChecker = ({
         const distanceInMeters = distance * 1000;
 
         if (distanceInMeters < 1000000) {
-          showNotification(
-            element.rule?.type || "INFO",
-            element.properties.name,
-            element.rule?.description || "You're near a point of interest.",
-            distanceInMeters
-          );
+          showNotification(element, distanceInMeters);
         }
       }
     });
@@ -108,12 +101,7 @@ export const RuleChecker = ({
     toast.dismiss();
   };
 
-  const showNotification = (
-    type: RuleType | string,
-    title: string,
-    message: string,
-    distance?: number
-  ) => {
+  const showNotification = (element: MapElement, distance?: number) => {
     const now = Date.now();
 
     if (now - lastNotificationTimeRef.current < 1000) {
@@ -122,22 +110,42 @@ export const RuleChecker = ({
 
     const existingNotification = previousNotifications.find(
       (notification) =>
-        notification.title === title && notification.message === message
+        notification.title === element.properties.name &&
+        notification.message === element.properties.description
     );
 
     if (existingNotification) return;
 
     setPreviousNotifications((prev) => [
       ...prev,
-      { type: type as RuleType, title, message },
+      {
+        type: element.rule?.type as RuleType,
+        title: element.properties.name,
+        message: element.properties.description,
+      },
     ]);
+
+    const notificationData = {
+      userId: user?.id || 0,
+      boatId: userBoats?.[0]?.id,
+      mapElementId: element.properties.id,
+      ruleId: element.rule?.id || 0,
+      locationCoordinates: {
+        type: element.geometry.type,
+        coordinates: userLocation,
+      },
+    };
+
+    console.log("Notification data:", notificationData);
+
+    createNotification(notificationData);
 
     toast.custom(
       () => (
         <Notification
-          type={type as RuleType}
-          title={title}
-          message={message}
+          type={element.rule?.type as RuleType}
+          title={element.properties.name}
+          message={element.properties.description || ""}
           distance={distance}
           onClose={onClose}
         />

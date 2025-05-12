@@ -19,6 +19,8 @@ import {
   profileButton,
   compassButton,
 } from "./buttons";
+import { SoundAlertNotification } from "../SoundAlertNotification";
+
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -28,6 +30,7 @@ export const Map = () => {
   );
   const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
   const [isTracking, setIsTracking] = useState<boolean>(false);
+  const [showSoundAlert, setShowSoundAlert] = useState<boolean>(false);
   useState<boolean>(false);
   const watchId = useRef<number | null>(null);
   const { data: mapElements } = useFetchMapElements();
@@ -160,12 +163,17 @@ export const Map = () => {
     }
   };
 
-  const startTracking = () => {
+  const showAlert = () => {
     if (!navigator.geolocation) {
       console.error("Geolocation is not supported by this browser.");
       return;
     }
 
+    setShowSoundAlert(true);
+  };
+
+  const startTracking = () => {
+    setShowSoundAlert(false);
     setIsTracking(true);
 
     watchId.current = navigator.geolocation.watchPosition(
@@ -337,6 +345,10 @@ export const Map = () => {
     <>
       <div ref={mapContainer} className={c.map}></div>
 
+      {showSoundAlert && (
+        <SoundAlertNotification onClose={() => startTracking()} />
+      )}
+
       <div className={c.customNav}>
         <img
           src={plusButton}
@@ -375,7 +387,7 @@ export const Map = () => {
 
       <div
         className={`${c.trackerButton} ${!isTracking ? `${c.trackerButtonStart}` : `${c.trackerButtonStop}`}`}
-        onClick={isTracking ? stopTracking : startTracking}
+        onClick={isTracking ? stopTracking : showAlert}
       >
         {isTracking ? "Stop" : "Start"}
       </div>

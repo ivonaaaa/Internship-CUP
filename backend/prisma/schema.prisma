@@ -83,7 +83,7 @@ model MapElement {
 model Notification {
   id                Int           @id @default(autoincrement())
   userId            Int
-  boatId            Int
+  boatId            Int?
   mapElementId      Int
   ruleId            Int
   timestamp         DateTime      @default(now())
@@ -91,7 +91,7 @@ model Notification {
   
   // Relations
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  boat              Boat          @relation(fields: [boatId], references: [id], onDelete: Cascade)
+  boat              Boat?          @relation(fields: [boatId], references: [id], onDelete: Cascade)
   mapElement        MapElement    @relation(fields: [mapElementId], references: [id])
   rule              Rule          @relation(fields: [ruleId], references: [id])
 }

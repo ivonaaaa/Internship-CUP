@@ -7,8 +7,8 @@ const fetchAllBoats = () => {
   return api.get<never, Boat[]>(BOATS_PATH);
 };
 
-const fetchUserBoats = () => {
-  return api.get<never, Boat[]>(`${BOATS_PATH}/allByUser`);
+const fetchUserBoatById = (userId: number) => {
+  return api.get<never, Boat[]>(`${BOATS_PATH}/user/${userId}`);
 };
 
 const fetchBoatById = (id: number) => {
@@ -24,10 +24,10 @@ export const useAllBoats = () => {
   });
 };
 
-export const useUserBoats = () => {
+export const useUserBoats = (userId: number) => {
   return useQuery({
-    queryKey: ["userBoats"],
-    queryFn: fetchUserBoats,
+    queryKey: ["userBoats", userId],
+    queryFn: () => fetchUserBoatById(userId),
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });

@@ -5,11 +5,9 @@
   padding: 12px 12px;
   width: 70%;
   max-width: 400px;
-  margin-bottom: 8px;
   animation: slideIn 0.3s ease-out;
   font-family: var(--font-primary);
   gap: 8px;
-  margin-top: 16px;
 }
 
 .iconContainer {
