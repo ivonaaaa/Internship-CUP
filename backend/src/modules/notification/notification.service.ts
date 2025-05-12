@@ -61,7 +61,10 @@ export class NotificationService {
     createNotificationDto: CreateNotificationDto,
   ): Promise<NotificationDto> {
     const notification = await this.prisma.notification.create({
-      data: createNotificationDto,
+      data: {
+        ...createNotificationDto,
+        boatId: createNotificationDto.boatId || null,
+      },
     });
 
     return this.mapToResponseDto(notification);

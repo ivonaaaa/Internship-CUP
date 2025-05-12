@@ -42,15 +42,15 @@ export class BoatController {
     return this.boatsService.findAll();
   }
 
-  @Get('allByUser')
+  @Get('user/:userid')
   @ApiOperation({ summary: 'Get all boats for a specific user' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'List of boats for the user',
     type: [BoatDto],
   })
-  async findAllByUser(@Request() req): Promise<BoatDto[]> {
-    return this.boatsService.findAllByUser(req.user.id);
+  async findAllByUser(@Param('userid') userId: number): Promise<BoatDto[]> {
+    return this.boatsService.findAllByUser(userId);
   }
 
   @Get(':id')

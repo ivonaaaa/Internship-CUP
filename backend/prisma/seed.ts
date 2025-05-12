@@ -249,7 +249,7 @@ async function main() {
           ],
         ],
       },
-      description: 'Shallow water zone - speed limit of 5 knots',
+      description: 'Speed limit of 5 knots',
       isActive: true,
       fillColor: '#153b61',
       fillOpacity: 0.3,
@@ -346,7 +346,7 @@ async function main() {
       coordinates: {
         coordinates: [16.331010051824677, 43.50588039602954],
       },
-      description: 'Ciovo anchoring area - anchoring allowed',
+      description: 'Anchoring allowed',
       isActive: true,
     },
   });
@@ -364,8 +364,7 @@ async function main() {
       coordinates: {
         coordinates: [16.391666737020813, 43.48923719439853],
       },
-      description:
-        'Ciovo Lighthouse - no anchoring within 100 meters of the lighthouse',
+      description: 'No anchoring within 100 meters of the lighthouse',
       isActive: true,
     },
   });
@@ -383,8 +382,20 @@ async function main() {
       coordinates: {
         coordinates: [16.38879372168188, 43.50856375565189],
       },
-      description:
-        'Marjan Lighthouse - no anchoring within 100 meters of the lighthouse',
+      description: 'No anchoring within 100 meters of the lighthouse',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Jadran Harbor Master',
+      type: MapElementType.POINT,
+      objectType: ObjectType.HARBOR_MASTER,
+      coordinates: {
+        coordinates: [16.414129759571182, 43.50289494848522],
+      },
+      description: 'Get your harbor master info here',
       isActive: true,
     },
   });
@@ -402,8 +413,7 @@ async function main() {
       coordinates: {
         coordinates: [16.441, 43.503],
       },
-      description:
-        'Split Breakwater Lighthouse - no anchoring within 100 meters of the lighthouse',
+      description: 'No anchoring within 100 meters of the lighthouse',
       isActive: true,
     },
   });
@@ -422,6 +432,42 @@ async function main() {
         coordinates: [16.364137504105486, 43.546240911927924],
       },
       description: 'Anchoring allowed',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      rule: {
+        connect: {
+          id: rule4.id,
+        },
+      },
+      name: 'Nature Reserve Ciovo',
+      type: MapElementType.POINT,
+      objectType: ObjectType.ANCHOR,
+      coordinates: {
+        coordinates: [16.364195023328023, 43.48170263589682],
+      },
+      description: 'Anchoring allowed - nice nature area',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      rule: {
+        connect: {
+          id: rule5.id,
+        },
+      },
+      name: 'Fishing Area - Trogir',
+      type: MapElementType.POINT,
+      objectType: ObjectType.ANCHOR,
+      coordinates: {
+        coordinates: [16.45956902070347, 43.46799084775512],
+      },
+      description: 'Fishing allowed in this area',
       isActive: true,
     },
   });
@@ -473,7 +519,7 @@ async function main() {
       coordinates: {
         coordinates: [16.440529324152692, 43.507113552631324],
       },
-      description: 'Harbor master office',
+      description: 'Get your harbor master info here',
       isActive: true,
     },
   });
@@ -486,7 +532,7 @@ async function main() {
       coordinates: {
         coordinates: [16.439, 43.508],
       },
-      description: 'Fuel dock available',
+      description: 'Fill up your tank here',
       isActive: true,
     },
   });

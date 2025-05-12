@@ -6,7 +6,8 @@ import styles from "./ProfilePage.module.css";
 export const ProfilePage = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { data: boats, isLoading: boatsLoading } = useUserBoats();
+
+  const { data: boats, isLoading: boatsLoading } = useUserBoats(user?.id || 0);
 
   const handleLogout = () => {
     logout();

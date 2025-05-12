@@ -10,7 +10,7 @@ export class CreateNotificationDto {
   @IsInt()
   @IsNotEmpty()
   @ApiProperty({ description: 'Boat ID' })
-  boatId: number;
+  boatId?: number;
 
   @IsInt()
   @IsNotEmpty()
