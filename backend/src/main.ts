@@ -25,7 +25,7 @@ async function bootstrap() {
     }),
   );
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://18.192.50.177'],
+    origin: ['http://localhost:5173', 'http://63.176.175.46'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS',
     allowedHeaders: 'Content-Type, Authorization',
   });
