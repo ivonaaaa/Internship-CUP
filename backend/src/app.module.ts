@@ -22,9 +22,6 @@ import { AppController } from './app.controller';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'frontend', 'dist'),
       exclude: ['/api*'],
-      serveStaticOptions: {
-        index: false,
-      },
     }),
   ],
   controllers: [AppController],
