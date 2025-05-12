@@ -23,7 +23,7 @@ export const SubscriptionPage: React.FC = () => {
   };
 
   const handleNext = () => {
-    if (selectedPlan) navigate("/payment");
+    if (selectedPlan) navigate("/register-payment");
   };
 
   return (

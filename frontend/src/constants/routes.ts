@@ -8,6 +8,7 @@ export const ROUTES = {
   INFO_BOAT: "/boat/info/:id",
   REGISTERSUBSCRIPTION: "/register-subscription",
   REGISTERPAYMENT: "/register-payment",
+  REGISTERCARD: "/register-card",
   PROFILE: "/profile",
   PROFILE_EDIT: "/profile/edit",
   INFO: "/info",

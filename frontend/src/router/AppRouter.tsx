@@ -13,6 +13,8 @@ import { InfoPage } from "../pages/InfoPage";
 import { AddBoatPage } from "../pages/BoatPages/AddBoatPage";
 import { EditBoatPage } from "../pages/BoatPages/EditBoatPage";
 import { InfoBoatPage } from "../pages/BoatPages/InfoBoatPage";
+import { PaymentPage } from "../pages/RegisterPages/PaymentPage";
+import { CardPage } from "../pages/RegisterPages/CardPage";
 
 export const AppRouter = () => {
   return (
@@ -25,6 +27,12 @@ export const AppRouter = () => {
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route path={ROUTES.REGISTERBOAT} element={<RegisterBoatPage />} />
+          <Route
+            path={ROUTES.REGISTERSUBSCRIPTION}
+            element={<SubscriptionPage />}
+          />
+          <Route path={ROUTES.REGISTERPAYMENT} element={<PaymentPage />} />
+          <Route path={ROUTES.REGISTERCARD} element={<CardPage />} />
           <Route path={ROUTES.ADD_BOAT} element={<AddBoatPage />} />
           <Route path={ROUTES.EDIT_BOAT} element={<EditBoatPage />} />
           <Route path={ROUTES.INFO_BOAT} element={<InfoBoatPage />} />
