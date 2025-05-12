@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   useCreateBoat,
   useUpdateBoat,
@@ -12,7 +12,7 @@ import c from "./BoatForm.module.css";
 
 interface BoatFormProps {
   context?: "registration" | "profile";
-  mode?: "create" | "edit";
+  mode?: "create" | "edit" | "info";
   boatId?: number;
 }
 
@@ -25,7 +25,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
   const { mutate: createBoat, isPending: isCreating } = useCreateBoat();
   const { mutate: updateBoat, isPending: isUpdating } = useUpdateBoat();
   const { data: boatData, isLoading: isLoadingBoat } = useBoat(
-    mode === "edit" && boatId ? boatId : 0
+    mode !== "create" && boatId ? boatId : 0
   );
 
   const { user } = useAuth();
@@ -47,9 +47,10 @@ export const BoatForm: React.FC<BoatFormProps> = ({
   });
 
   const [errors, setErrors] = useState<string[]>([]);
+  const isReadOnly = mode === "info";
 
   useEffect(() => {
-    if (mode === "edit" && boatData) {
+    if (mode !== "create" && boatData) {
       setFormData({
         userId: boatData.userId,
         name: boatData.name || "",
@@ -63,15 +64,15 @@ export const BoatForm: React.FC<BoatFormProps> = ({
 
   if (!user) return null;
 
-  if (mode === "edit" && isLoadingBoat) {
+  if (mode !== "create" && isLoadingBoat)
     return <div className={c.loadingMessage}>Loading boat data...</div>;
-  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
+    if (isReadOnly) return;
 
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: name === "boatType" ? (value as BoatType) : value,
@@ -80,6 +81,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (isReadOnly) return;
 
     const validationErrors = validateBoatForm(formData);
     if (validationErrors.length > 0) {
@@ -157,6 +160,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           value={formData.name}
           onChange={handleChange}
           required
+          readOnly={isReadOnly}
+          className={isReadOnly ? c.readOnlyInput : ""}
         />
       </div>
 
@@ -167,6 +172,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           value={formData.boatType}
           onChange={handleChange}
           required
+          disabled={isReadOnly}
+          className={isReadOnly ? c.readOnlyInput : ""}
         >
           <option value="">Boat type</option>
           <option value={BoatType.MOTORBOAT}>Motorboat</option>
@@ -189,6 +196,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
               value={formData.length}
               onChange={handleChange}
               required
+              readOnly={isReadOnly}
+              className={isReadOnly ? c.readOnlyInput : ""}
             />
           </div>
         </div>
@@ -206,6 +215,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
               value={formData.width}
               onChange={handleChange}
               required
+              readOnly={isReadOnly}
+              className={isReadOnly ? c.readOnlyInput : ""}
             />
           </div>
         </div>
@@ -221,6 +232,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           value={formData.registration}
           onChange={handleChange}
           required
+          readOnly={isReadOnly}
+          className={isReadOnly ? c.readOnlyInput : ""}
         />
       </div>
 
@@ -233,20 +246,23 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           ))}
         </ul>
       )}
-
-      <button
-        type="submit"
-        className={c.submitButton}
-        disabled={isCreating || isUpdating}
-      >
-        {mode === "edit"
-          ? isUpdating
-            ? "Updating..."
-            : "Update Boat"
-          : isCreating
-            ? "Processing..."
-            : "Next"}
-      </button>
+      {mode === "info" ? (
+        <Link to={`/boat/edit/${boatId}`}>Edit info</Link>
+      ) : (
+        <button
+          type="submit"
+          className={c.submitButton}
+          disabled={isCreating || isUpdating}
+        >
+          {mode === "edit"
+            ? isUpdating
+              ? "Updating..."
+              : "Update Boat"
+            : isCreating
+              ? "Processing..."
+              : "Next"}
+        </button>
+      )}
     </form>
   );
 };

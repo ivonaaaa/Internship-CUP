@@ -5,6 +5,7 @@ export const ROUTES = {
   REGISTERBOAT: "/register-boat",
   ADD_BOAT: "/boat/add",
   EDIT_BOAT: "/boat/edit/:id",
+  INFO_BOAT: "/boat/info/:id",
   REGISTERSUBSCRIPTION: "/register-subscription",
   REGISTERPAYMENT: "/register-payment",
   PROFILE: "/profile",
