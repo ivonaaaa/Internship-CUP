@@ -3,16 +3,16 @@ import { ROUTES } from "../constants";
 import { HomePage } from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage/LoginPage";
 import { RegisterUserPage } from "../pages/RegisterPages/RegisterUserPage";
-import { ProfilePage } from "../pages/ProfilePage/ProfilePage";
+import { ProfilePage } from "../pages/ProfilePages/ProfilePage";
 import { ProtectedRoute } from "../hoc/ProtectedRoute";
-import { EditProfilePage } from "../pages/ProfilePage/EditProfilePage";
+import { EditProfilePage } from "../pages/ProfilePages/EditProfilePage";
 import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
 import { RegisterBoatPage } from "../pages/RegisterPages/RegisterBoatPage";
 import { SubscriptionPage } from "../pages/RegisterPages/SubscriptionPage";
 import { InfoPage } from "../pages/InfoPage";
-import { AddBoatPage } from "../pages/BoatPage/AddBoatPage";
-import { EditBoatPage } from "../pages/BoatPage/EditBoatPage";
-import { InfoBoatPage } from "../pages/BoatPage/InfoBoatPage";
+import { AddBoatPage } from "../pages/BoatPages/AddBoatPage";
+import { EditBoatPage } from "../pages/BoatPages/EditBoatPage";
+import { InfoBoatPage } from "../pages/BoatPages/InfoBoatPage";
 
 export const AppRouter = () => {
   return (

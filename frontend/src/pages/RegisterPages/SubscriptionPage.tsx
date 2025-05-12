@@ -14,8 +14,8 @@ export const SubscriptionPage: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
   const planOptions: PlanOption[] = [
-    { id: "weekly", period: "7 days", price: 25.0 },
-    { id: "yearly", period: "12 months", price: 49.0 },
+    { id: "weekly", period: "7 days", price: 24.99 },
+    { id: "yearly", period: "12 months", price: 49.99 },
   ];
 
   const handlePlanSelect = (planId: string) => {
@@ -23,10 +23,7 @@ export const SubscriptionPage: React.FC = () => {
   };
 
   const handleNext = () => {
-    if (selectedPlan) {
-      console.log(`Selected plan: ${selectedPlan}`);
-      navigate("/payment");
-    }
+    if (selectedPlan) navigate("/payment");
   };
 
   return (
