@@ -300,7 +300,7 @@ export const Map = () => {
     if (!mapContainer.current) return;
 
     if (!map.current) {
-      mapboxgl.accessToken = import.meta.env.VITE_ACCESS_TOKEN as string;
+      mapboxgl.accessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
