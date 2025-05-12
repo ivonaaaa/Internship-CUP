@@ -13,21 +13,15 @@ export const ProfilePage = () => {
     navigate("/login");
   };
 
-  const handleEditProfile = () => {
-    navigate("/profile/edit");
-  };
+  const handleEditProfile = () => navigate("/profile/edit");
 
-  const handleAddBoat = () => {
-    navigate("/boat/add");
-  };
+  const handleAddBoat = () => navigate("/boat/add");
 
-  const handleEditBoat = (boatId: number) => {
-    navigate(`/boat/edit/${boatId}`);
-  };
+  const handleEditBoat = (boatId: number) => navigate(`/boat/edit/${boatId}`);
 
-  if (!user) {
-    return <div className={styles.loadingContainer}>Loading...</div>;
-  }
+  const handleInfoBoat = (boatId: number) => navigate(`/boat/info/${boatId}`);
+
+  if (!user) return <div className={styles.loadingContainer}>Loading...</div>;
 
   return (
     <div className={styles.profilePage}>
@@ -57,9 +51,14 @@ export const ProfilePage = () => {
           ) : boats && boats.length > 0 ? (
             boats.map((boat, index) => (
               <div key={boat.id} className={styles.boatItem}>
-                <div className={styles.boatNumber}>{index + 1}</div>
-                <div className={styles.boatName}>
-                  {boat.name || `Boat ${index + 1}`}
+                <div
+                  className={styles.boatInfo}
+                  onClick={() => handleInfoBoat(boat.id)}
+                >
+                  <div className={styles.boatNumber}>{index + 1}</div>
+                  <div className={styles.boatName}>
+                    {boat.name || `Boat ${index + 1}`}
+                  </div>
                 </div>
                 <button
                   className={styles.editBoatButton}

@@ -12,6 +12,7 @@ import { SubscriptionPage } from "../pages/RegisterPages/SubscriptionPage";
 import { InfoPage } from "../pages/InfoPage";
 import { AddBoatPage } from "../pages/BoatPage/AddBoatPage";
 import { EditBoatPage } from "../pages/BoatPage/EditBoatPage";
+import { InfoBoatPage } from "../pages/BoatPage/InfoBoatPage";
 
 export const AppRouter = () => {
   return (
@@ -26,6 +27,7 @@ export const AppRouter = () => {
           <Route path={ROUTES.REGISTERBOAT} element={<RegisterBoatPage />} />
           <Route path={ROUTES.ADD_BOAT} element={<AddBoatPage />} />
           <Route path={ROUTES.EDIT_BOAT} element={<EditBoatPage />} />
+          <Route path={ROUTES.INFO_BOAT} element={<InfoBoatPage />} />
           <Route
             path={ROUTES.REGISTERSUBSCRIPTION}
             element={<SubscriptionPage />}
