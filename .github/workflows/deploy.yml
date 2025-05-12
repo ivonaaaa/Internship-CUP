@@ -37,8 +37,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/lukazuljevic/internship-cup:${{ github.sha }}
-            ghcr.io/lukazuljevic/internship-cup:${{ github.ref_name }}
+            ghcr.io/ivonaaaa/internship-cup:${{ github.sha }}
+            ghcr.io/ivonaaaa/internship-cup:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -60,7 +60,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo docker pull ghcr.io/lukazuljevic/internship-cup:main
+            sudo docker pull ghcr.io/ivonaaaa/internship-cup:main
             sudo docker stop internship-cup || true
             sudo docker rm internship-cup || true
-            sudo docker run -d -p 3000:3000 --env-file .env --restart always --name internship-cup ghcr.io/lukazuljevic/internship-cup:main
+            sudo docker run -d -p 3000:3000 --env-file .env --restart always --name internship-cup ghcr.io/ivonaaaa/internship-cup:main
