@@ -7,20 +7,11 @@ import { MapElement } from "../../types";
 import { useFetchMapElements } from "../../api/map/useFetchMapElements";
 import { MapIcons } from "../../constants/map-icons";
 import { MapElementTypes } from "../../types";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants";
 import { RuleChecker } from "../RuleChecker";
 
-import {
-  infoButton,
-  sosButton,
-  plusButton,
-  minusButton,
-  profileButton,
-  compassButton,
-  homeButton,
-} from "./buttons";
+import { sosButton, plusButton, minusButton, compassButton } from "./buttons";
 import { SoundAlertNotification } from "../SoundAlertNotification";
+import { NavBar } from "../NavBar";
 
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -35,8 +26,6 @@ export const Map = () => {
   useState<boolean>(false);
   const watchId = useRef<number | null>(null);
   const { data: mapElements } = useFetchMapElements();
-
-  const navigate = useNavigate();
 
   const handleMapLoad = useCallback(() => {
     if (!mapElements) return;
@@ -388,24 +377,7 @@ export const Map = () => {
         >
           {isTracking ? "Stop" : "Start"}
         </div>
-        <div className={c.trackerContainerButtons}>
-          <img
-            src={infoButton}
-            className={`${c.infoButton}`}
-            onClick={() => navigate(ROUTES.INFO)}
-          ></img>
-          <img
-            src={homeButton}
-            className={`${c.profileButton}`}
-            onClick={() => navigate(ROUTES.PROFILE)}
-          ></img>
-
-          <img
-            src={profileButton}
-            className={`${c.profileButton}`}
-            onClick={() => navigate(ROUTES.PROFILE)}
-          ></img>
-        </div>
+        <NavBar />
       </div>
 
       <RuleChecker
