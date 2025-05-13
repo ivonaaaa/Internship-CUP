@@ -2,8 +2,7 @@
   border: 1px solid #d5d7da;
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 12px;
-  background-color: #ffffff;
+  background: #2c7bc9;
   cursor: pointer;
 }
 
@@ -15,6 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: white;
 }
 
 .infoSectionHeader h1 {
@@ -48,4 +48,19 @@
   font-size: 16px;
   color: #717680;
   line-height: 1.5;
+}
+
+.infoSectionOpen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-primary);
+}
+
+.infoSectionOpen p {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  color: #535862;
 }

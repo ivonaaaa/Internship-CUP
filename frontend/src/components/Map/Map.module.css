@@ -3,11 +3,14 @@
   width: 100%;
 }
 
-.trackerButton {
+.trackerButtonContainer {
   position: absolute;
+  bottom: 0px;
+}
+
+.trackerButton {
   width: 80px;
   height: 50px;
-  bottom: 20px;
   border-radius: 8px;
   color: white;
   display: flex;
@@ -20,6 +23,7 @@
   line-height: 24px;
   padding: 12px 20px;
   cursor: pointer;
+  margin-bottom: 94px;
 }
 
 .trackerButtonStart {
@@ -45,16 +49,6 @@
   cursor: pointer;
   margin-bottom: 5px;
   -webkit-tap-highlight-color: transparent;
-}
-
-.profileButton {
-  bottom: 25px;
-  right: 15px;
-}
-
-.infoButton {
-  bottom: 25px;
-  left: 15px;
 }
 
 .emergencyButton {

@@ -7,19 +7,11 @@ import { MapElement } from "../../types";
 import { useFetchMapElements } from "../../api/map/useFetchMapElements";
 import { MapIcons } from "../../constants/map-icons";
 import { MapElementTypes } from "../../types";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants";
 import { RuleChecker } from "../RuleChecker";
 
-import {
-  infoButton,
-  sosButton,
-  plusButton,
-  minusButton,
-  profileButton,
-  compassButton,
-} from "./buttons";
+import { sosButton, plusButton, minusButton, compassButton } from "./buttons";
 import { SoundAlertNotification } from "../SoundAlertNotification";
+import { NavBar } from "../NavBar";
 
 export const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -34,8 +26,6 @@ export const Map = () => {
   useState<boolean>(false);
   const watchId = useRef<number | null>(null);
   const { data: mapElements } = useFetchMapElements();
-
-  const navigate = useNavigate();
 
   const handleMapLoad = useCallback(() => {
     if (!mapElements) return;
@@ -234,19 +224,24 @@ export const Map = () => {
 
     const layers = map.current.getStyle().layers || [];
 
-    layers.forEach((layer) => {
-      if (layer.id && (layer.id.includes("poi") || layer.id.includes("park"))) {
-        map.current?.setLayoutProperty(layer.id, "visibility", "none");
-      }
-    });
-
     const layersToHide = [
       "airport-label",
       "road-label",
       "road-number-shield",
       "settlement-subdivision-label",
       "transit-label",
+      "hillshade",
+      "contour",
+      "terrain",
+      // "landcover",
+      // "landuse",
     ];
+
+    layers.forEach((layer) => {
+      if (layer.id && (layer.id.includes("poi") || layer.id.includes("park"))) {
+        map.current?.setLayoutProperty(layer.id, "visibility", "none");
+      }
+    });
 
     layersToHide.forEach((layerId) => {
       if (map.current?.getLayer(layerId)) {
@@ -368,16 +363,6 @@ export const Map = () => {
       </div>
 
       <img
-        src={profileButton}
-        className={`${c.profileButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.PROFILE)}
-      ></img>
-      <img
-        src={infoButton}
-        className={`${c.infoButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.INFO)}
-      ></img>
-      <img
         src={sosButton}
         className={`${c.emergencyButton} ${c.generalButton}`}
         onClick={() => {
@@ -385,11 +370,14 @@ export const Map = () => {
         }}
       ></img>
 
-      <div
-        className={`${c.trackerButton} ${!isTracking ? `${c.trackerButtonStart}` : `${c.trackerButtonStop}`}`}
-        onClick={isTracking ? stopTracking : showAlert}
-      >
-        {isTracking ? "Stop" : "Start"}
+      <div className={c.trackerButtonContainer}>
+        <div
+          className={`${c.trackerButton} ${!isTracking ? `${c.trackerButtonStart}` : `${c.trackerButtonStop}`}`}
+          onClick={isTracking ? stopTracking : showAlert}
+        >
+          {isTracking ? "Stop" : "Start"}
+        </div>
+        <NavBar />
       </div>
 
       <RuleChecker

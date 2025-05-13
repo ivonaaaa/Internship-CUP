@@ -1,11 +1,17 @@
 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="40" height="40" rx="20" fill="#EBEFFC"/>
+<rect width="40" height="40" rx="20" fill="url(#paint0_linear_265_11032)"/>
 <mask id="mask0_265_11032" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="10" y="10" width="20" height="20">
 <path d="M20 11C24.97 11 29 15.03 29 20C29 24.97 24.97 29 20 29C15.03 29 11 24.97 11 20C11 15.03 15.03 11 20 11Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M21.8 21.8L15 25L18.2 18.2L25 15L21.8 21.8Z" fill="white"/>
 <path d="M20 21C20.5523 21 21 20.5523 21 20C21 19.4477 20.5523 19 20 19C19.4477 19 19 19.4477 19 20C19 20.5523 19.4477 21 20 21Z" fill="black"/>
 </mask>
 <g mask="url(#mask0_265_11032)">
-<path d="M32 8H8V32H32V8Z" fill="#153B61"/>
+<path d="M32 8H8V32H32V8Z" fill="white"/>
 </g>
+<defs>
+<linearGradient id="paint0_linear_265_11032" x1="20" y1="0" x2="20" y2="40" gradientUnits="userSpaceOnUse">
+<stop stop-color="#153B61"/>
+<stop offset="0.721154" stop-color="#1596D1"/>
+</linearGradient>
+</defs>
 </svg>

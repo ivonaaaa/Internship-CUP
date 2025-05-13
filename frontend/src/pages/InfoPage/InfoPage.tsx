@@ -1,10 +1,9 @@
 import c from "./InfoPage.module.css";
 import { InfoSection } from "../../components/InfoSection";
 import { useState } from "react";
-import homeButton from "../../assets/images/Home.png";
 import laws from "./laws.json";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants";
+import { NavBar } from "../../components/NavBar";
+import arrowLeft from "../../assets/images/ArrowLeft.svg";
 
 type InfoSectionType = {
   title: string;
@@ -15,33 +14,50 @@ export const InfoPage = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleSectionClick = (index: number) => {
-    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+    setOpenIndex(index);
   };
 
-  const navigate = useNavigate();
+  const handleBackClick = () => {
+    setOpenIndex(null);
+  };
 
   return (
     <div className={c.infoPage}>
-      <h1 className={c.infoPageHeader}>Rules and help</h1>
-      <div className={c.infoPageContent}>
-        {laws.map((section: InfoSectionType, index: number) => (
-          <InfoSection
-            key={index}
-            title={section.title}
-            content={section.content}
-            isOpen={openIndex === index}
-            onClick={() => handleSectionClick(index)}
-          />
-        ))}
-      </div>
-      <img
-        className={c.homeButton}
-        src={homeButton}
-        onClick={() => {
-          navigate(ROUTES.HOME);
-        }}
-        alt="Home"
-      />
+      {openIndex === null ? (
+        <>
+          <h1 className={c.infoPageHeader}>
+            Rules <br /> and help
+          </h1>
+          <div className={c.infoPageContent}>
+            {laws.map((section: InfoSectionType, index: number) => (
+              <InfoSection
+                key={index}
+                title={section.title}
+                content={section.content}
+                isOpen={false}
+                onClick={() => handleSectionClick(index)}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={c.detailHeader}>
+            <img
+              src={arrowLeft}
+              alt="Back"
+              className={c.backButton}
+              onClick={handleBackClick}
+            />
+            <h1 className={c.detailTitle}>Rules and help</h1>
+          </div>
+          <div className={c.detailContent}>
+            <h2>{laws[openIndex].title}</h2>
+            <p className={c.detailText}>{laws[openIndex].content}</p>
+          </div>
+        </>
+      )}
+      <NavBar />
     </div>
   );
 };
