@@ -3,18 +3,18 @@
   flex-direction: column;
   height: 100dvh;
   padding: 60px 16px;
-  gap: 68px;
+  gap: 36px;
   font-family: var(--primary-font);
-  background-color: var(--color-cloud);
   position: relative;
+  padding-top: 64px;
 }
 
 .infoPageHeader {
-  font-size: 32px;
-  font-weight: 700;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 48px;
   line-height: 44px;
-  letter-spacing: -2px;
-  text-align: center;
+  letter-spacing: -2%;
   color: var(--color-ocean);
 }
 
@@ -27,4 +27,48 @@
   position: absolute;
   bottom: 16px;
   right: 16px;
+}
+
+.detailHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.backButton {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.detailTitle {
+  font-family: var(--font-primary);
+  color: var(--color-ocean);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 44px;
+  letter-spacing: -2%;
+  text-align: center;
+}
+
+.detailContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.detailContent h2 {
+  color: var(--color-ocean);
+  margin-bottom: 15px;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+}
+
+.detailText {
+  color: #333;
+  line-height: 1.5;
 }

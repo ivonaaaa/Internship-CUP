@@ -1,6 +1,5 @@
 import c from "./InfoSection.module.css";
-import arrowUp from "../../assets/arrowUp.svg";
-import arrowDown from "../../assets/arrowDown.svg";
+import arrowRight from "../../assets/whiteArrowRight.svg";
 
 type InfoSectionProps = {
   title: string;
@@ -15,15 +14,11 @@ export const InfoSection = ({
   isOpen,
   onClick,
 }: InfoSectionProps) => {
-  const arrow = isOpen ? arrowUp : arrowDown;
   return (
-    <div className={c.infoSectionBox}>
+    <div className={c.infoSectionBox} onClick={onClick}>
       <div className={c.infoSectionHeader}>
         <h1>{title}</h1>
-        <img src={arrow} onClick={onClick} />
-      </div>
-      <div className={`${c.contentWrapper} ${isOpen ? c.open : ""}`}>
-        <p className={c.content}>{content}</p>
+        <img src={arrowRight} className={c.arrowIcon} alt="Open section" />
       </div>
     </div>
   );
