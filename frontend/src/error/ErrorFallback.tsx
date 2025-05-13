@@ -1,6 +1,7 @@
 import React from "react";
 import { ErrorFallbackProps } from "../types/errors";
 import c from "./ErrorFallback.module.css";
+import logoBackground from "../assets/big-logo-background.svg";
 
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   resetErrorBoundary,
@@ -10,8 +11,11 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
       <h2>Uh oh, something went wrong!</h2>
       <p>We apologize for the inconvenience.</p>
       {resetErrorBoundary && (
-        <button onClick={resetErrorBoundary}>Try again</button>
+        <div onClick={resetErrorBoundary} className={c.resetButton}>
+          Try again
+        </div>
       )}
+      <img src={logoBackground} className={c.logoBackground} />
     </div>
   );
 };
