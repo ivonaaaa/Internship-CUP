@@ -234,19 +234,24 @@ export const Map = () => {
 
     const layers = map.current.getStyle().layers || [];
 
-    layers.forEach((layer) => {
-      if (layer.id && (layer.id.includes("poi") || layer.id.includes("park"))) {
-        map.current?.setLayoutProperty(layer.id, "visibility", "none");
-      }
-    });
-
     const layersToHide = [
       "airport-label",
       "road-label",
       "road-number-shield",
       "settlement-subdivision-label",
       "transit-label",
+      "hillshade",
+      "contour",
+      "terrain",
+      // "landcover",
+      // "landuse",
     ];
+
+    layers.forEach((layer) => {
+      if (layer.id && (layer.id.includes("poi") || layer.id.includes("park"))) {
+        map.current?.setLayoutProperty(layer.id, "visibility", "none");
+      }
+    });
 
     layersToHide.forEach((layerId) => {
       if (map.current?.getLayer(layerId)) {
