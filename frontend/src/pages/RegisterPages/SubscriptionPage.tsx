@@ -18,10 +18,7 @@ export const SubscriptionPage: React.FC = () => {
     { id: "yearly", period: "12 months", price: 49.99 },
   ];
 
-  const handlePlanSelect = (planId: string) => {
-    setSelectedPlan(planId);
-  };
-
+  const handlePlanSelect = (planId: string) => setSelectedPlan(planId);
   const handleNext = () => {
     if (selectedPlan) navigate("/register-payment");
   };

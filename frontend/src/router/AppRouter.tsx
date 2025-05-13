@@ -28,18 +28,14 @@ export const AppRouter = () => {
         <Route element={<ProtectedRoute />}>
           <Route path={ROUTES.REGISTERBOAT} element={<RegisterBoatPage />} />
           <Route
-            path={ROUTES.REGISTERSUBSCRIPTION}
+            path={ROUTES.REGISTER_SUBSCRIPTION}
             element={<SubscriptionPage />}
           />
-          <Route path={ROUTES.REGISTERPAYMENT} element={<PaymentPage />} />
-          <Route path={ROUTES.REGISTERCARD} element={<CardPage />} />
+          <Route path={ROUTES.REGISTER_PAYMENT} element={<PaymentPage />} />
+          <Route path={ROUTES.REGISTER_CARD} element={<CardPage />} />
           <Route path={ROUTES.ADD_BOAT} element={<AddBoatPage />} />
           <Route path={ROUTES.EDIT_BOAT} element={<EditBoatPage />} />
           <Route path={ROUTES.INFO_BOAT} element={<InfoBoatPage />} />
-          <Route
-            path={ROUTES.REGISTERSUBSCRIPTION}
-            element={<SubscriptionPage />}
-          />
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
           <Route path={ROUTES.PROFILE_EDIT} element={<EditProfilePage />} />

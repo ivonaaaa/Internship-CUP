@@ -13,10 +13,7 @@ export const CardPage: React.FC = () => {
   const [cvv, setCvv] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleCancel = () => {
-    navigate(-1);
-  };
-
+  const handleCancel = () => navigate(-1);
   const handlePay = () => {
     const validationErrors = validateCardDetails(
       name,

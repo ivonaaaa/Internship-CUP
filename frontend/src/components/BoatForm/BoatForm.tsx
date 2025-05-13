@@ -177,11 +177,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       } else {
         createBoat(boatData, {
           onSuccess: () => {
-            if (context === "profile") {
-              navigate("/profile");
-            } else {
-              navigate("/register-subscription");
-            }
+            if (context === "profile") navigate("/profile");
+            else navigate("/register-subscription");
           },
           onError: (error: any) => {
             const errorMessage =
@@ -220,7 +217,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           onChange={handleChange}
           required
           readOnly={isReadOnly}
-          className={`${isReadOnly ? c.readOnlyInput : ""}`}
+          className={isReadOnly ? c.readOnlyInput : ""}
         />
         {fieldErrors.name.map((error, index) => (
           <div key={`name-error-${index}`} className={c.fieldError}>
@@ -237,7 +234,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           onChange={handleChange}
           required
           disabled={isReadOnly}
-          className={`${isReadOnly ? c.readOnlyInput : ""}`}
+          className={isReadOnly ? c.readOnlyInput : ""}
         >
           <option value="">Boat type</option>
           <option value={BoatType.MOTORBOAT}>Motorboat</option>
@@ -254,7 +251,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       <div className={c.rowGroup}>
         <div className={c.mInputGroup}>
           <label htmlFor="length">Length</label>
-          <div className={`${c.inputWithPrefix}`}>
+          <div className={c.inputWithPrefix}>
             <span>m</span>
             <input
               type="number"
@@ -278,7 +275,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
 
         <div className={c.mInputGroup}>
           <label htmlFor="width">Width</label>
-          <div className={`${c.inputWithPrefix}`}>
+          <div className={c.inputWithPrefix}>
             <span>m</span>
             <input
               type="number"
@@ -312,7 +309,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           onChange={handleChange}
           required
           readOnly={isReadOnly}
-          className={`${isReadOnly ? c.readOnlyInput : ""}`}
+          className={isReadOnly ? c.readOnlyInput : ""}
         />
         {fieldErrors.registration.map((error, index) => (
           <div key={`reg-error-${index}`} className={c.fieldError}>
