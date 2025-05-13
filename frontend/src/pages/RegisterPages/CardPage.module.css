@@ -79,7 +79,7 @@
 
 .row {
   display: flex;
-  gap: 5rem;
+  gap: 4rem;
   width: 100%;
 }
 
@@ -112,4 +112,11 @@
   background-color: var(--color-ocean);
   color: white;
   font-weight: 600;
+}
+
+.errorMessage {
+  color: var(--color-red);
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 500;
 }

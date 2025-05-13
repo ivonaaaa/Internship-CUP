@@ -14,7 +14,7 @@ button {
   background-color: var(--color-ocean);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 7px;
   transition: background-color 0.3s ease;
 }
 
@@ -23,12 +23,10 @@ button:hover {
 }
 
 .page-container {
-  background-color: var(--color-cloud);
+  background-color: white;
   font-family: var(--font-primary);
   min-height: 100vh;
-
   display: flex;
   justify-content: center;
-  align-items: center;
   padding: 40px 20px;
 }

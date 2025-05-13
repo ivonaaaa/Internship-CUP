@@ -6,7 +6,7 @@
 .authForm h2 {
   text-align: center;
   margin-bottom: 24px;
-  font-size: 24px;
+  font-size: 2rem;
   color: #333;
 }
 
@@ -38,23 +38,13 @@
   box-shadow: 0 0 5px rgba(74, 144, 226, 0.2);
 }
 
+.errorText {
+  color: var(--color-red);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
 .submitButton {
   width: 100%;
   margin-top: 10px;
-}
-
-.errorList {
-  background-color: #fff1f0;
-  border: 1px solid var(--color-red);
-  border-radius: 6px;
-  padding: 10px 15px;
-  margin: 16px 0;
-  list-style-type: disc;
-  list-style-position: inside;
-}
-
-.error {
-  color: var(--color-red);
-  font-size: 14px;
-  margin-bottom: 4px;
 }
