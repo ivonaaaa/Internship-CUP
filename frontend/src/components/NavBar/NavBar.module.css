@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 5vw;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   box-shadow: 5px 8px 16px 0 rgba(21, 150, 209, 0.4);

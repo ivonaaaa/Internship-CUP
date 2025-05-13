@@ -10,18 +10,18 @@ export const NavBar = () => {
     <div className={c.navBar}>
       <img
         src={infoButton}
-        className={`${c.navButton}`}
+        className={c.navButton}
         onClick={() => navigate(ROUTES.INFO)}
       ></img>
       <img
         src={homeButton}
-        className={`${c.navButton}`}
+        className={c.navButton}
         onClick={() => navigate(ROUTES.HOME)}
       ></img>
 
       <img
         src={profileButton}
-        className={`${c.navButton}`}
+        className={c.navButton}
         onClick={() => navigate(ROUTES.PROFILE)}
       ></img>
     </div>
