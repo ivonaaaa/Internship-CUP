@@ -46,7 +46,22 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     width: "",
   });
 
-  const [errors, setErrors] = useState<string[]>([]);
+  const [fieldErrors, setFieldErrors] = useState<{
+    name: string[];
+    boatType: string[];
+    length: string[];
+    width: string[];
+    registration: string[];
+    general: string[];
+  }>({
+    name: [],
+    boatType: [],
+    length: [],
+    width: [],
+    registration: [],
+    general: [],
+  });
+
   const isReadOnly = mode === "info";
 
   useEffect(() => {
@@ -77,6 +92,12 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       ...formData,
       [name]: name === "boatType" ? (value as BoatType) : value,
     });
+
+    // Clear error for this field when user starts typing
+    setFieldErrors((prev) => ({
+      ...prev,
+      [name]: [],
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -85,12 +106,39 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     if (isReadOnly) return;
 
     const validationErrors = validateBoatForm(formData);
+
     if (validationErrors.length > 0) {
-      setErrors(validationErrors);
+      // Map general errors to specific fields
+      const mappedErrors = {
+        name: validationErrors.filter((err) => err.includes("name")),
+        boatType: validationErrors.filter((err) => err.includes("type")),
+        length: validationErrors.filter((err) => err.includes("Length")),
+        width: validationErrors.filter((err) => err.includes("Width")),
+        registration: validationErrors.filter((err) =>
+          err.includes("Registration")
+        ),
+        general: validationErrors.filter(
+          (err) =>
+            !err.includes("name") &&
+            !err.includes("type") &&
+            !err.includes("Length") &&
+            !err.includes("Width") &&
+            !err.includes("Registration")
+        ),
+      };
+
+      setFieldErrors(mappedErrors);
       return;
     }
 
-    setErrors([]);
+    setFieldErrors({
+      name: [],
+      boatType: [],
+      length: [],
+      width: [],
+      registration: [],
+      general: [],
+    });
 
     try {
       const boatData = {
@@ -116,33 +164,41 @@ export const BoatForm: React.FC<BoatFormProps> = ({
               const errorMessage =
                 error?.response?.data?.message ||
                 "Failed to update boat. Please try again.";
-              setErrors(
-                Array.isArray(errorMessage) ? errorMessage : [errorMessage]
-              );
+
+              setFieldErrors((prev) => ({
+                ...prev,
+                general: Array.isArray(errorMessage)
+                  ? errorMessage
+                  : [errorMessage],
+              }));
             },
           }
         );
       } else {
         createBoat(boatData, {
           onSuccess: () => {
-            if (context === "profile") {
-              navigate("/profile");
-            } else {
-              navigate("/register-subscription");
-            }
+            if (context === "profile") navigate("/profile");
+            else navigate("/register-subscription");
           },
           onError: (error: any) => {
             const errorMessage =
               error?.response?.data?.message ||
               "Failed to register boat. Please try again.";
-            setErrors(
-              Array.isArray(errorMessage) ? errorMessage : [errorMessage]
-            );
+
+            setFieldErrors((prev) => ({
+              ...prev,
+              general: Array.isArray(errorMessage)
+                ? errorMessage
+                : [errorMessage],
+            }));
           },
         });
       }
     } catch (err: any) {
-      setErrors([err?.message || "An unexpected error occurred"]);
+      setFieldErrors((prev) => ({
+        ...prev,
+        general: [err?.message || "An unexpected error occurred"],
+      }));
     }
   };
 
@@ -163,6 +219,11 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           readOnly={isReadOnly}
           className={isReadOnly ? c.readOnlyInput : ""}
         />
+        {fieldErrors.name.map((error, index) => (
+          <div key={`name-error-${index}`} className={c.fieldError}>
+            {error}
+          </div>
+        ))}
       </div>
 
       <div className={c.formGroup}>
@@ -180,6 +241,11 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           <option value={BoatType.DINGHY}>Dinghy</option>
           <option value={BoatType.YACHT}>Yacht</option>
         </select>
+        {fieldErrors.boatType.map((error, index) => (
+          <div key={`type-error-${index}`} className={c.fieldError}>
+            {error}
+          </div>
+        ))}
       </div>
 
       <div className={c.rowGroup}>
@@ -200,6 +266,11 @@ export const BoatForm: React.FC<BoatFormProps> = ({
               className={isReadOnly ? c.readOnlyInput : ""}
             />
           </div>
+          {fieldErrors.length.map((error, index) => (
+            <div key={`length-error-${index}`} className={c.fieldError}>
+              {error}
+            </div>
+          ))}
         </div>
 
         <div className={c.mInputGroup}>
@@ -219,6 +290,11 @@ export const BoatForm: React.FC<BoatFormProps> = ({
               className={isReadOnly ? c.readOnlyInput : ""}
             />
           </div>
+          {fieldErrors.width.map((error, index) => (
+            <div key={`width-error-${index}`} className={c.fieldError}>
+              {error}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -235,17 +311,21 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           readOnly={isReadOnly}
           className={isReadOnly ? c.readOnlyInput : ""}
         />
+        {fieldErrors.registration.map((error, index) => (
+          <div key={`reg-error-${index}`} className={c.fieldError}>
+            {error}
+          </div>
+        ))}
       </div>
 
-      {errors.length > 0 && (
-        <ul className={c.errorList}>
-          {errors.map((msg, index) => (
-            <li key={index} className={c.error}>
-              {msg}
-            </li>
+      {fieldErrors.general.length > 0 && (
+        <ul>
+          {fieldErrors.general.map((msg, index) => (
+            <li key={index}>{msg}</li>
           ))}
         </ul>
       )}
+
       {mode === "info" ? (
         <Link to={`/boat/edit/${boatId}`}>Edit info</Link>
       ) : (

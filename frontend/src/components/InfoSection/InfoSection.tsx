@@ -1,6 +1,6 @@
 import c from "./InfoSection.module.css";
-import arrowUp from "../../assets/arrowUp.svg";
-import arrowDown from "../../assets/arrowDown.svg";
+import arrowUp from "../../assets/images/arrowUp.svg";
+import arrowDown from "../../assets/images/arrowDown.svg";
 
 type InfoSectionProps = {
   title: string;
