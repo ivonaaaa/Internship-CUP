@@ -13,6 +13,7 @@
   width: 60%;
   padding: 40px;
   max-height: 400px;
+  font-family: var(--font-primary);
 }
 
 .soundAlertContent {

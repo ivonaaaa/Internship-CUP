@@ -18,6 +18,7 @@ import {
   minusButton,
   profileButton,
   compassButton,
+  homeButton,
 } from "./buttons";
 import { SoundAlertNotification } from "../SoundAlertNotification";
 
@@ -373,16 +374,6 @@ export const Map = () => {
       </div>
 
       <img
-        src={profileButton}
-        className={`${c.profileButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.PROFILE)}
-      ></img>
-      <img
-        src={infoButton}
-        className={`${c.infoButton} ${c.generalButton}`}
-        onClick={() => navigate(ROUTES.INFO)}
-      ></img>
-      <img
         src={sosButton}
         className={`${c.emergencyButton} ${c.generalButton}`}
         onClick={() => {
@@ -390,11 +381,31 @@ export const Map = () => {
         }}
       ></img>
 
-      <div
-        className={`${c.trackerButton} ${!isTracking ? `${c.trackerButtonStart}` : `${c.trackerButtonStop}`}`}
-        onClick={isTracking ? stopTracking : showAlert}
-      >
-        {isTracking ? "Stop" : "Start"}
+      <div className={c.trackerButtonContainer}>
+        <div
+          className={`${c.trackerButton} ${!isTracking ? `${c.trackerButtonStart}` : `${c.trackerButtonStop}`}`}
+          onClick={isTracking ? stopTracking : showAlert}
+        >
+          {isTracking ? "Stop" : "Start"}
+        </div>
+        <div className={c.trackerContainerButtons}>
+          <img
+            src={infoButton}
+            className={`${c.infoButton}`}
+            onClick={() => navigate(ROUTES.INFO)}
+          ></img>
+          <img
+            src={homeButton}
+            className={`${c.profileButton}`}
+            onClick={() => navigate(ROUTES.PROFILE)}
+          ></img>
+
+          <img
+            src={profileButton}
+            className={`${c.profileButton}`}
+            onClick={() => navigate(ROUTES.PROFILE)}
+          ></img>
+        </div>
       </div>
 
       <RuleChecker

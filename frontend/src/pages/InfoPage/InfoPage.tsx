@@ -1,7 +1,7 @@
 import c from "./InfoPage.module.css";
 import { InfoSection } from "../../components/InfoSection";
 import { useState } from "react";
-import homeButton from "../../assets/Home.png";
+import homeButton from "../../assets/Home.svg";
 import laws from "./laws.json";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants";

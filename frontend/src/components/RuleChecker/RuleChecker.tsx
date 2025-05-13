@@ -56,7 +56,7 @@ export const RuleChecker = ({
 
       console.log("Speed (km/h):", speedKmh.toFixed(2));
 
-      if (speedKmh > 100) {
+      if (speedKmh > 50) {
         console.log("Speed limit exceeded!");
       }
     }
@@ -135,8 +135,6 @@ export const RuleChecker = ({
         coordinates: userLocation,
       },
     };
-
-    console.log("Notification data:", notificationData);
 
     createNotification(notificationData);
 
