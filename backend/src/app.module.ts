@@ -20,6 +20,10 @@ import { NotificationModule } from './modules/notification/notification.module';
     TransactionModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'frontend', 'dist'),
+      exclude: ['/api*'],
+      serveStaticOptions: {
+        index: false,
+      },
     }),
   ],
 })
