@@ -1,10 +1,10 @@
-import sosButton from "../../assets/Sos icon.svg";
-import plusButton from "../../assets/Plus icon.svg";
-import minusButton from "../../assets/Minus icon.svg";
-import compassButton from "../../assets/Navigation icon.svg";
-import profileButton from "../../assets/Profile icon no background.svg";
-import infoButton from "../../assets/Rules and help no background.svg";
-import homeButton from "../../assets/Home no background.svg";
+import sosButton from "../../assets/images/Sos icon.svg";
+import plusButton from "../../assets/images/Plus icon.svg";
+import minusButton from "../../assets/images/Minus icon.svg";
+import compassButton from "../../assets/images/Navigation icon.svg";
+import profileButton from "../../assets/images/Profile icon no background.svg";
+import infoButton from "../../assets/images/Rules and help no background.svg";
+import homeButton from "../../assets/images/Home no background.svg";
 
 export {
   sosButton,

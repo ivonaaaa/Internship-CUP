@@ -1,5 +1,5 @@
 import c from "./InfoSection.module.css";
-import arrowRight from "../../assets/whiteArrowRight.svg";
+import arrowRight from "../../assets/images/whiteArrowRight.svg";
 
 type InfoSectionProps = {
   title: string;
@@ -8,12 +8,7 @@ type InfoSectionProps = {
   onClick: () => void;
 };
 
-export const InfoSection = ({
-  title,
-  content,
-  isOpen,
-  onClick,
-}: InfoSectionProps) => {
+export const InfoSection = ({ title, onClick }: InfoSectionProps) => {
   return (
     <div className={c.infoSectionBox} onClick={onClick}>
       <div className={c.infoSectionHeader}>

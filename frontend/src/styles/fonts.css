@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "MyFont";
+  src: url("../assets/fonts/omnes-2/Omnes Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --font-primary: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-primary: "inter", sans-serif;
+  --font-omnes: "MyFont2", sans-serif;
 }

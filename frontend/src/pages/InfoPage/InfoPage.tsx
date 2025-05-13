@@ -3,7 +3,7 @@ import { InfoSection } from "../../components/InfoSection";
 import { useState } from "react";
 import laws from "./laws.json";
 import { NavBar } from "../../components/NavBar";
-import arrowLeft from "../../assets/ArrowLeft.svg";
+import arrowLeft from "../../assets/images/ArrowLeft.svg";
 
 type InfoSectionType = {
   title: string;

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./NotFoundPage.module.css";
-import logoBackground from "../../assets/big-logo-background.svg";
+import logoBackground from "../../assets/images/big-logo-background.svg";
 import { ROUTES } from "../../constants";
 
 export const NotFoundPage = () => {

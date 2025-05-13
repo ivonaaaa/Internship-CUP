@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorFallbackProps } from "../types/errors";
 import c from "./ErrorFallback.module.css";
-import logoBackground from "../assets/big-logo-background.svg";
+import logoBackground from "../assets/images/big-logo-background.svg";
 
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
   resetErrorBoundary,

@@ -23,29 +23,39 @@ export const PlanButton: React.FC<PlanButtonProps> = ({
       onClick={handleClick}
       aria-pressed={isSelected}
     >
-      <div className={styles.period}>{plan.period}</div>
-
-      <div className={styles.checkCircle}>
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            fill={isSelected ? "#000000" : "#e0e0e0"}
-          />
-          {isSelected && (
-            <path
-              d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
-              fill="white"
-              transform="scale(0.6)"
-              style={{ transformOrigin: "center" }}
-            />
-          )}
-        </svg>
+      <div className={styles.topRow}>
+        <div className={styles.period}>{plan.period}</div>
+        <div className={styles.checkCircle}>
+          <div
+            className={`${styles.circle} ${isSelected ? styles.circleSelected : ""}`}
+          >
+            <svg
+              className={styles.checkIcon}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M9 16.2l-4.2-4.2-1.4 1.4L9 19l12-12-1.4-1.4z"
+                fill={isSelected ? "white" : "#999"}
+              />
+            </svg>
+          </div>
+        </div>
       </div>
 
-      <div className={styles.priceLabel}>price EUR</div>
-      <div className={styles.priceValue}>{plan.price.toFixed(2)}</div>
+      <div className={styles.bottomRow}>
+        <div className={styles.price}>{plan.price.toFixed(2)}€</div>
+        <div className={styles.subPrice}>
+          <div>
+            {plan.id === "weekly"
+              ? (plan.price / 7).toFixed(2) + "€"
+              : (plan.price / 12).toFixed(2) + "€"}
+          </div>
+          <div className={styles.subPriceText}>
+            {plan.id === "weekly" ? "per day" : "per month"}
+          </div>
+        </div>
+      </div>
     </button>
   );
 };

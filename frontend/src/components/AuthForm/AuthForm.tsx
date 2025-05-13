@@ -20,14 +20,25 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState<string[]>([]);
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+  const [generalErrors, setGeneralErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
   };
 
   const getErrorMessage = (err: any): string[] => {
@@ -73,17 +84,56 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
     return ["An unknown error occurred."];
   };
 
+  const createFieldErrorsMap = (
+    validationErrors: string[]
+  ): { [key: string]: string } => {
+    const errorMap: { [key: string]: string } = {};
+    const generalErrors: string[] = [];
+
+    validationErrors.forEach((error) => {
+      const lowerCaseError = error.toLowerCase();
+
+      if (lowerCaseError.includes("email")) errorMap.email = error;
+      else if (
+        lowerCaseError.includes("first name") ||
+        (lowerCaseError.includes("name") &&
+          !lowerCaseError.includes("last") &&
+          !lowerCaseError.includes("surname"))
+      ) {
+        errorMap.name = error;
+      } else if (
+        lowerCaseError.includes("last name") ||
+        lowerCaseError.includes("surname")
+      ) {
+        errorMap.surname = error;
+      } else if (
+        lowerCaseError.includes("password") &&
+        lowerCaseError.includes("confirm")
+      ) {
+        errorMap.confirmPassword = error;
+      } else if (lowerCaseError.includes("password")) errorMap.password = error;
+      else generalErrors.push(error);
+    });
+
+    setGeneralErrors(generalErrors);
+
+    return errorMap;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const isRegisterMode = mode === "register";
     const validationErrors = validateAuthForm(formData, isRegisterMode);
+
     if (validationErrors.length > 0) {
-      setErrors(validationErrors);
+      const errorMap = createFieldErrorsMap(validationErrors);
+      setFieldErrors(errorMap);
       return;
     }
 
-    setErrors([]);
+    setFieldErrors({});
+    setGeneralErrors([]);
     setIsLoading(true);
 
     try {
@@ -100,7 +150,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         navigate("/");
       }
     } catch (err: any) {
-      setErrors(getErrorMessage(err));
+      const errorMessages = getErrorMessage(err);
+      // API greške stavljamo u opće greške
+      setGeneralErrors(errorMessages);
     } finally {
       setIsLoading(false);
     }
@@ -126,6 +178,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
               onChange={handleChange}
               required
             />
+            {fieldErrors.name && (
+              <div className={c.errorText}>{fieldErrors.name}</div>
+            )}
           </div>
 
           <div className={c.formGroup}>
@@ -139,6 +194,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
               onChange={handleChange}
               required
             />
+            {fieldErrors.surname && (
+              <div className={c.errorText}>{fieldErrors.surname}</div>
+            )}
           </div>
         </>
       )}
@@ -154,6 +212,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           onChange={handleChange}
           required
         />
+        {fieldErrors.email && (
+          <div className={c.errorText}>{fieldErrors.email}</div>
+        )}
       </div>
 
       <div className={c.formGroup}>
@@ -167,6 +228,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           onChange={handleChange}
           required
         />
+        {fieldErrors.password && (
+          <div className={c.errorText}>{fieldErrors.password}</div>
+        )}
       </div>
 
       {!isLogin && (
@@ -181,12 +245,15 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             onChange={handleChange}
             required
           />
+          {fieldErrors.confirmPassword && (
+            <div className={c.errorText}>{fieldErrors.confirmPassword}</div>
+          )}
         </div>
       )}
 
-      {errors.length > 0 && (
+      {generalErrors.length > 0 && (
         <ul className={c.errorList}>
-          {errors.map((msg, index) => (
+          {generalErrors.map((msg, index) => (
             <li key={index} className={c.error}>
               {msg}
             </li>
