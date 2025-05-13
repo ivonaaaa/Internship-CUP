@@ -35,12 +35,14 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  app.use('*', (req: Request, res: Response) => {
-    if (!req.originalUrl.startsWith('/api')) {
-      res.sendFile(
-        join(__dirname, '..', '..', '..', 'frontend', 'dist', 'index.html'),
-      );
+  app.use((req: Request, res: Response, next) => {
+    if (req.originalUrl.startsWith('/api') || req.originalUrl.includes('.')) {
+      return next();
     }
+
+    res.sendFile(
+      join(__dirname, '..', '..', '..', 'frontend', 'dist', 'index.html'),
+    );
   });
 
   await app.listen(process.env.PORT || 3000);
