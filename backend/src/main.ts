@@ -3,6 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { join } from 'path';
+import { Request, Response } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -32,6 +34,14 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  app.use('*', (req: Request, res: Response) => {
+    if (!req.originalUrl.startsWith('/api')) {
+      res.sendFile(
+        join(__dirname, '..', '..', '..', 'frontend', 'dist', 'index.html'),
+      );
+    }
+  });
 
   await app.listen(process.env.PORT || 3000);
 }
