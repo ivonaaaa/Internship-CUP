@@ -8,7 +8,6 @@ import { MapElementModule } from './modules/map-element/map-element.module';
 import { RuleModule } from './modules/rule/rule.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { NotificationModule } from './modules/notification/notification.module';
-import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -21,9 +20,7 @@ import { AppController } from './app.controller';
     TransactionModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'frontend', 'dist'),
-      exclude: ['/api*'],
     }),
   ],
-  controllers: [AppController],
 })
 export class AppModule {}
