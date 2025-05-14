@@ -9,6 +9,7 @@ import { BoatType } from "../../types/boats";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateBoatForm } from "../../utils/BoatFormValidation";
 import c from "./BoatForm.module.css";
+import { ROUTES } from "../../constants";
 
 interface BoatFormProps {
   context?: "registration" | "profile";
@@ -323,7 +324,13 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       {mode === "info" ? (
         <Link to={`/boat/edit/${boatId}`}>Edit info</Link>
       ) : (
-        <div className={c.buttonContainer}>
+        <div className={c.buttonGroup}>
+          <button
+            className={c.cancelButton}
+            onClick={() => navigate(ROUTES.PROFILE)}
+          >
+            Cancel
+          </button>
           <button
             type="submit"
             className={c.submitButton}
@@ -332,7 +339,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
             {mode === "edit"
               ? isUpdating
                 ? "Updating..."
-                : "Update Boat"
+                : "Confirm"
               : isCreating
                 ? "Processing..."
                 : "Next"}

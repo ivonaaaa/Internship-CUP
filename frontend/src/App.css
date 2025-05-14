@@ -15,7 +15,6 @@ button {
   color: white;
   border: none;
   border-radius: 7px;
-  transition: background-color 0.3s ease;
 }
 
 .page-container {
@@ -54,7 +53,8 @@ button {
   color: #444;
 }
 
-.formGroup input, .formGroup select {
+.formGroup input,
+.formGroup select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -69,4 +69,12 @@ button {
   outline: none;
   border-color: #4a90e2;
   box-shadow: 0 0 5px rgba(74, 144, 226, 0.2);
+}
+
+.arrow {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  top: 64px;
+  left: 20px;
 }

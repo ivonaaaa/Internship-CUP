@@ -15,6 +15,10 @@ const fetchBoatById = (id: number) => {
   return api.get<never, Boat>(`${BOATS_PATH}/${id}`);
 };
 
+const deleteBoatById = (id: number) => {
+  return api.delete<never, Boat>(`${BOATS_PATH}/${id}`);
+};
+
 export const useAllBoats = () => {
   return useQuery({
     queryKey: ["boats"],
@@ -74,7 +78,7 @@ export const useDeleteBoat = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => api.delete<never, Boat>(`${BOATS_PATH}/${id}`),
+    mutationFn: deleteBoatById,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["boats"] });
       queryClient.invalidateQueries({ queryKey: ["userBoats"] });

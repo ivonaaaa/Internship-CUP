@@ -2,9 +2,16 @@ import { useNavigate } from "react-router-dom";
 import Dolphin from "../../assets/images/dolphin.png";
 import Sea from "../../assets/images/sea.png";
 import c from "./StartPage.module.css";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const StartPage: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleLiveDemoClick = async () => {
+    await login("marko@gmail.com", "password123");
+    navigate("/");
+  };
 
   return (
     <div className={c.container}>
@@ -22,6 +29,9 @@ export const StartPage: React.FC = () => {
       <p className={c.registerText}>
         Don't have an account?{" "}
         <span onClick={() => navigate("/register")}>Register</span>
+      </p>
+      <p className={c.liveDemoText} onClick={handleLiveDemoClick}>
+        Try live demo
       </p>
     </div>
   );

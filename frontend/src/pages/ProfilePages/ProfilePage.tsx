@@ -2,25 +2,42 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useUserBoats } from "../../api/boat/useBoatQueries";
 import styles from "./ProfilePage.module.css";
+import { ROUTES } from "../../constants";
+import { useDeleteBoat } from "../../api/boat/useBoatQueries";
 
 export const ProfilePage = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const { data: boats, isLoading: boatsLoading } = useUserBoats(user?.id || 0);
+  const { mutate: deleteBoatById } = useDeleteBoat();
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate(ROUTES.LOGIN);
   };
 
-  const handleEditProfile = () => navigate("/profile/edit");
+  const handleEditProfile = () => navigate(ROUTES.PROFILE_EDIT);
 
-  const handleAddBoat = () => navigate("/boat/add");
+  const handleAddBoat = () => navigate(ROUTES.ADD_BOAT);
 
-  const handleEditBoat = (boatId: number) => navigate(`/boat/edit/${boatId}`);
+  const handleEditBoat = (boatId: number) =>
+    navigate(ROUTES.EDIT_BOAT.replace(":id", boatId.toString()));
 
-  const handleInfoBoat = (boatId: number) => navigate(`/boat/info/${boatId}`);
+  const handleInfoBoat = (boatId: number) =>
+    navigate(ROUTES.INFO_BOAT.replace(":id", boatId.toString()));
+
+  const handleRemoveBoat = async (boatId: number) => {
+    if (confirm("Are you sure you want to remove this boat?")) {
+      try {
+        await deleteBoatById(boatId);
+        alert("Boat removed successfully");
+      } catch (error) {
+        console.error("Error removing boat:", error);
+        alert("Failed to remove boat");
+      }
+    }
+  };
 
   if (!user) return <div className={styles.loadingContainer}>Loading...</div>;
 
@@ -61,12 +78,20 @@ export const ProfilePage = () => {
                     {boat.name || `Boat ${index + 1}`}
                   </div>
                 </div>
-                <button
-                  className={styles.editBoatButton}
-                  onClick={() => handleEditBoat(boat.id)}
-                >
-                  Edit
-                </button>
+                <div className={styles.boatButtons}>
+                  <button
+                    className={styles.editBoatButton}
+                    onClick={() => handleEditBoat(boat.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className={styles.editBoatButton}
+                    onClick={() => handleRemoveBoat(boat.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             ))
           ) : null}
