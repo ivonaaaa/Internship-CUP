@@ -6,7 +6,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { MapElementModule } from './modules/map-element/map-element.module';
 import { RuleModule } from './modules/rule/rule.module';
-import { TransactionModule } from './modules/transaction/transaction.module';
 import { NotificationModule } from './modules/notification/notification.module';
 
 @Module({
@@ -17,7 +16,6 @@ import { NotificationModule } from './modules/notification/notification.module';
     MapElementModule,
     NotificationModule,
     RuleModule,
-    TransactionModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'frontend', 'dist'),
       exclude: ['/api*'],
