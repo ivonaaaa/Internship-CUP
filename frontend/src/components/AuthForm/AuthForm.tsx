@@ -151,7 +151,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       }
     } catch (err: any) {
       const errorMessages = getErrorMessage(err);
-      // API greške stavljamo u opće greške
       setGeneralErrors(errorMessages);
     } finally {
       setIsLoading(false);
@@ -159,7 +158,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   };
 
   const isLogin = mode === "login";
-  const title = isLogin ? "Sign In" : "Sign Up";
+  const title = isLogin ? "Sign In" : "Next";
 
   return (
     <form onSubmit={handleSubmit} className={c.authForm}>

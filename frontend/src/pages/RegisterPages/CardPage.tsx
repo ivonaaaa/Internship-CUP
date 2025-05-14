@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./CardPage.module.css";
 import MasterCardIcon from "../../assets/images/Mastercard.svg";
 import { validateCardDetails } from "../../utils/CardFormValidation";
+import c from "./CardPage.module.css";
 
 export const CardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -125,7 +125,7 @@ export const CardPage: React.FC = () => {
         <div className={styles.column}>
           <label className={styles.label}>Expiration date</label>
           <input
-            className={styles.input}
+            className={c.input}
             type="text"
             placeholder="MM/YY"
             value={expiration}
@@ -133,30 +133,28 @@ export const CardPage: React.FC = () => {
             maxLength={5}
           />
           {errors.expiration && (
-            <div className={styles.errorMessage}>{errors.expiration}</div>
+            <div className={c.errorMessage}>{errors.expiration}</div>
           )}
         </div>
         <div className={styles.column}>
           <label className={styles.label}>CVV</label>
           <input
-            className={styles.input}
+            className={c.input}
             type="text"
             placeholder="XXX"
             value={cvv}
             onChange={handleCvvChange}
             maxLength={3}
           />
-          {errors.cvv && (
-            <div className={styles.errorMessage}>{errors.cvv}</div>
-          )}
+          {errors.cvv && <div className={c.errorMessage}>{errors.cvv}</div>}
         </div>
       </div>
 
-      <div className={styles.buttonGroup}>
-        <button className={styles.cancelBtn} onClick={handleCancel}>
+      <div className={c.buttonGroup}>
+        <button className={c.cancelBtn} onClick={handleCancel}>
           Cancel
         </button>
-        <button className={styles.payBtn} onClick={handlePay}>
+        <button className={c.payBtn} onClick={handlePay}>
           Pay now
         </button>
       </div>
