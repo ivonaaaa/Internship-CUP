@@ -1,13 +1,40 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { BoatDto } from './dto/boat.dto';
 import { CreateBoatDto } from './dto/create-boat.dto';
 import { UpdateBoatDto } from './dto/update-boat.dto';
-import { Boat } from '@prisma/client';
+import { Boat, Prisma } from '@prisma/client';
 
 @Injectable()
 export class BoatService {
   constructor(private prisma: PrismaService) {}
+
+  private async validateUniqueRegistration(
+    registration: string,
+    excludeBoatId?: number,
+  ): Promise<void> {
+    const query: Prisma.BoatWhereInput = {
+      registration,
+    };
+
+    if (excludeBoatId) {
+      query.NOT = { id: excludeBoatId };
+    }
+
+    const existingBoat = await this.prisma.boat.findFirst({
+      where: query,
+    });
+
+    if (existingBoat) {
+      throw new ConflictException(
+        `Boat with registration ${registration} already exists`,
+      );
+    }
+  }
 
   private mapToResponseDto(boat: Boat): BoatDto {
     return {
@@ -48,6 +75,8 @@ export class BoatService {
   }
 
   async create(createBoatDto: CreateBoatDto): Promise<BoatDto> {
+    await this.validateUniqueRegistration(createBoatDto.registration);
+
     const boat = await this.prisma.boat.create({
       data: createBoatDto,
     });
@@ -56,6 +85,9 @@ export class BoatService {
   }
 
   async update(id: number, updateBoatDto: UpdateBoatDto): Promise<BoatDto> {
+    if (updateBoatDto.registration)
+      await this.validateUniqueRegistration(updateBoatDto.registration, id);
+
     const existingBoat = await this.prisma.boat.findUnique({
       where: { id },
     });
