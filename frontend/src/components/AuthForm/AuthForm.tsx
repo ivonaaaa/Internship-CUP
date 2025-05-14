@@ -158,106 +158,108 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   };
 
   const isLogin = mode === "login";
-  const title = isLogin ? "Sign In" : "Next";
+  const title = isLogin ? "Sign In" : "Sign Up";
 
   return (
-    <form onSubmit={handleSubmit} className={c.authForm}>
-      <h2>{title}</h2>
+    <>
+      <h2 className={c.authFormTitle}>{title}</h2>
 
-      {!isLogin && (
-        <>
-          <div className={c.formGroup}>
-            <label htmlFor="name">First Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="First Name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            {fieldErrors.name && (
-              <div className={c.errorText}>{fieldErrors.name}</div>
-            )}
-          </div>
+      <form onSubmit={handleSubmit} className={c.authForm}>
+        {!isLogin && (
+          <>
+            <div className={c.formGroup}>
+              <label htmlFor="name">First Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="First Name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+              {fieldErrors.name && (
+                <div className={c.errorText}>{fieldErrors.name}</div>
+              )}
+            </div>
 
-          <div className={c.formGroup}>
-            <label htmlFor="surname">Last Name</label>
-            <input
-              type="text"
-              id="surname"
-              name="surname"
-              placeholder="Last Name"
-              value={formData.surname}
-              onChange={handleChange}
-            />
-            {fieldErrors.surname && (
-              <div className={c.errorText}>{fieldErrors.surname}</div>
-            )}
-          </div>
-        </>
-      )}
-
-      <div className={c.formGroup}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {fieldErrors.email && (
-          <div className={c.errorText}>{fieldErrors.email}</div>
+            <div className={c.formGroup}>
+              <label htmlFor="surname">Last Name</label>
+              <input
+                type="text"
+                id="surname"
+                name="surname"
+                placeholder="Last Name"
+                value={formData.surname}
+                onChange={handleChange}
+              />
+              {fieldErrors.surname && (
+                <div className={c.errorText}>{fieldErrors.surname}</div>
+              )}
+            </div>
+          </>
         )}
-      </div>
 
-      <div className={c.formGroup}>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {fieldErrors.password && (
-          <div className={c.errorText}>{fieldErrors.password}</div>
-        )}
-      </div>
-
-      {!isLogin && (
         <div className={c.formGroup}>
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label htmlFor="email">Email</label>
           <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
             onChange={handleChange}
           />
-          {fieldErrors.confirmPassword && (
-            <div className={c.errorText}>{fieldErrors.confirmPassword}</div>
+          {fieldErrors.email && (
+            <div className={c.errorText}>{fieldErrors.email}</div>
           )}
         </div>
-      )}
 
-      {generalErrors.length > 0 && (
-        <ul className={c.errorList}>
-          {generalErrors.map((msg, index) => (
-            <li key={index} className={c.error}>
-              {msg}
-            </li>
-          ))}
-        </ul>
-      )}
+        <div className={c.formGroup}>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          {fieldErrors.password && (
+            <div className={c.errorText}>{fieldErrors.password}</div>
+          )}
+        </div>
 
-      <button type="submit" className={c.submitButton} disabled={isLoading}>
-        {isLoading ? "Processing..." : title}
-      </button>
-    </form>
+        {!isLogin && (
+          <div className={c.formGroup}>
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            {fieldErrors.confirmPassword && (
+              <div className={c.errorText}>{fieldErrors.confirmPassword}</div>
+            )}
+          </div>
+        )}
+
+        {generalErrors.length > 0 && (
+          <ul className={c.errorList}>
+            {generalErrors.map((msg, index) => (
+              <li key={index} className={c.error}>
+                {msg}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <button type="submit" className={c.submitButton} disabled={isLoading}>
+          {isLoading ? "Processing..." : title}
+        </button>
+      </form>
+    </>
   );
 };
