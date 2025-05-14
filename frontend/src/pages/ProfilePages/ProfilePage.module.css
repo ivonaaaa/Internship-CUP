@@ -198,7 +198,10 @@
 .logoutButton {
   background: none;
   border: none;
-  color: #333;
+  color: white;
+  display: flex;
+  justify-content: center;
+  background-color: red;
   font-size: 1rem;
   padding: 1rem 0;
   cursor: pointer;
