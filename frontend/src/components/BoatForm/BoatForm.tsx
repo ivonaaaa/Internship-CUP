@@ -182,8 +182,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           },
           onError: (error: any) => {
             const errorMessage =
-              error?.response?.data?.message ||
-              "Failed to register boat. Please try again.";
+              error || "Failed to register boat. Please try again.";
 
             setFieldErrors((prev) => ({
               ...prev,
