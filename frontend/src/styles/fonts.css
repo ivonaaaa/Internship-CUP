@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "MyFont";
+  font-family: "Omnes";
   src: url("../assets/fonts/omnes-2/Omnes Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
@@ -8,5 +8,5 @@
 
 :root {
   --font-primary: "inter", sans-serif;
-  --font-omnes: "MyFont2", sans-serif;
+  --font-omnes: "Omnes", sans-serif;
 }
