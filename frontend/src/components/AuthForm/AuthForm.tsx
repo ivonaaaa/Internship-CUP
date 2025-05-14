@@ -176,7 +176,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
               placeholder="First Name"
               value={formData.name}
               onChange={handleChange}
-              required
             />
             {fieldErrors.name && (
               <div className={c.errorText}>{fieldErrors.name}</div>
@@ -192,7 +191,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
               placeholder="Last Name"
               value={formData.surname}
               onChange={handleChange}
-              required
             />
             {fieldErrors.surname && (
               <div className={c.errorText}>{fieldErrors.surname}</div>
@@ -210,7 +208,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          required
         />
         {fieldErrors.email && (
           <div className={c.errorText}>{fieldErrors.email}</div>
@@ -226,7 +223,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          required
         />
         {fieldErrors.password && (
           <div className={c.errorText}>{fieldErrors.password}</div>
@@ -243,7 +239,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            required
           />
           {fieldErrors.confirmPassword && (
             <div className={c.errorText}>{fieldErrors.confirmPassword}</div>

@@ -27,10 +27,13 @@ export const validateAuthForm = (
 ): string[] => {
   const errors: string[] = [];
 
-  if (!validateEmail(formData.email))
+  if (!validateRequired(formData.email)) errors.push("Email is required.");
+  else if (!validateEmail(formData.email))
     errors.push("Please enter a valid email address.");
 
-  if (!validatePassword(formData.password))
+  if (!validateRequired(formData.password))
+    errors.push("Password is required.");
+  else if (!validatePassword(formData.password))
     errors.push("Password must be at least 8 characters long.");
 
   if (isRegisterMode) {
@@ -40,7 +43,9 @@ export const validateAuthForm = (
     if (!validateRequired(formData.surname))
       errors.push("Last name is required.");
 
-    if (!validateMatch(formData.password, formData.confirmPassword))
+    if (!validateRequired(formData.confirmPassword))
+      errors.push("Please confirm your password.");
+    else if (!validateMatch(formData.password, formData.confirmPassword))
       errors.push("Passwords do not match.");
   }
 
