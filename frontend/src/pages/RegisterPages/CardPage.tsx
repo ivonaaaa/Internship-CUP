@@ -83,33 +83,27 @@ export const CardPage: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Enter card details</h1>
-      <div className={styles.column}>
-        <label className={styles.label}>Name and Surname</label>
+    <div className={c.container}>
+      <h1 className={c.title}>Enter card details</h1>
+      <div className={c.column}>
+        <label className={c.label}>Name and Surname</label>
         <input
-          className={styles.input}
+          className={c.input}
           type="text"
           placeholder="Enter your Name and Surname"
           value={name}
           onChange={handleNameChange}
         />
-        {errors.name && (
-          <div className={styles.errorMessage}>{errors.name}</div>
-        )}
+        {errors.name && <div className={c.errorMessage}>{errors.name}</div>}
       </div>
-      <div className={styles.column}>
-        <label className={styles.label}>Card number</label>
-        <div className={styles.cardInputWrapper}>
-          <div className={styles.cardIconWrapper}>
-            <img
-              src={MasterCardIcon}
-              alt="Card logo"
-              className={styles.cardIcon}
-            />
+      <div className={c.column}>
+        <label className={c.label}>Card number</label>
+        <div className={c.cardInputWrapper}>
+          <div className={c.cardIconWrapper}>
+            <img src={MasterCardIcon} alt="Card logo" className={c.cardIcon} />
           </div>
           <input
-            className={styles.cardInput}
+            className={c.cardInput}
             type="text"
             placeholder="Enter your card number"
             value={cardNumber}
@@ -118,12 +112,12 @@ export const CardPage: React.FC = () => {
           />
         </div>
         {errors.cardNumber && (
-          <div className={styles.errorMessage}>{errors.cardNumber}</div>
+          <div className={c.errorMessage}>{errors.cardNumber}</div>
         )}
       </div>
-      <div className={styles.row}>
-        <div className={styles.column}>
-          <label className={styles.label}>Expiration date</label>
+      <div className={c.row}>
+        <div className={c.column}>
+          <label className={c.label}>Expiration date</label>
           <input
             className={c.input}
             type="text"
@@ -136,8 +130,8 @@ export const CardPage: React.FC = () => {
             <div className={c.errorMessage}>{errors.expiration}</div>
           )}
         </div>
-        <div className={styles.column}>
-          <label className={styles.label}>CVV</label>
+        <div className={c.column}>
+          <label className={c.label}>CVV</label>
           <input
             className={c.input}
             type="text"
