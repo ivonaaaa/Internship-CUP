@@ -15,12 +15,14 @@ import { EditBoatPage } from "../pages/BoatPages/EditBoatPage";
 import { InfoBoatPage } from "../pages/BoatPages/InfoBoatPage";
 import { PaymentPage } from "../pages/RegisterPages/PaymentPage";
 import { CardPage } from "../pages/RegisterPages/CardPage";
+import { StartPage } from "../pages/StartPage/StartPage";
 
 export const AppRouter = () => {
   return (
     <Router>
       <Routes>
         {/* Public routes */}
+        <Route path={ROUTES.START} element={<StartPage />} />
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.REGISTER} element={<RegisterUserPage />} />
 

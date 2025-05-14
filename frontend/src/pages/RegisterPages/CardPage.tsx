@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./CardPage.module.css";
 import MasterCardIcon from "../../assets/images/Mastercard.svg";
 import { validateCardDetails } from "../../utils/CardFormValidation";
+import c from "./CardPage.module.css";
 
 export const CardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -83,30 +83,26 @@ export const CardPage: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Enter card details</h1>
+    <div className={c.container}>
+      <h1 className={c.title}>Enter card details</h1>
 
-      <label className={styles.label}>Name and Surname</label>
+      <label className={c.label}>Name and Surname</label>
       <input
-        className={styles.input}
+        className={c.input}
         type="text"
         placeholder="Enter your Name and Surname"
         value={name}
         onChange={handleNameChange}
       />
-      {errors.name && <div className={styles.errorMessage}>{errors.name}</div>}
+      {errors.name && <div className={c.errorMessage}>{errors.name}</div>}
 
-      <label className={styles.label}>Card number</label>
-      <div className={styles.cardInputWrapper}>
-        <div className={styles.cardIconWrapper}>
-          <img
-            src={MasterCardIcon}
-            alt="Card logo"
-            className={styles.cardIcon}
-          />
+      <label className={c.label}>Card number</label>
+      <div className={c.cardInputWrapper}>
+        <div className={c.cardIconWrapper}>
+          <img src={MasterCardIcon} alt="Card logo" className={c.cardIcon} />
         </div>
         <input
-          className={styles.cardInput}
+          className={c.cardInput}
           type="text"
           placeholder="Enter your card number"
           value={cardNumber}
@@ -115,14 +111,14 @@ export const CardPage: React.FC = () => {
         />
       </div>
       {errors.cardNumber && (
-        <div className={styles.errorMessage}>{errors.cardNumber}</div>
+        <div className={c.errorMessage}>{errors.cardNumber}</div>
       )}
 
-      <div className={styles.row}>
-        <div className={styles.column}>
-          <label className={styles.labelRow}>Expiration date</label>
+      <div className={c.row}>
+        <div className={c.column}>
+          <label className={c.labelRow}>Expiration date</label>
           <input
-            className={styles.input}
+            className={c.input}
             type="text"
             placeholder="MM/YY"
             value={expiration}
@@ -130,30 +126,28 @@ export const CardPage: React.FC = () => {
             maxLength={5}
           />
           {errors.expiration && (
-            <div className={styles.errorMessage}>{errors.expiration}</div>
+            <div className={c.errorMessage}>{errors.expiration}</div>
           )}
         </div>
-        <div className={styles.column}>
-          <label className={styles.labelRow}>CVV</label>
+        <div className={c.column}>
+          <label className={c.labelRow}>CVV</label>
           <input
-            className={styles.input}
+            className={c.input}
             type="text"
             placeholder="XXX"
             value={cvv}
             onChange={handleCvvChange}
             maxLength={3}
           />
-          {errors.cvv && (
-            <div className={styles.errorMessage}>{errors.cvv}</div>
-          )}
+          {errors.cvv && <div className={c.errorMessage}>{errors.cvv}</div>}
         </div>
       </div>
 
-      <div className={styles.buttonGroup}>
-        <button className={styles.cancelBtn} onClick={handleCancel}>
+      <div className={c.buttonGroup}>
+        <button className={c.cancelBtn} onClick={handleCancel}>
           Cancel
         </button>
-        <button className={styles.payBtn} onClick={handlePay}>
+        <button className={c.payBtn} onClick={handlePay}>
           Pay now
         </button>
       </div>
