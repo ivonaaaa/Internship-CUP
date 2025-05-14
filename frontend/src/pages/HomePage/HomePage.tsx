@@ -1,5 +1,5 @@
-import c from "./HomePage.module.css";
 import { Map } from "../../components/Map";
+import c from "./HomePage.module.css";
 
 export const HomePage = () => {
   return (

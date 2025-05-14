@@ -1,21 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./NotFoundPage.module.css";
-import logoBackground from "../../assets/images/big-logo-background.svg";
 import { ROUTES } from "../../constants";
+import logoBackground from "../../assets/images/big-logo-background.svg";
+import c from "./NotFoundPage.module.css";
 
 export const NotFoundPage = () => {
   const navigate = useNavigate();
   return (
-    <div className={styles.notFoundPage}>
+    <div className={c.notFoundPage}>
       <h2>404</h2>
       <p>Page not found</p>
-      <div
-        onClick={() => navigate(ROUTES.HOME)}
-        className={styles.homepageButton}
-      >
+      <div onClick={() => navigate(ROUTES.HOME)} className={c.homepageButton}>
         Homepage
       </div>
-      <img src={logoBackground} className={styles.logoBackground} />
+      <img src={logoBackground} className={c.logoBackground} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { BoatForm } from "../../components/BoatForm";
-import "../../App.css";
+import "../../styles/App.css";
 
 export function InfoBoatPage() {
   const { id } = useParams<{ id: string }>();
@@ -8,7 +8,7 @@ export function InfoBoatPage() {
   if (!id) return <div>Error: No boat ID provided</div>;
 
   return (
-    <div className="page-container">
+    <div className="pageContainer">
       <BoatForm context="profile" mode="info" boatId={parseInt(id)} />
     </div>
   );

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import Dolphin from "../../assets/images/dolphin.png";
 import Sea from "../../assets/images/sea.png";
 import c from "./StartPage.module.css";
-import { useAuth } from "../../contexts/AuthContext";
 
 export const StartPage: React.FC = () => {
   const navigate = useNavigate();

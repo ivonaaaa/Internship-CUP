@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateAuthForm } from "../../utils/AuthFormValidation";
-import c from "./AuthForm.module.css";
-import { useNavigate } from "react-router-dom";
+import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
+import { ROUTES } from "../../constants";
+import "../../styles/App.css";
 
 type AuthFormProps = {
   mode: "login" | "register";
@@ -163,12 +165,30 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
 
   return (
     <>
-      <h2 className={c.authFormTitle}>{title}</h2>
+      <img
+        src={whiteArrowLeft}
+        alt="arrow"
+        className="arrow"
+        onClick={() => navigate(ROUTES.START)}
+      />
 
-      <form onSubmit={handleSubmit} className={c.authForm}>
+      <h2 className="authFormTitle">{title}</h2>
+
+      {/* Display general errors at the top of the form */}
+      {generalErrors.length > 0 && (
+        <div className="generalErrors">
+          {generalErrors.map((error, index) => (
+            <div key={index} className="errorText">
+              {error}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="authForm">
         {!isLogin && (
           <>
-            <div className={c.formGroup}>
+            <div className="formGroup">
               <label htmlFor="name">First Name</label>
               <input
                 type="text"
@@ -179,11 +199,11 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
                 onChange={handleChange}
               />
               {fieldErrors.name && (
-                <div className={c.errorText}>{fieldErrors.name}</div>
+                <div className="errorText">{fieldErrors.name}</div>
               )}
             </div>
 
-            <div className={c.formGroup}>
+            <div className="formGroup">
               <label htmlFor="surname">Last Name</label>
               <input
                 type="text"
@@ -194,13 +214,13 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
                 onChange={handleChange}
               />
               {fieldErrors.surname && (
-                <div className={c.errorText}>{fieldErrors.surname}</div>
+                <div className="errorText">{fieldErrors.surname}</div>
               )}
             </div>
           </>
         )}
 
-        <div className={c.formGroup}>
+        <div className="formGroup">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -211,11 +231,11 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             onChange={handleChange}
           />
           {fieldErrors.email && (
-            <div className={c.errorText}>{fieldErrors.email}</div>
+            <div className="errorText">{fieldErrors.email}</div>
           )}
         </div>
 
-        <div className={c.formGroup}>
+        <div className="formGroup">
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -226,12 +246,12 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             onChange={handleChange}
           />
           {fieldErrors.password && (
-            <div className={c.errorText}>{fieldErrors.password}</div>
+            <div className="errorText">{fieldErrors.password}</div>
           )}
         </div>
 
         {!isLogin && (
-          <div className={c.formGroup}>
+          <div className="formGroup">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
               type="password"
@@ -242,22 +262,12 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
               onChange={handleChange}
             />
             {fieldErrors.confirmPassword && (
-              <div className={c.errorText}>{fieldErrors.confirmPassword}</div>
+              <div className="errorText">{fieldErrors.confirmPassword}</div>
             )}
           </div>
         )}
 
-        {generalErrors.length > 0 && (
-          <ul className={c.errorList}>
-            {generalErrors.map((msg, index) => (
-              <li key={index} className={c.error}>
-                {msg}
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <button type="submit" className={c.submitButton} disabled={isLoading}>
+        <button type="submit" className="submitButton" disabled={isLoading}>
           {isLoading ? "Processing..." : buttonText}
         </button>
       </form>
