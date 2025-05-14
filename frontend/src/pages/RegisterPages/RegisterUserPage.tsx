@@ -13,8 +13,8 @@ export function RegisterUserPage() {
       <img
         src={whiteArrowLeft}
         alt="arrow"
-        className={c.arrow}
         onClick={() => navigate(ROUTES.START)}
+        className={c.arrow}
       />
       <AuthForm mode="register" />
     </div>

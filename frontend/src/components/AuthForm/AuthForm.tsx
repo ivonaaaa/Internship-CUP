@@ -174,7 +174,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
                 type="text"
                 id="name"
                 name="name"
-                placeholder="First Name"
+                placeholder="Enter First Name"
                 value={formData.name}
                 onChange={handleChange}
               />
@@ -189,7 +189,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
                 type="text"
                 id="surname"
                 name="surname"
-                placeholder="Last Name"
+                placeholder="Enter Last Name"
                 value={formData.surname}
                 onChange={handleChange}
               />
@@ -206,7 +206,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             type="email"
             id="email"
             name="email"
-            placeholder="Email"
+            placeholder="Enter Email"
             value={formData.email}
             onChange={handleChange}
           />
