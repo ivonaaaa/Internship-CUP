@@ -61,12 +61,15 @@ export const ProfilePage = () => {
                     {boat.name || `Boat ${index + 1}`}
                   </div>
                 </div>
-                <button
-                  className={styles.editBoatButton}
-                  onClick={() => handleEditBoat(boat.id)}
-                >
-                  Edit
-                </button>
+                <div className={styles.boatButtons}>
+                  <button
+                    className={styles.editBoatButton}
+                    onClick={() => handleEditBoat(boat.id)}
+                  >
+                    Edit
+                  </button>
+                  <button className={styles.editBoatButton}>Remove</button>
+                </div>
               </div>
             ))
           ) : null}

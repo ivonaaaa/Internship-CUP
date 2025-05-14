@@ -96,7 +96,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem;
+  padding: 0.75rem 0px;
   border-bottom: 1px solid #eee;
 }
 
@@ -132,6 +132,11 @@
   font-size: 0.875rem;
   padding: 0;
   cursor: pointer;
+}
+
+.boatButtons {
+  display: flex;
+  gap: 1rem;
 }
 
 .addButton {

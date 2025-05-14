@@ -321,19 +321,24 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       {mode === "info" ? (
         <Link to={`/boat/edit/${boatId}`}>Edit info</Link>
       ) : (
-        <button
-          type="submit"
-          className={c.submitButton}
-          disabled={isCreating || isUpdating}
-        >
-          {mode === "edit"
-            ? isUpdating
-              ? "Updating..."
-              : "Update Boat"
-            : isCreating
-              ? "Processing..."
-              : "Next"}
-        </button>
+        <div className={c.buttonGroup}>
+          <button className={c.cancelButton} onClick={() => navigate(-1)}>
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className={c.submitButton}
+            disabled={isCreating || isUpdating}
+          >
+            {mode === "edit"
+              ? isUpdating
+                ? "Updating..."
+                : "Confirm"
+              : isCreating
+                ? "Processing..."
+                : "Next"}
+          </button>
+        </div>
       )}
     </form>
   );
