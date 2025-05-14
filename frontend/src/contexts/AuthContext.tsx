@@ -57,12 +57,9 @@ type AuthProviderProps = {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userId, setUserId] = useState<number | null>(null);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
-  
-  const { 
-    data: userData, 
-    isLoading: isLoadingUser 
-  } = useUser(userId || 0);
-  
+
+  const { data: userData, isLoading: isLoadingUser } = useUser(userId || 0);
+
   const isLoading = isLoadingAuth || (userId !== null && isLoadingUser);
 
   const getToken = (): string | null => {
@@ -218,6 +215,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         subscriptionPlan: "FREE_TRIAL",
       };
       await axios.post("/api/auth/register", requestData);
+      await login(registerData.email, registerData.password);
     } catch (error) {
       handleApiError(error);
     }
