@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Dolphin from "../../assets/images/dolphin.png";
-import Sea from "../../assets/images/sea.png";
+import Dolphin from "../../assets/images/dolphin.webp";
+import Sea from "../../assets/images/sea.webp";
 import c from "./StartPage.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 
