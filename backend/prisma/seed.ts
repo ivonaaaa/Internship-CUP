@@ -2,7 +2,6 @@ import {
   PrismaClient,
   SubscriptionPlan,
   BoatType,
-  TransactionStatus,
   RuleType,
   MapElementType,
   ObjectType,
@@ -15,7 +14,6 @@ async function main() {
   await prisma.notification.deleteMany({});
   await prisma.mapElement.deleteMany({});
   await prisma.boat.deleteMany({});
-  await prisma.transaction.deleteMany({});
   await prisma.rule.deleteMany({});
   await prisma.user.deleteMany({});
 
@@ -92,15 +90,6 @@ async function main() {
       length: 6.5,
       width: 2.5,
       boatType: BoatType.DINGHY,
-    },
-  });
-
-  await prisma.transaction.create({
-    data: {
-      userId: user2.id,
-      amount: 9.99,
-      status: TransactionStatus.SUCCESSFUL,
-      transactionDate: new Date('2025-03-15'),
     },
   });
 
