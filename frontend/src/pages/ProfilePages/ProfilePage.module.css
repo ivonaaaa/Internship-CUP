@@ -123,6 +123,7 @@
 .boatName {
   font-size: 0.875rem;
   color: #333;
+  max-width: 80%;
 }
 
 .editBoatButton {

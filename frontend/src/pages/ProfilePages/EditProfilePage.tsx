@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useUpdateUser } from "../../api/user/useUserQueries";
 import { validateProfileForm } from "../../utils/ProfileValidation";
 import styles from "./EditProfilePage.module.css";
+import { ROUTES } from "../../constants";
 
 export const EditProfilePage = () => {
   const { user } = useAuth();
@@ -181,13 +182,21 @@ export const EditProfilePage = () => {
           </ul>
         )}
 
-        <button
-          type="submit"
-          className={styles.confirmButton}
-          disabled={updateUser.isPending}
-        >
-          {updateUser.isPending ? "Updating..." : "Confirm"}
-        </button>
+        <div className={styles.buttonGroup}>
+          <button
+            className={styles.cancelButton}
+            onClick={() => navigate(ROUTES.PROFILE)}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className={styles.confirmButton}
+            disabled={updateUser.isPending}
+          >
+            {updateUser.isPending ? "Updating..." : "Confirm"}
+          </button>
+        </div>
       </form>
     </div>
   );
