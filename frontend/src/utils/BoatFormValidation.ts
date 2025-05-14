@@ -12,7 +12,7 @@ export const validateBoatForm = (formData: {
   const newErrors: string[] = [];
 
   if (!formData.name.trim()) newErrors.push("Boat name is required");
-  if (formData.name.trim().length < 3)
+  else if (formData.name.trim().length < 3)
     newErrors.push("Boat name must be at least 3 characters long");
 
   if (!formData.boatType) newErrors.push("Boat type is required");

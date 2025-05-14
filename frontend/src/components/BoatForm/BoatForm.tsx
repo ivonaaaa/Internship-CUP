@@ -93,7 +93,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       [name]: name === "boatType" ? (value as BoatType) : value,
     });
 
-    // Clear error for this field when user starts typing
     setFieldErrors((prev) => ({
       ...prev,
       [name]: [],
@@ -108,7 +107,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     const validationErrors = validateBoatForm(formData);
 
     if (validationErrors.length > 0) {
-      // Map general errors to specific fields
       const mappedErrors = {
         name: validationErrors.filter((err) => err.includes("name")),
         boatType: validationErrors.filter((err) => err.includes("type")),
@@ -214,7 +212,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           placeholder="Type in boat's name"
           value={formData.name}
           onChange={handleChange}
-          required
           readOnly={isReadOnly}
           className={isReadOnly ? c.readOnlyInput : ""}
         />
@@ -231,7 +228,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           name="boatType"
           value={formData.boatType}
           onChange={handleChange}
-          required
           disabled={isReadOnly}
           className={isReadOnly ? c.readOnlyInput : ""}
         >
@@ -260,7 +256,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
               placeholder="10"
               value={formData.length}
               onChange={handleChange}
-              required
               readOnly={isReadOnly}
               className={isReadOnly ? c.readOnlyInput : ""}
             />
@@ -284,7 +279,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
               placeholder="3"
               value={formData.width}
               onChange={handleChange}
-              required
               readOnly={isReadOnly}
               className={isReadOnly ? c.readOnlyInput : ""}
             />
@@ -306,7 +300,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           placeholder="ST-1234"
           value={formData.registration}
           onChange={handleChange}
-          required
           readOnly={isReadOnly}
           className={isReadOnly ? c.readOnlyInput : ""}
         />
