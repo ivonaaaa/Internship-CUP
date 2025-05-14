@@ -10,34 +10,6 @@
   color: #333;
 }
 
-.formGroup {
-  margin-bottom: 16px;
-}
-
-.formGroup label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #444;
-}
-
-.formGroup input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
-}
-
-.formGroup input:focus {
-  outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.2);
-}
-
 .errorText {
   color: var(--color-red);
   font-size: 12px;

@@ -162,11 +162,11 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
 
   return (
     <form onSubmit={handleSubmit} className={c.authForm}>
-      <h2>{title}</h2>
+      <h2>{isLogin ? title : "Sign Up"}</h2>
 
       {!isLogin && (
         <>
-          <div className={c.formGroup}>
+          <div className="formGroup">
             <label htmlFor="name">First Name</label>
             <input
               type="text"
@@ -181,7 +181,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
             )}
           </div>
 
-          <div className={c.formGroup}>
+          <div className="formGroup">
             <label htmlFor="surname">Last Name</label>
             <input
               type="text"
@@ -198,7 +198,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         </>
       )}
 
-      <div className={c.formGroup}>
+      <div className="formGroup">
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -213,7 +213,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         )}
       </div>
 
-      <div className={c.formGroup}>
+      <div className="formGroup">
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -229,7 +229,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       </div>
 
       {!isLogin && (
-        <div className={c.formGroup}>
+        <div className="formGroup">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             type="password"
@@ -246,9 +246,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       )}
 
       {generalErrors.length > 0 && (
-        <ul className={c.errorList}>
+        <ul className="errorList">
           {generalErrors.map((msg, index) => (
-            <li key={index} className={c.error}>
+            <li key={index} className="error">
               {msg}
             </li>
           ))}
