@@ -21,7 +21,6 @@ model User {
 
   // Relations
   boats               Boat[]
-  transactions        Transaction[]
   notifications       Notification[]
 }
 
