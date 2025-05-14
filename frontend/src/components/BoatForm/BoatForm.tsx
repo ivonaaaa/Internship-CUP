@@ -204,7 +204,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     <form onSubmit={handleSubmit} className={c.boatForm}>
       <h2>{mode === "edit" ? "Edit Boat" : "Boat information"}</h2>
 
-      <div className={c.formGroup}>
+      <div className="formGroup">
         <label htmlFor="name">Boat Name</label>
         <input
           type="text"
@@ -223,7 +223,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
         ))}
       </div>
 
-      <div className={c.formGroup}>
+      <div className="formGroup">
         <select
           id="boatType"
           name="boatType"
@@ -245,7 +245,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       </div>
 
       <div className={c.rowGroup}>
-        <div className={c.mInputGroup}>
+        <div className="formGroup">
           <label htmlFor="length">Length</label>
           <div className={c.inputWithPrefix}>
             <span>m</span>
@@ -268,7 +268,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           ))}
         </div>
 
-        <div className={c.mInputGroup}>
+        <div className="formGroup">
           <label htmlFor="width">Width</label>
           <div className={c.inputWithPrefix}>
             <span>m</span>
@@ -292,7 +292,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
         </div>
       </div>
 
-      <div className={c.formGroup}>
+      <div className="formGroup">
         <label htmlFor="registration">Registration</label>
         <input
           type="text"
@@ -312,9 +312,11 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       </div>
 
       {fieldErrors.general.length > 0 && (
-        <ul>
+        <ul className="errorList">
           {fieldErrors.general.map((msg, index) => (
-            <li key={index}>{msg}</li>
+            <li key={index} className="error">
+              {msg}
+            </li>
           ))}
         </ul>
       )}

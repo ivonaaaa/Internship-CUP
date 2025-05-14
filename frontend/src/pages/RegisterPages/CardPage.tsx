@@ -94,7 +94,11 @@ export const CardPage: React.FC = () => {
           value={name}
           onChange={handleNameChange}
         />
-        {errors.name && <div className={c.errorMessage}>{errors.name}</div>}
+        {errors.name && (
+          <div className="errorList">
+            <span className="error">{errors.name}</span>
+          </div>
+        )}
       </div>
       <div className={c.column}>
         <label className={c.label}>Card number</label>

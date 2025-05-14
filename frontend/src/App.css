@@ -25,3 +25,47 @@ button {
   justify-content: center;
   padding: 40px 20px;
 }
+
+.errorList {
+  background-color: white;
+  border: 1px solid var(--color-red);
+  border-radius: 0.375rem;
+  padding: 0.625rem 0.9375rem;
+  margin: 0.5rem 0;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.error {
+  color: var(--color-red);
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #444;
+}
+
+.formGroup input, .formGroup select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.2);
+}

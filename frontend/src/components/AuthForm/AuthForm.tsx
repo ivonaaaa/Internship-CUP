@@ -159,6 +159,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
 
   const isLogin = mode === "login";
   const title = isLogin ? "Sign In" : "Sign Up";
+  const buttonText = isLogin ? "Sign In" : "Next";
 
   return (
     <>
@@ -257,7 +258,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         )}
 
         <button type="submit" className={c.submitButton} disabled={isLoading}>
-          {isLoading ? "Processing..." : title}
+          {isLoading ? "Processing..." : buttonText}
         </button>
       </form>
     </>
