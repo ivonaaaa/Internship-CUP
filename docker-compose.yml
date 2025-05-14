@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    restart: on-failure
+    environment:
+      POSTGRES_DB: bayobey-app
+      POSTGRES_PASSWORD: more123
+      POSTGRES_USER: pomorac
+    ports:
+      - "5432:5432"

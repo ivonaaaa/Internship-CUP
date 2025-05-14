@@ -9,7 +9,10 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "postinstall": "yarn workspace backend prisma generate"
+    "postinstall": "yarn workspace backend prisma generate",
+    "db:generate": "yarn workspace backend run prisma generate",
+    "db:migrate": "yarn workspace backend run prisma migrate dev",
+    "db:seed": "yarn workspace backend run ts-node prisma/seed.ts"
   },
   "devDependencies": {
     "turbo": "^2.5.2"
