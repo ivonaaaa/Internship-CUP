@@ -78,3 +78,12 @@
   );
   mask-image: linear-gradient(to bottom, #000000, #00000000);
 }
+
+.liveDemoText {
+  font-size: 20px;
+  margin-top: 10px;
+  font-weight: 600;
+  font-style: italic;
+  text-decoration: underline;
+  z-index: 100;
+}
