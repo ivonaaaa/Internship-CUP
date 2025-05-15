@@ -1,56 +1,69 @@
 .profilePage {
-  max-width: 425px;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem 1rem;
-  font-family: var(--font-primary);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
 }
 
 .profileHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
+  height: 16rem;
   position: relative;
+  color: white;
+  background-color: var(--color-ocean);
+  border-radius: 0 0 30% 30%;
+  z-index: -1;
 }
 
 .profileContent {
   display: flex;
   flex-direction: column;
+  padding: 0 2rem 1rem 2rem;
   gap: 2rem;
+  margin-bottom: 5rem;
+}
+
+.userInfoContainer {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: -10rem;
 }
 
 .userInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  position: relative;
+  gap: 2rem;
+  padding: 3rem;
+  width: fit-content;
+  background-color: white;
+  border-radius: 20%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .avatar {
-  width: 6rem;
-  height: 6rem;
+  width: 8rem;
+  height: 8rem;
   border-radius: 50%;
   background-color: #eaeff5;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0;
-  color: #1e3a5f;
+  color: var(--color-ocean);
   margin-bottom: 0.5rem;
 }
 
 .avatar::before {
   content: "";
   display: block;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 5rem;
+  height: 5rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231E3A5F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3C/svg%3E");
   background-position: center;
   background-repeat: no-repeat;
@@ -59,28 +72,36 @@
 
 .userDetails {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .userDetails h3 {
-  font-size: 1.125rem;
   font-weight: 600;
-  margin: 0 0 0.25rem 0;
-  color: #1e3a5f;
+  font-size: 32px;
+  line-height: 44px;
+  letter-spacing: -2%;
+  text-align: center;
+  color: var(--color-ocean);
 }
 
 .userDetails p {
-  font-size: 0.875rem;
-  color: #666;
-  margin: 0;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #333;
 }
 
 .editButton {
   position: absolute;
-  top: 1rem;
+  top: 4rem;
   right: 1rem;
   background: none;
   border: none;
-  color: #1e3a5f;
+  color: white;
   font-size: 0.875rem;
   padding: 0;
   cursor: pointer;
@@ -90,6 +111,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: -6rem;
 }
 
 .boatItem {
@@ -103,33 +125,37 @@
 .boatInfo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   cursor: pointer;
 }
 
 .boatNumber {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   background-color: #eaeff5;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.875rem;
-  color: #1e3a5f;
-  margin-right: 0.75rem;
+  color: var(--color-ocean);
 }
 
 .boatName {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: center;
   font-size: 0.875rem;
   color: #333;
-  max-width: 80%;
 }
 
-.editBoatButton {
+.editBoatButton,
+.logoutButton {
   background: none;
   border: none;
-  color: #1e3a5f;
+  color: var(--color-ocean);
   font-size: 0.875rem;
   padding: 0;
   cursor: pointer;
@@ -143,12 +169,16 @@
 .addButton {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   background: none;
   border: none;
   color: #666;
   padding: 0.75rem 0;
-  font-size: 0.875rem;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -156,9 +186,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  background-color: #eaeff5;
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+  border: 2px dotted grey;
   border-radius: 50%;
   color: #1e3a5f;
   font-size: 1.125rem;
@@ -173,17 +204,26 @@
 
 .subscriptionContainer {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   gap: 0.25rem;
+  background-color: var(--color-sky);
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
 }
 
-.subscriptionRow {
+.subscriptionColumn {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-  font-size: 0.875rem;
-  color: #333;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.subscriptionTitle {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: 0%;
 }
 
 .priceContainer {
@@ -201,23 +241,14 @@
   color: #888;
 }
 
-.logoutButton {
-  background: none;
-  border: none;
-  color: white;
-  display: flex;
-  justify-content: center;
-  background-color: red;
-  font-size: 1rem;
-  padding: 1rem 0;
-  cursor: pointer;
-  text-align: left;
-  margin-top: 1rem;
-}
-
 .loadingContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+.logoutContainer {
+  display: flex;
+  justify-content: flex-end;
 }
