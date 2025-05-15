@@ -6,6 +6,7 @@ import laws from "./laws.json";
 import ArrowLeft from "../../assets/images/whiteArrowLeft.svg";
 import BlackArrowLeft from "../../assets/images/ArrowLeft.svg";
 import c from "./InfoPage.module.css";
+import { ROUTES } from "../../constants";
 
 type InfoSectionType = {
   title: string;
@@ -31,7 +32,7 @@ export const InfoPage = () => {
           src={BlackArrowLeft}
           alt="arrow"
           className="arrow"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(ROUTES.HOME)}
         />
       )}
 

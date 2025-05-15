@@ -267,3 +267,9 @@
   display: flex;
   justify-content: flex-end;
 }
+
+@media (max-width: 475px) {
+  .subscriptionContainer {
+    padding: 2rem 2rem;
+  }
+}
