@@ -50,7 +50,7 @@ export const ProfilePage = () => {
           src={whiteArrowLeft}
           alt="arrow"
           className="arrow"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(ROUTES.HOME)}
         />
         <div className={c.profileHeader}>
           <button className={c.editButton} onClick={handleEditProfile}>

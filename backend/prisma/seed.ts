@@ -417,6 +417,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule7.id,
+        },
+      },
       name: 'Jadran Harbor Master',
       type: MapElementType.POINT,
       objectType: ObjectType.HARBOR_MASTER,
@@ -502,6 +507,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule5.id,
+        },
+      },
       name: 'Trogir ridge',
       type: MapElementType.POINT,
       objectType: ObjectType.RIDGE,
@@ -515,6 +525,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule5.id,
+        },
+      },
       name: 'Ciovo Ridge',
       type: MapElementType.POINT,
       objectType: ObjectType.RIDGE,
@@ -528,6 +543,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule5.id,
+        },
+      },
       name: 'Trogir fuel dock',
       type: MapElementType.POINT,
       objectType: ObjectType.FUEL_DOCK,
@@ -541,6 +561,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule5.id,
+        },
+      },
       name: 'Kaštela fuel dock',
       type: MapElementType.POINT,
       objectType: ObjectType.FUEL_DOCK,
@@ -572,6 +597,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule2.id,
+        },
+      },
       name: 'Spinut Bay Ridge',
       type: MapElementType.POINT,
       objectType: ObjectType.RIDGE,
@@ -585,6 +615,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule2.id,
+        },
+      },
       name: 'Split Harbor Master',
       type: MapElementType.POINT,
       objectType: ObjectType.HARBOR_MASTER,
@@ -598,6 +633,11 @@ async function main() {
 
   await prisma.mapElement.create({
     data: {
+      rule: {
+        connect: {
+          id: rule2.id,
+        },
+      },
       name: 'Fuel Dock - Split',
       type: MapElementType.POINT,
       objectType: ObjectType.FUEL_DOCK,

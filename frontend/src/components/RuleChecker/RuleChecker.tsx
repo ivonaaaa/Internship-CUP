@@ -3,7 +3,7 @@ import * as turf from "@turf/turf";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Notification } from "../Notification/Notification";
-import { RuleType } from "../../types";
+import { RuleType, MapElementTypes } from "../../types";
 import { useCreateNotification } from "../../api/notification/useCreateNotification";
 import { useUserBoats } from "../../api/boat/useBoatQueries";
 import { useAuth } from "../../contexts/AuthContext";
@@ -79,18 +79,18 @@ export const RuleChecker = ({
     const userPoint = turf.point(userLocation);
 
     mapElements?.forEach((element: MapElement) => {
-      if (element.geometry.type === "ZONE") {
-        const zone = turf.polygon(element.geometry.coordinates as [number[][]]);
+      if (element.geometry.type === MapElementTypes.ZONE) {
+        const zone = turf.polygon(element.geometry.coordinates as number[][][]);
         const distance = turf.pointToPolygonDistance(userPoint, zone, {
           units: "kilometers",
         });
 
         const distanceInMeters = distance * 1000;
 
-        if (distanceInMeters < 200) {
+        if (distanceInMeters < 400) {
           showNotification(element, distanceInMeters);
         }
-      } else if (element.geometry.type === "POINT") {
+      } else if (element.geometry.type === MapElementTypes.POINT) {
         const point = turf.point(
           element.geometry.coordinates as [number, number]
         );
@@ -100,7 +100,7 @@ export const RuleChecker = ({
 
         const distanceInMeters = distance * 1000;
 
-        if (distanceInMeters < 200) {
+        if (distanceInMeters < 400) {
           showNotification(element, distanceInMeters);
         }
       }
