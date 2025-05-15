@@ -1,0 +1,38 @@
+.editBoatPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* gap: 100px; */
+}
+
+.blueTopBackground {
+  background: linear-gradient(180deg, #124374 0%, #112e4c 100%);
+  min-width: 110vw;
+  height: 250px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.boatProfilePicture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  height: 180px;
+  width: 180px;
+  border-radius: 20px;
+  box-shadow: 0px 1px 17.8px 0px #0000001a;
+  position: absolute;
+  top: 150px;
+  z-index: 1001;
+  overflow: hidden;
+  padding-top: 20px;
+}
+
+.formWrapper {
+  position: absolute;
+  bottom: 60px;
+}

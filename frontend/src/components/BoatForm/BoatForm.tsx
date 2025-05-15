@@ -16,11 +16,13 @@ interface BoatFormProps {
   context?: "registration" | "profile";
   mode?: "create" | "edit" | "info";
   boatId?: number;
+  showTitle?: boolean;
 }
 
 export const BoatForm: React.FC<BoatFormProps> = ({
   context = "registration",
   mode = "create",
+  showTitle = true,
   boatId,
 }) => {
   const navigate = useNavigate();
@@ -182,16 +184,18 @@ export const BoatForm: React.FC<BoatFormProps> = ({
         className="arrow"
         onClick={() => navigate(-1)}
       />
-      <h2 className="boatFormTitle">
-        {mode === "info" ? (
-          <>Boat details</>
-        ) : (
-          <>
-            Type in your <br />
-            boat details
-          </>
-        )}
-      </h2>
+      {showTitle ? (
+        <h2 className="boatFormTitle">
+          {mode === "info" ? (
+            <>Boat details</>
+          ) : (
+            <>
+              Type in your <br />
+              boat details
+            </>
+          )}
+        </h2>
+      ) : null}
 
       <form onSubmit={handleSubmit} className="boatForm">
         <div className="formGroup">
