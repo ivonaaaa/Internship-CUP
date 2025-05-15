@@ -7,6 +7,11 @@ export const validateCardDetails = (
   const errors: { [key: string]: string } = {};
 
   if (!name.trim()) errors.name = "Name and surname are required.";
+  else if (name.trim().split(" ").length < 2)
+    errors.name = "Please enter both name and surname.";
+  else if (!/^[A-Za-zÀ-ÿ\s'-]{4,}$/.test(name.trim()))
+    errors.name =
+      "Name must contain only letters, spaces, hyphens or apostrophes.";
 
   const cardRegex = /^[0-9]{16}$/;
   if (!cardNumber.trim()) errors.cardNumber = "Card number is required.";

@@ -1,16 +1,7 @@
 .container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   text-align: center;
-  font-family: var(--font-primary);
-}
-
-.headline {
-  margin-top: 50px;
-  color: var(--color-ocean);
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
 }
 
 .trialText {
@@ -25,5 +16,5 @@
   gap: 1rem;
   margin: 0 auto;
   margin-bottom: 2rem;
-  max-width: 500px;
+  max-width: 600px;
 }

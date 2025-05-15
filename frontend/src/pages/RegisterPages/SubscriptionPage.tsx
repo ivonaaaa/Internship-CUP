@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PlanButton } from "../../components/PlanButton";
+import ArrowLeft from "../../assets/images/ArrowLeft.svg";
 import c from "./SubscriptionPage.module.css";
+import "../../styles/App.css";
 
 export interface PlanOption {
   id: string;
@@ -25,7 +27,13 @@ export const SubscriptionPage: React.FC = () => {
 
   return (
     <div className={c.container}>
-      <h1 className={c.headline}>Choose your plan</h1>
+      <img
+        src={ArrowLeft}
+        alt="arrow"
+        className="arrow"
+        onClick={() => navigate(-1)}
+      />
+      <h1 className="registerHeadline">Choose your plan</h1>
       <p className={c.trialText}>3 day free trial!</p>
 
       <div className={c.plansContainer}>
