@@ -117,10 +117,11 @@ export const ProfilePage = () => {
                   ? "Free trial"
                   : "Weekly"}
               </h3>
-              <span>
+              <span className={styles.subscriptionText}>
                 {user.subscriptionPlan === "FREE_TRIAL"
                   ? user.subscriptionExpiry
-                    ? "until " + new Date(user.subscriptionExpiry).toLocaleDateString()
+                    ? "until " +
+                      new Date(user.subscriptionExpiry).toLocaleDateString()
                     : "no expiry date"
                   : "billed every week"}
               </span>
