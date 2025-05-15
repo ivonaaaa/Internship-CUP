@@ -70,7 +70,6 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<UserDto> {
-    // ove dvi linije bi trebale biti bolje
     await this.ensureUserExists(id);
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
 

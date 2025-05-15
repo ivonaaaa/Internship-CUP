@@ -54,10 +54,20 @@ export const RuleChecker = ({
       const distanceKm = turf.distance(from, to, { units: "kilometers" });
       const speedKmh = (distanceKm / timeDiffSec) * 3600;
 
-      console.log("Speed (km/h):", speedKmh.toFixed(2));
-
       if (speedKmh > 50) {
-        console.log("Speed limit exceeded!");
+        toast.custom(
+          () => (
+            <Notification
+              type={RuleType.WARNING}
+              title="Speed Limit Exceeded"
+              message={`Your speed is ${speedKmh.toFixed(2)} km/h`}
+              onClose={() => toast.dismiss()}
+            />
+          ),
+          {
+            duration: 5000,
+          }
+        );
       }
     }
 
