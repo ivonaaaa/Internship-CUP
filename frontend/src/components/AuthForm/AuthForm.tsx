@@ -174,17 +174,16 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
 
       <h2 className="authFormTitle">{title}</h2>
 
-      {generalErrors.length > 0 && (
-        <div className="generalErrors">
-          {generalErrors.map((error, index) => (
-            <div key={index} className="errorText">
-              {error}
-            </div>
-          ))}
-        </div>
-      )}
-
       <form onSubmit={handleSubmit} className="authForm">
+        {generalErrors.length > 0 && (
+          <div className="generalErrors">
+            {generalErrors.map((error, index) => (
+              <div key={index} className="errorText">
+                {error}
+              </div>
+            ))}
+          </div>
+        )}
         {!isLogin && (
           <>
             <div className="formGroup">

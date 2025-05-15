@@ -251,7 +251,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule3.id, // No anchoring
+          id: rule3.id, 
         },
       },
       name: 'No Anchoring Zone - Split Aerodrome',
@@ -282,11 +282,40 @@ async function main() {
     },
   });
 
+  const domMladih = await prisma.mapElement.create({
+    data: {
+      rule: {
+        connect: {
+          id: rule3.id,
+        },
+      },
+      name: 'Dom mladih',
+      type: MapElementType.ZONE,
+      coordinates: {
+        coordinates: [
+          [
+            [16.449876010755105, 43.51245654442948],
+            [16.449267207911817, 43.51230586717037],
+            [16.450103103878575, 43.51193793274754],
+            [16.45022872986243, 43.51213766885542],
+            [16.449876010755105, 43.51245654442948],
+          ],
+        ],
+      },
+      description: 'No anchoring allowed in this area!',
+      isActive: true,
+      fillColor: '#d6dcef',
+      fillOpacity: 0.3,
+      lineColor: '#153b61',
+      lineWidth: 1.0,
+    },
+  });
+
   const militaryZone2 = await prisma.mapElement.create({
     data: {
       rule: {
         connect: {
-          id: rule1.id, // No entry
+          id: rule1.id, 
         },
       },
       name: 'Military Zone - Lora',
@@ -344,7 +373,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule7.id, // Clean water zone
+          id: rule7.id, 
         },
       },
       name: 'Ciovo Lighthouse',
@@ -362,7 +391,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule7.id, // Clean water zone
+          id: rule7.id, 
         },
       },
       name: 'Marjan Lighthouse',
@@ -393,7 +422,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule6.id, // Common swimming area
+          id: rule6.id, 
         },
       },
       name: 'Split Breakwater Lighthouse',
@@ -411,7 +440,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule8.id, // Common anchoring area
+          id: rule8.id, 
         },
       },
       name: 'Kaštel Area',
@@ -496,6 +525,50 @@ async function main() {
         coordinates: [16.271802350123693, 43.49205998369948],
       },
       description: 'Fill up your tank here',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Kaštela fuel dock',
+      type: MapElementType.POINT,
+      objectType: ObjectType.FUEL_DOCK,
+      coordinates: {
+        coordinates: [16.401801639641093, 43.54655535871984],
+      },
+      description: 'Fill up your tank here',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      rule: {
+        connect: {
+          id: rule2.id, 
+        },
+      },
+      name: 'Lora Lighthouse',
+      type: MapElementType.POINT,
+      objectType: ObjectType.LIGHTHOUSE,
+      coordinates: {
+        coordinates: [16.415336632212444, 43.52255608344453],
+      },
+      description: 'No anchoring within 100 meters of the lighthouse',
+      isActive: true,
+    },
+  });
+
+  await prisma.mapElement.create({
+    data: {
+      name: 'Spinut Bay Ridge',
+      type: MapElementType.POINT,
+      objectType: ObjectType.RIDGE,
+      coordinates: {
+        coordinates: [16.41618277692379, 43.51795553154852],
+      },
+      description: 'Ridge area - caution advised',
       isActive: true,
     },
   });

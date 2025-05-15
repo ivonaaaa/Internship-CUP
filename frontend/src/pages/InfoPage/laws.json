@@ -1,22 +1,27 @@
 [
     {
-      "title": "Obaveze javljanja o izvanrednim situacijama",
+      "title": "Collision Avoidance",
       "content":
-        "U slučaju izvanredne situacije, kapetan broda je dužan odmah obavijestiti nadležnu pomorsku vlast i pružiti sve potrebne informacije o situaciji."
+        "The ship's captain must continuously observe and use all means to avoid collisions, navigating at a safe speed based on conditions. Clear and timely maneuvers are required when collision risks arise, including course changes or speed reduction. Vessels that must not obstruct others must ensure enough space for safe passage"
     },
     {
-      "title": "Upravljanje brodovima",
+      "title": "Navigation of Vessels in Sight of One Another",
       "content":
-        "Kapetan broda je odgovoran za upravljanje brodom u svim uvjetima vidljivosti, uključujući maglu, noć i loše vremenske uvjete."
+        "Vessels must follow strict navigation rules when visible to each other, including yielding based on wind direction, overtaking protocols, and head-on encounters. Priority is given to vessels with limited maneuverability or engaged in fishing or sailing. Special care is required in reduced visibility, including speed adjustments, radar use, and fog signals. The captain is responsible for avoiding collisions with other vessels and objects at sea."
     },
     {
-      "title": "Red u lukama i na moru",
+      "title": "Reduced Visibility",
       "content":
-        "Svi brodovi moraju poštovati pravila reda u lukama i na moru kako bi se osigurala sigurnost plovidbe."
+        "Captains are responsible for safe navigation in fog or darkness by maintaining safe speed and readiness. Proper navigation lights and signals must be used according to vessel type. Ships must act promptly to avoid collisions and use special lights or shapes to indicate restricted operations, ensuring clear communication."
     },
     {
-      "title": "Izbjegavanje sudara",
+      "title": "Sound and Light Signals",
       "content":
-        "Kapetan broda je odgovoran za izbjegavanje sudara s drugim plovilima i objektima na moru."
+        "Vessels use prescribed whistle signals and lights for maneuvering and signaling intentions, including passing, turning, and stopping. Different signals apply in narrow channels, reduced visibility, and at anchor. Distress signals include sound, light, and radio calls strictly for emergencies. Additional signals exist for fishing vessels operating nearby."
+    },
+    {
+      "title": "Mandatory Reporting and Watchkeeping System",
+      "content":
+        "In emergencies, captains must immediately notify authorities with details. A reporting system requires vessels to monitor VHF channels in VTS areas and communicate in English or Croatian when necessary. Reports must be made before entering VTS areas, ports, or sectors, and upon mooring, shifting, or departure, including detailed vessel information and intentions. Any deviation from plans must be reported and approved by VTS before proceeding."
     }
   ]

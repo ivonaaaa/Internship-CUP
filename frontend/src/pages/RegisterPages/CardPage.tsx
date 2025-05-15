@@ -96,7 +96,7 @@ export const CardPage: React.FC = () => {
         />
         {errors.name && (
           <div className="errorList">
-            <span className="error">{errors.name}</span>
+            <span className={c.errorMessage}>{errors.name}</span>
           </div>
         )}
       </div>

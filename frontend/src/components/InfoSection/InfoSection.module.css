@@ -18,6 +18,7 @@
 }
 
 .infoSectionHeader h1 {
+  font-family: var(--font-omnes);
   font-size: 16px;
   line-height: 1.5;
   font-weight: 600;
