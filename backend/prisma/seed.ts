@@ -251,7 +251,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule3.id, // No anchoring
+          id: rule3.id, 
         },
       },
       name: 'No Anchoring Zone - Split Aerodrome',
@@ -315,7 +315,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule1.id, // No entry
+          id: rule1.id, 
         },
       },
       name: 'Military Zone - Lora',
@@ -373,7 +373,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule7.id, // Clean water zone
+          id: rule7.id, 
         },
       },
       name: 'Ciovo Lighthouse',
@@ -391,7 +391,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule7.id, // Clean water zone
+          id: rule7.id, 
         },
       },
       name: 'Marjan Lighthouse',
@@ -422,7 +422,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule6.id, // Common swimming area
+          id: rule6.id, 
         },
       },
       name: 'Split Breakwater Lighthouse',
@@ -440,7 +440,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule8.id, // Common anchoring area
+          id: rule8.id, 
         },
       },
       name: 'Kaštel Area',
@@ -529,7 +529,6 @@ async function main() {
     },
   });
 
-  //fefe
   await prisma.mapElement.create({
     data: {
       name: 'Kaštela fuel dock',
@@ -547,7 +546,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule2.id, // Speed limit
+          id: rule2.id, 
         },
       },
       name: 'Lora Lighthouse',
@@ -573,8 +572,6 @@ async function main() {
       isActive: true,
     },
   });
-
-  //
 
   await prisma.mapElement.create({
     data: {
