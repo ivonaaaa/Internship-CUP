@@ -9,7 +9,6 @@ import { BoatType } from "../../types/boats";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateBoatForm } from "../../utils/BoatFormValidation";
 import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
-import { ROUTES } from "../../constants";
 import c from "./BoatForm.module.css";
 import "../../styles/App.css";
 
@@ -181,12 +180,19 @@ export const BoatForm: React.FC<BoatFormProps> = ({
         src={whiteArrowLeft}
         alt="arrow"
         className="arrow"
-        onClick={() => navigate(ROUTES.START)}
+        onClick={() => navigate(-1)}
       />
       <h2 className="boatFormTitle">
-        Type in your <br />
-        boat details
+        {mode === "info" ? (
+          <>Boat details</>
+        ) : (
+          <>
+            Type in your <br />
+            boat details
+          </>
+        )}
       </h2>
+
       <form onSubmit={handleSubmit} className="boatForm">
         <div className="formGroup">
           <label htmlFor="name">Boat Name</label>
@@ -298,8 +304,10 @@ export const BoatForm: React.FC<BoatFormProps> = ({
             </div>
           ))}
 
-        {mode === "info" ? (
-          <Link to={`/boat/edit/${boatId}`}>Edit info</Link>
+        {mode === "info" && boatId ? (
+          <Link to={`/boat/edit/${boatId}`} className={c.editLink}>
+            Edit info
+          </Link>
         ) : (
           <div className={c.buttonGroup}>
             <button

@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import Dolphin from "../../assets/images/dolphin.png";
-import Sea from "../../assets/images/sea.png";
+import Dolphin from "../../assets/images/dolphin.webp";
+import Sea from "../../assets/images/sea.webp";
 import c from "./StartPage.module.css";
+import { ROUTES } from "../../constants";
 
 export const StartPage: React.FC = () => {
   const navigate = useNavigate();
@@ -23,12 +24,12 @@ export const StartPage: React.FC = () => {
         sail safe
       </h1>
 
-      <button className={c.signInBtn} onClick={() => navigate("/login")}>
+      <button className={c.signInBtn} onClick={() => navigate(ROUTES.LOGIN)}>
         Sign in
       </button>
       <p className={c.registerText}>
         Don't have an account?{" "}
-        <span onClick={() => navigate("/register")}>Register</span>
+        <span onClick={() => navigate(ROUTES.REGISTER)}>Register</span>
       </p>
       <p className={c.liveDemoText} onClick={handleLiveDemoClick}>
         Try live demo

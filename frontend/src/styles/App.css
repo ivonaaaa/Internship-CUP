@@ -35,14 +35,14 @@ button {
   left: 10px;
 }
 
-/* universal form styl */
+/* universal form style */
 .SeaContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   height: 100vh;
-  background: url(../assets/images/sea.png);
+  background: url(../assets/images/sea.webp);
   position: relative;
 }
 
@@ -88,6 +88,7 @@ button {
 }
 
 .formGroup {
+  flex: 1;
   margin-bottom: 16px;
 }
 

@@ -174,7 +174,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
 
       <h2 className="authFormTitle">{title}</h2>
 
-      {/* Display general errors at the top of the form */}
       {generalErrors.length > 0 && (
         <div className="generalErrors">
           {generalErrors.map((error, index) => (

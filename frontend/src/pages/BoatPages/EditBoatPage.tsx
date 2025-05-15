@@ -10,7 +10,7 @@ export function EditBoatPage() {
   }
 
   return (
-    <div className="pageContainer">
+    <div className="SeaContainer">
       <BoatForm context="profile" mode="edit" boatId={parseInt(id)} />
     </div>
   );

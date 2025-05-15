@@ -8,7 +8,7 @@ export function InfoBoatPage() {
   if (!id) return <div>Error: No boat ID provided</div>;
 
   return (
-    <div className="pageContainer">
+    <div className="SeaContainer">
       <BoatForm context="profile" mode="info" boatId={parseInt(id)} />
     </div>
   );

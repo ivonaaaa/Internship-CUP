@@ -39,3 +39,8 @@
   font-size: 14px;
   background-color: white;
 }
+
+.editLink {
+  color: #555;
+  text-decoration: none;
+}
