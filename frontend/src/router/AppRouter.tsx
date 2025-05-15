@@ -16,6 +16,7 @@ import { InfoBoatPage } from "../pages/BoatPages/InfoBoatPage";
 import { PaymentPage } from "../pages/RegisterPages/PaymentPage";
 import { CardPage } from "../pages/RegisterPages/CardPage";
 import { StartPage } from "../pages/StartPage/StartPage";
+import { BoatPage } from "../pages/BoatPages/BoatPage";
 
 export const AppRouter = () => {
   return (
@@ -35,8 +36,8 @@ export const AppRouter = () => {
           />
           <Route path={ROUTES.REGISTER_PAYMENT} element={<PaymentPage />} />
           <Route path={ROUTES.REGISTER_CARD} element={<CardPage />} />
-          <Route path={ROUTES.ADD_BOAT} element={<AddBoatPage />} />
-          <Route path={ROUTES.EDIT_BOAT} element={<EditBoatPage />} />
+          <Route path={ROUTES.ADD_BOAT} element={<BoatPage />} />
+          <Route path={ROUTES.EDIT_BOAT} element={<BoatPage />} />
           <Route path={ROUTES.INFO_BOAT} element={<InfoBoatPage />} />
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />

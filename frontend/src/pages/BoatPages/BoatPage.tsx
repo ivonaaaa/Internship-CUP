@@ -8,13 +8,15 @@ import leftArrow from "../../assets/images/whiteArrowLeft.svg";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants";
 
-export function InfoBoatPage() {
+export function BoatPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  if (!id) {
-    return <div>Error: Boat ID is missing</div>;
-  }
+  const isEditMode = !!id;
+
+  const context = isEditMode ? "registration" : "profile";
+  const mode = "edit";
+
   return (
     <div className={c.boatPage}>
       <img
@@ -29,9 +31,9 @@ export function InfoBoatPage() {
       </div>
       <div className={c.formWrapper}>
         <BoatForm
-          context="profile"
-          mode="info"
-          boatId={parseInt(id)}
+          context={context}
+          mode={mode}
+          boatId={isEditMode ? parseInt(id) : undefined}
           showTitle={false}
         />
       </div>

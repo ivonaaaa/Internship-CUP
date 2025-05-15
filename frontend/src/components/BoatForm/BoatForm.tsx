@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   useCreateBoat,
   useUpdateBoat,
@@ -11,6 +11,7 @@ import { validateBoatForm } from "../../utils/BoatFormValidation";
 import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
 import c from "./BoatForm.module.css";
 import "../../styles/App.css";
+import { ROUTES } from "../../constants";
 
 interface BoatFormProps {
   context?: "registration" | "profile";
@@ -142,7 +143,7 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           },
           {
             onSuccess: () => {
-              navigate("/profile");
+              navigate(ROUTES.PROFILE);
             },
             onError: (error: any) => {
               const errorMessage =
@@ -158,8 +159,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       } else {
         createBoat(boatData, {
           onSuccess: () => {
-            if (context === "profile") navigate("/profile");
-            else navigate("/register-subscription");
+            if (context === "profile") navigate(ROUTES.PROFILE);
+            else navigate(ROUTES.REGISTER_SUBSCRIPTION);
           },
           onError: (error: any) => {
             const errorMessage =
@@ -178,23 +179,26 @@ export const BoatForm: React.FC<BoatFormProps> = ({
 
   return (
     <>
-      <img
-        src={whiteArrowLeft}
-        alt="arrow"
-        className="arrow"
-        onClick={() => navigate(-1)}
-      />
       {showTitle ? (
-        <h2 className="boatFormTitle">
-          {mode === "info" ? (
-            <>Boat details</>
-          ) : (
-            <>
-              Type in your <br />
-              boat details
-            </>
-          )}
-        </h2>
+        <>
+          <img
+            src={whiteArrowLeft}
+            alt="arrow"
+            className="arrow"
+            onClick={() => navigate(-1)}
+          />
+
+          <h2 className="boatFormTitle">
+            {mode === "info" ? (
+              <>Boat details</>
+            ) : (
+              <>
+                Type in your <br />
+                boat details
+              </>
+            )}
+          </h2>
+        </>
       ) : null}
 
       <form onSubmit={handleSubmit} className="boatForm">
@@ -309,9 +313,14 @@ export const BoatForm: React.FC<BoatFormProps> = ({
           ))}
 
         {mode === "info" && boatId ? (
-          <Link to={`/boat/edit/${boatId}`} className={c.editLink}>
+          <button
+            onClick={() =>
+              navigate(ROUTES.EDIT_BOAT.replace(":id", boatId.toString()))
+            }
+            className="submitButton"
+          >
             Edit info
-          </Link>
+          </button>
         ) : (
           <div className={c.buttonGroup}>
             <button
