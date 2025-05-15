@@ -38,24 +38,29 @@
 }
 
 .formWrapper {
-  position: absolute;
-  bottom: 50px;
+  margin-top: 32px;
 }
 
+@media (max-height: 660px) {
+  .blueTopBackground {
+    height: 22vh;
+  }
+  .boatProfilePicture {
+    top: 12vh;
+  }
+
+  .formWrapper {
+    margin-top: 16px;
+  }
+}
 @media (max-height: 620px) {
+  .formWrapper {
+    margin-top: 0px;
+  }
   .blueTopBackground {
     height: 20vh;
   }
   .boatProfilePicture {
-    top: 8vh;
-  }
-}
-
-@media (max-height: 570px) {
-  .blueTopBackground {
-    height: 15vh;
-  }
-  .boatProfilePicture {
-    top: 4vh;
+    top: 10vh;
   }
 }
