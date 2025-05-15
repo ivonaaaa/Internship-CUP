@@ -58,7 +58,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
 
       case 409:
         return [
-          "This email or username is already registered. Please use different credentials.",
+          "This email is already registered. Please use different credentials.",
         ];
 
       case 500:

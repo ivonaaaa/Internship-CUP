@@ -8,7 +8,6 @@ import {
 import { BoatType } from "../../types/boats";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateBoatForm } from "../../utils/BoatFormValidation";
-import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
 import c from "./BoatForm.module.css";
 import "../../styles/App.css";
 import { ROUTES } from "../../constants";
@@ -181,13 +180,6 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     <>
       {showTitle ? (
         <>
-          <img
-            src={whiteArrowLeft}
-            alt="arrow"
-            className="arrow"
-            onClick={() => navigate(-1)}
-          />
-
           <h2 className="boatFormTitle">
             {mode === "info" ? (
               <>Boat details</>
