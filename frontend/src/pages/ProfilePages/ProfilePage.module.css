@@ -12,7 +12,7 @@
 .profileHeader {
   background: linear-gradient(180deg, #124374 0%, #112e4c 100%);
   min-width: 110vw;
-  height: 30vh;
+  height: 40vh;
   border-bottom-left-radius: 50%;
   border-bottom-right-radius: 50%;
   z-index: 0;
@@ -25,21 +25,21 @@
   flex-direction: column;
   padding: 0 2rem 1rem 2rem;
   gap: 2rem;
-  margin-bottom: 5rem;
+  margin: -4rem 0 5rem 0;
 }
 
 .userInfoContainer {
   display: flex;
   justify-content: center;
   position: relative;
-  top: -10rem;
+  top: -7rem;
 }
 
 .userInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   padding: 3rem;
   width: fit-content;
   background-color: white;

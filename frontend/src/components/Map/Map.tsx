@@ -233,8 +233,6 @@ export const Map = () => {
       "hillshade",
       "contour",
       "terrain",
-      // "landcover",
-      // "landuse",
     ];
 
     layers.forEach((layer) => {
