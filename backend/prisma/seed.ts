@@ -49,6 +49,16 @@ async function main() {
     },
   });
 
+  const user4 = await prisma.user.create({
+    data: {
+      email: 'john.doe@gmail.com',
+      name: 'John',
+      surname: 'Doe',
+      passwordHash: await bcrypt.hash('securepass456', 10),
+      subscriptionPlan: SubscriptionPlan.FREE_TRIAL,
+    },
+  });
+
   const boat1 = await prisma.boat.create({
     data: {
       name: 'Mala Sirena',
@@ -251,7 +261,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule3.id, 
+          id: rule3.id,
         },
       },
       name: 'No Anchoring Zone - Split Aerodrome',
@@ -315,7 +325,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule1.id, 
+          id: rule1.id,
         },
       },
       name: 'Military Zone - Lora',
@@ -373,7 +383,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule7.id, 
+          id: rule7.id,
         },
       },
       name: 'Ciovo Lighthouse',
@@ -391,7 +401,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule7.id, 
+          id: rule7.id,
         },
       },
       name: 'Marjan Lighthouse',
@@ -422,7 +432,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule6.id, 
+          id: rule6.id,
         },
       },
       name: 'Split Breakwater Lighthouse',
@@ -440,7 +450,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule8.id, 
+          id: rule8.id,
         },
       },
       name: 'Kaštel Area',
@@ -546,7 +556,7 @@ async function main() {
     data: {
       rule: {
         connect: {
-          id: rule2.id, 
+          id: rule2.id,
         },
       },
       name: 'Lora Lighthouse',

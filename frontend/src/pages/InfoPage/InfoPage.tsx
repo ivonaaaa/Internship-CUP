@@ -2,7 +2,7 @@ import { useState } from "react";
 import { InfoSection } from "../../components/InfoSection";
 import { NavBar } from "../../components/NavBar";
 import laws from "./laws.json";
-import arrowLeft from "../../assets/images/ArrowLeft.svg";
+import arrowLeft from "../../assets/images/whiteArrowLeft.svg";
 import c from "./InfoPage.module.css";
 
 type InfoSectionType = {
@@ -42,6 +42,7 @@ export const InfoPage = () => {
         </>
       ) : (
         <>
+          <div className={c.blueTopBackground}></div>
           <div className={c.detailHeader}>
             <img
               src={arrowLeft}

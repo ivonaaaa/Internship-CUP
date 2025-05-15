@@ -10,7 +10,7 @@ export const StartPage: React.FC = () => {
   const { login } = useAuth();
 
   const handleLiveDemoClick = async () => {
-    await login("marko@gmail.com", "password123");
+    await login("john.doe@gmail.com", "securepass456");
     navigate("/");
   };
 
