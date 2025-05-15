@@ -16,7 +16,6 @@
   color: white;
   background-color: var(--color-ocean);
   border-radius: 0 0 30% 30%;
-  z-index: -1;
 }
 
 .profileContent {
