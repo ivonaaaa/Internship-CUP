@@ -10,8 +10,6 @@ import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
 import { RegisterBoatPage } from "../pages/RegisterPages/RegisterBoatPage";
 import { SubscriptionPage } from "../pages/RegisterPages/SubscriptionPage";
 import { InfoPage } from "../pages/InfoPage";
-import { AddBoatPage } from "../pages/BoatPages/AddBoatPage";
-import { EditBoatPage } from "../pages/BoatPages/EditBoatPage";
 import { InfoBoatPage } from "../pages/BoatPages/InfoBoatPage";
 import { PaymentPage } from "../pages/RegisterPages/PaymentPage";
 import { CardPage } from "../pages/RegisterPages/CardPage";
