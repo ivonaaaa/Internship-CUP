@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants";
 import { useAuth } from "../../contexts/AuthContext";
 import { useUpdateUser } from "../../api/user/useUserQueries";
 import { validateProfileForm } from "../../utils/ProfileValidation";
-import styles from "./EditProfilePage.module.css";
-import { ROUTES } from "../../constants";
+import c from "./EditProfilePage.module.css";
 
 export const EditProfilePage = () => {
   const { user } = useAuth();
@@ -79,17 +79,17 @@ export const EditProfilePage = () => {
   };
 
   if (!user) {
-    return <div className={styles.loadingContainer}>Loading...</div>;
+    return <div className={c.loadingContainer}>Loading...</div>;
   }
 
   return (
-    <div className={styles.editProfilePage}>
-      <div className={styles.header}>
+    <div className={c.editProfilePage}>
+      <div className={c.header}>
         <h2>Edit profile</h2>
       </div>
 
-      <form onSubmit={handleSubmit} className={styles.editForm}>
-        <div className={styles.formGroup}>
+      <form onSubmit={handleSubmit} className={c.editForm}>
+        <div className={c.formGroup}>
           <label htmlFor="name">Name</label>
           <input
             type="text"
@@ -101,7 +101,7 @@ export const EditProfilePage = () => {
           />
         </div>
 
-        <div className={styles.formGroup}>
+        <div className={c.formGroup}>
           <label htmlFor="surname">Surname</label>
           <input
             type="text"
@@ -113,19 +113,19 @@ export const EditProfilePage = () => {
           />
         </div>
 
-        <div className={styles.formGroup}>
+        <div className={c.formGroup}>
           <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             value="••••••••••"
             disabled
-            className={styles.passwordField}
+            className={c.passwordField}
             readOnly
           />
           <button
             type="button"
-            className={styles.changePasswordButton}
+            className={c.changePasswordButton}
             onClick={() => setShowPasswordChange(!showPasswordChange)}
           >
             {showPasswordChange ? "Cancel password change" : "Change password"}
@@ -134,7 +134,7 @@ export const EditProfilePage = () => {
 
         {showPasswordChange && (
           <>
-            <div className={styles.formGroup}>
+            <div className={c.formGroup}>
               <label htmlFor="currentPassword">Current password</label>
               <input
                 type="password"
@@ -146,7 +146,7 @@ export const EditProfilePage = () => {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={c.formGroup}>
               <label htmlFor="newPassword">New password</label>
               <input
                 type="password"
@@ -158,7 +158,7 @@ export const EditProfilePage = () => {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={c.formGroup}>
               <label htmlFor="confirmPassword">Confirm password</label>
               <input
                 type="password"
@@ -173,25 +173,25 @@ export const EditProfilePage = () => {
         )}
 
         {errors.length > 0 && (
-          <ul className={styles.errorList}>
+          <ul className={c.errorList}>
             {errors.map((error, index) => (
-              <li key={index} className={styles.error}>
+              <li key={index} className={c.error}>
                 {error}
               </li>
             ))}
           </ul>
         )}
 
-        <div className={styles.buttonGroup}>
+        <div className={c.buttonGroup}>
           <button
-            className={styles.cancelButton}
+            className={c.cancelButton}
             onClick={() => navigate(ROUTES.PROFILE)}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className={styles.confirmButton}
+            className={c.confirmButton}
             disabled={updateUser.isPending}
           >
             {updateUser.isPending ? "Updating..." : "Confirm"}

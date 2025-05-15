@@ -1,11 +1,11 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useUserBoats } from "../../api/boat/useBoatQueries";
-import styles from "./ProfilePage.module.css";
 import { ROUTES } from "../../constants";
+import { NavBar } from "../../components/NavBar";
+import { useUserBoats } from "../../api/boat/useBoatQueries";
 import { useDeleteBoat } from "../../api/boat/useBoatQueries";
 import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
-import { NavBar } from "../../components/NavBar";
+import c from "./ProfilePage.module.css";
 
 export const ProfilePage = () => {
   const { user, logout } = useAuth();
@@ -41,31 +41,31 @@ export const ProfilePage = () => {
     }
   };
 
-  if (!user) return <div className={styles.loadingContainer}>Loading...</div>;
+  if (!user) return <div className={c.loadingContainer}>Loading...</div>;
 
   return (
     <>
-      <div className={styles.profilePage}>
+      <div className={c.profilePage}>
         <img
           src={whiteArrowLeft}
           alt="arrow"
           className="arrow"
           onClick={() => navigate(-1)}
         />
-        <div className={styles.profileHeader}>
-          <button className={styles.editButton} onClick={handleEditProfile}>
+        <div className={c.profileHeader}>
+          <button className={c.editButton} onClick={handleEditProfile}>
             Edit profile
           </button>
         </div>
-        <div className={styles.profileContent}>
-          <div className={styles.userInfoContainer}>
-            <div className={styles.userInfo}>
-              <div className={styles.avatar}>
+        <div className={c.profileContent}>
+          <div className={c.userInfoContainer}>
+            <div className={c.userInfo}>
+              <div className={c.avatar}>
                 {user.name && user.surname
                   ? user.name[0] + user.surname[0]
                   : user.email[0].toUpperCase()}
               </div>
-              <div className={styles.userDetails}>
+              <div className={c.userDetails}>
                 <h3>
                   {user.name} {user.surname}
                 </h3>
@@ -73,30 +73,30 @@ export const ProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className={styles.boatListContainer}>
+          <div className={c.boatListContainer}>
             {boatsLoading ? (
               <p>Loading boats...</p>
             ) : boats && boats.length > 0 ? (
               boats.map((boat, index) => (
-                <div key={boat.id} className={styles.boatItem}>
+                <div key={boat.id} className={c.boatItem}>
                   <div
-                    className={styles.boatInfo}
+                    className={c.boatInfo}
                     onClick={() => handleInfoBoat(boat.id)}
                   >
-                    <div className={styles.boatNumber}>{index + 1}</div>
-                    <div className={styles.boatName}>
+                    <div className={c.boatNumber}>{index + 1}</div>
+                    <div className={c.boatName}>
                       {boat.name || `Boat ${index + 1}`}
                     </div>
                   </div>
-                  <div className={styles.boatButtons}>
+                  <div className={c.boatButtons}>
                     <button
-                      className={styles.editBoatButton}
+                      className={c.editBoatButton}
                       onClick={() => handleEditBoat(boat.id)}
                     >
                       Edit
                     </button>
                     <button
-                      className={styles.editBoatButton}
+                      className={c.editBoatButton}
                       onClick={() => handleRemoveBoat(boat.id)}
                     >
                       Remove
@@ -105,37 +105,38 @@ export const ProfilePage = () => {
                 </div>
               ))
             ) : null}
-            <button className={styles.addButton} onClick={handleAddBoat}>
-              <span className={styles.plusIcon}>+</span> Add boat
+            <button className={c.addButton} onClick={handleAddBoat}>
+              <span className={c.plusIcon}>+</span> Add boat
             </button>
           </div>
 
-          <div className={styles.subscriptionContainer}>
-            <div className={styles.subscriptionColumn}>
-              <h3 className={styles.subscriptionTitle}>
+          <div className={c.subscriptionContainer}>
+            <div className={c.subscriptionColumn}>
+              <h3 className={c.subscriptionTitle}>
                 {user.subscriptionPlan === "FREE_TRIAL"
                   ? "Free trial"
                   : "Weekly"}
               </h3>
-              <span>
+              <span className={c.subscriptionText}>
                 {user.subscriptionPlan === "FREE_TRIAL"
                   ? user.subscriptionExpiry
-                    ? "until " + new Date(user.subscriptionExpiry).toLocaleDateString()
+                    ? "until " +
+                      new Date(user.subscriptionExpiry).toLocaleDateString()
                     : "no expiry date"
                   : "billed every week"}
               </span>
             </div>
-            <div className={styles.subscriptionColumn}>
-              <div className={styles.priceContainer}>
-                <span className={styles.price}>
+            <div className={c.subscriptionColumn}>
+              <div className={c.priceContainer}>
+                <span className={c.price}>
                   {user.subscriptionPlan === "PAID" ? "24.99" : "0.00"}€
                 </span>
               </div>
             </div>
           </div>
 
-          <div className={styles.logoutContainer}>
-            <button className={styles.logoutButton} onClick={handleLogout}>
+          <div className={c.logoutContainer}>
+            <button className={c.logoutButton} onClick={handleLogout}>
               Log out
             </button>
           </div>

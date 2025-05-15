@@ -27,6 +27,7 @@
 .signInBtn {
   cursor: pointer;
   width: calc(100% - 40px);
+  max-width: 600px;
   padding: 12px 20px;
   justify-content: center;
   align-items: center;

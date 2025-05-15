@@ -161,7 +161,7 @@
 .logoutButton {
   background: none;
   border: none;
-  color: var(--color-ocean);
+  color: #535862;
   font-size: 0.875rem;
   padding: 0;
   cursor: pointer;
@@ -195,7 +195,7 @@
   width: 2rem;
   height: 2rem;
   background-color: white;
-  border: 2px dotted grey;
+  border: 2px dotted #1e3a5f;
   border-radius: 50%;
   color: #1e3a5f;
   font-size: 1.125rem;
@@ -214,7 +214,7 @@
   gap: 0.25rem;
   background-color: #2c7bc9;
   color: white;
-  padding: 2rem;
+  padding: 2rem 4rem;
   border-radius: 1rem;
 }
 
@@ -223,6 +223,12 @@
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
+}
+
+.subscriptionText {
+  font-size: 12px;
+  line-height: 24px;
+  color: var(--color-cloud);
 }
 
 .subscriptionTitle {
@@ -241,7 +247,8 @@
 
 .price {
   font-family: var(--font-omnes);
-  font-weight: 500;
+  font-size: 32px;
+  font-weight: 600;
 }
 
 .pricePeriod {
