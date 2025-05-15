@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { InfoSection } from "../../components/InfoSection";
 import { NavBar } from "../../components/NavBar";
 import laws from "./laws.json";
-import arrowLeft from "../../assets/images/whiteArrowLeft.svg";
+import ArrowLeft from "../../assets/images/whiteArrowLeft.svg";
+import BlackArrowLeft from "../../assets/images/ArrowLeft.svg";
 import c from "./InfoPage.module.css";
 
 type InfoSectionType = {
@@ -12,6 +14,7 @@ type InfoSectionType = {
 
 export const InfoPage = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const handleSectionClick = (index: number) => {
     setOpenIndex(index);
@@ -23,6 +26,15 @@ export const InfoPage = () => {
 
   return (
     <div className={c.infoPage}>
+      {openIndex === null && (
+        <img
+          src={BlackArrowLeft}
+          alt="arrow"
+          className="arrow"
+          onClick={() => navigate(-1)}
+        />
+      )}
+
       {openIndex === null ? (
         <>
           <h1 className={c.infoPageHeader}>
@@ -45,7 +57,7 @@ export const InfoPage = () => {
           <div className={c.blueTopBackground}></div>
           <div className={c.detailHeader}>
             <img
-              src={arrowLeft}
+              src={ArrowLeft}
               alt="Back"
               className={c.backButton}
               onClick={handleBackClick}
