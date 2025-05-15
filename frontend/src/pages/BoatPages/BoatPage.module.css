@@ -9,9 +9,10 @@
 .blueTopBackground {
   background: linear-gradient(180deg, #124374 0%, #112e4c 100%);
   min-width: 110vw;
-  height: 250px;
+  height: 25vh;
   border-bottom-left-radius: 50%;
   border-bottom-right-radius: 50%;
+  z-index: 200;
 }
 
 .boatProfilePicture {
@@ -20,18 +21,46 @@
   align-items: center;
   justify-content: center;
   background-color: white;
-  height: 180px;
-  width: 180px;
+  height: 18vh;
+  width: 18vh;
   border-radius: 20px;
   box-shadow: 0px 1px 17.8px 0px #0000001a;
   position: absolute;
-  top: 150px;
+  top: 15vh;
   z-index: 1001;
-  overflow: hidden;
-  padding-top: 20px;
+}
+
+.boatProfilePicture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin-top: 20px;
 }
 
 .formWrapper {
-  position: absolute;
-  bottom: 60px;
+  margin-top: 32px;
+}
+
+@media (max-height: 660px) {
+  .blueTopBackground {
+    height: 22vh;
+  }
+  .boatProfilePicture {
+    top: 12vh;
+  }
+
+  .formWrapper {
+    margin-top: 16px;
+  }
+}
+@media (max-height: 620px) {
+  .formWrapper {
+    margin-top: 0px;
+  }
+  .blueTopBackground {
+    height: 20vh;
+  }
+  .boatProfilePicture {
+    top: 10vh;
+  }
 }
