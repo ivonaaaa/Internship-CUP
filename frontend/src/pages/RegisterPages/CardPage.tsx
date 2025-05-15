@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateCardDetails } from "../../utils/CardFormValidation";
 import MasterCardIcon from "../../assets/images/Mastercard.svg";
+import ArrowLeft from "../../assets/images/ArrowLeft.svg";
 import c from "./CardPage.module.css";
+import "../../styles/App.css";
 
 export const CardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -84,7 +86,13 @@ export const CardPage: React.FC = () => {
 
   return (
     <div className={c.container}>
-      <h1 className={c.title}>Enter card details</h1>
+      <img
+        src={ArrowLeft}
+        alt="arrow"
+        className="arrow"
+        onClick={() => navigate(-1)}
+      />
+      <h1 className="registerHeadline">Enter card details</h1>
       <div className={c.column}>
         <label className={c.label}>Name and Surname</label>
         <input
@@ -95,8 +103,8 @@ export const CardPage: React.FC = () => {
           onChange={handleNameChange}
         />
         {errors.name && (
-          <div className="errorList">
-            <span className="error">{errors.name}</span>
+          <div className="errorText">
+            <span>{errors.name}</span>
           </div>
         )}
       </div>
@@ -116,7 +124,7 @@ export const CardPage: React.FC = () => {
           />
         </div>
         {errors.cardNumber && (
-          <div className={c.errorMessage}>{errors.cardNumber}</div>
+          <div className="errorText">{errors.cardNumber}</div>
         )}
       </div>
       <div className={c.row}>
@@ -131,7 +139,7 @@ export const CardPage: React.FC = () => {
             maxLength={5}
           />
           {errors.expiration && (
-            <div className={c.errorMessage}>{errors.expiration}</div>
+            <div className="errorText">{errors.expiration}</div>
           )}
         </div>
         <div className={c.column}>
@@ -144,7 +152,7 @@ export const CardPage: React.FC = () => {
             onChange={handleCvvChange}
             maxLength={3}
           />
-          {errors.cvv && <div className={c.errorMessage}>{errors.cvv}</div>}
+          {errors.cvv && <div className="errorText">{errors.cvv}</div>}
         </div>
       </div>
 
@@ -152,9 +160,7 @@ export const CardPage: React.FC = () => {
         <button className={c.cancelBtn} onClick={handleCancel}>
           Cancel
         </button>
-        <button className={c.payBtn} onClick={handlePay}>
-          Pay now
-        </button>
+        <button onClick={handlePay}>Pay now</button>
       </div>
     </div>
   );

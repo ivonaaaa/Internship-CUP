@@ -35,6 +35,17 @@ button {
   left: 10px;
 }
 
+.registerHeadline {
+  margin-top: 56px;
+  margin-bottom: 0.5rem;
+  color: var(--color-ocean);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: -0.64px;
+  text-align: center;
+}
+
 /* universal form style */
 .SeaContainer {
   display: flex;
