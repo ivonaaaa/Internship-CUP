@@ -1,9 +1,9 @@
-import c from "./InfoPage.module.css";
-import { InfoSection } from "../../components/InfoSection";
 import { useState } from "react";
-import laws from "./laws.json";
+import { InfoSection } from "../../components/InfoSection";
 import { NavBar } from "../../components/NavBar";
+import laws from "./laws.json";
 import arrowLeft from "../../assets/images/ArrowLeft.svg";
+import c from "./InfoPage.module.css";
 
 type InfoSectionType = {
   title: string;

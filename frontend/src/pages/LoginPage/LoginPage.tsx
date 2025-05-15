@@ -1,21 +1,9 @@
 import { AuthForm } from "../../components/AuthForm";
-import "../../App.css";
-import c from "../RegisterPages/RegisterUserPage.module.css";
-import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants";
+import "../../styles/App.css";
 
 export function LoginPage() {
-  const navigate = useNavigate();
-
   return (
-    <div className={c.pageContainer}>
-      <img
-        src={whiteArrowLeft}
-        alt="arrow"
-        className={c.arrow}
-        onClick={() => navigate(ROUTES.START)}
-      />
+    <div className="SeaContainer">
       <AuthForm mode="login" />
     </div>
   );

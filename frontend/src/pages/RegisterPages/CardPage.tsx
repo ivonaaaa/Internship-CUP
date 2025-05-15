@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MasterCardIcon from "../../assets/images/Mastercard.svg";
 import { validateCardDetails } from "../../utils/CardFormValidation";
+import MasterCardIcon from "../../assets/images/Mastercard.svg";
 import c from "./CardPage.module.css";
 
 export const CardPage: React.FC = () => {

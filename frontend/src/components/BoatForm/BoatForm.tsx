@@ -8,8 +8,9 @@ import {
 import { BoatType } from "../../types/boats";
 import { useAuth } from "../../contexts/AuthContext";
 import { validateBoatForm } from "../../utils/BoatFormValidation";
+import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
 import c from "./BoatForm.module.css";
-import { ROUTES } from "../../constants";
+import "../../styles/App.css";
 
 interface BoatFormProps {
   context?: "registration" | "profile";
@@ -47,21 +48,8 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     width: "",
   });
 
-  const [fieldErrors, setFieldErrors] = useState<{
-    name: string[];
-    boatType: string[];
-    length: string[];
-    width: string[];
-    registration: string[];
-    general: string[];
-  }>({
-    name: [],
-    boatType: [],
-    length: [],
-    width: [],
-    registration: [],
-    general: [],
-  });
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+  const [generalErrors, setGeneralErrors] = useState<string[]>([]);
 
   const isReadOnly = mode === "info";
 
@@ -94,10 +82,13 @@ export const BoatForm: React.FC<BoatFormProps> = ({
       [name]: name === "boatType" ? (value as BoatType) : value,
     });
 
-    setFieldErrors((prev) => ({
-      ...prev,
-      [name]: [],
-    }));
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,36 +99,28 @@ export const BoatForm: React.FC<BoatFormProps> = ({
     const validationErrors = validateBoatForm(formData);
 
     if (validationErrors.length > 0) {
-      const mappedErrors = {
-        name: validationErrors.filter((err) => err.includes("name")),
-        boatType: validationErrors.filter((err) => err.includes("type")),
-        length: validationErrors.filter((err) => err.includes("Length")),
-        width: validationErrors.filter((err) => err.includes("Width")),
-        registration: validationErrors.filter((err) =>
-          err.includes("Registration")
-        ),
-        general: validationErrors.filter(
-          (err) =>
-            !err.includes("name") &&
-            !err.includes("type") &&
-            !err.includes("Length") &&
-            !err.includes("Width") &&
-            !err.includes("Registration")
-        ),
-      };
+      const errorMap: { [key: string]: string } = {};
+      const generalErrs: string[] = [];
 
-      setFieldErrors(mappedErrors);
+      validationErrors.forEach((error) => {
+        const lowerCaseError = error.toLowerCase();
+
+        if (lowerCaseError.includes("name")) errorMap.name = error;
+        else if (lowerCaseError.includes("type")) errorMap.boatType = error;
+        else if (lowerCaseError.includes("length")) errorMap.length = error;
+        else if (lowerCaseError.includes("width")) errorMap.width = error;
+        else if (lowerCaseError.includes("registration"))
+          errorMap.registration = error;
+        else generalErrs.push(error);
+      });
+
+      setFieldErrors(errorMap);
+      setGeneralErrors(generalErrs);
       return;
     }
 
-    setFieldErrors({
-      name: [],
-      boatType: [],
-      length: [],
-      width: [],
-      registration: [],
-      general: [],
-    });
+    setFieldErrors({});
+    setGeneralErrors([]);
 
     try {
       const boatData = {
@@ -164,12 +147,9 @@ export const BoatForm: React.FC<BoatFormProps> = ({
                 error?.response?.data?.message ||
                 "Failed to update boat. Please try again.";
 
-              setFieldErrors((prev) => ({
-                ...prev,
-                general: Array.isArray(errorMessage)
-                  ? errorMessage
-                  : [errorMessage],
-              }));
+              setGeneralErrors(
+                Array.isArray(errorMessage) ? errorMessage : [errorMessage]
+              );
             },
           }
         );
@@ -183,169 +163,169 @@ export const BoatForm: React.FC<BoatFormProps> = ({
             const errorMessage =
               error || "Failed to register boat. Please try again.";
 
-            setFieldErrors((prev) => ({
-              ...prev,
-              general: Array.isArray(errorMessage)
-                ? errorMessage
-                : [errorMessage],
-            }));
+            setGeneralErrors(
+              Array.isArray(errorMessage) ? errorMessage : [errorMessage]
+            );
           },
         });
       }
     } catch (err: any) {
-      setFieldErrors((prev) => ({
-        ...prev,
-        general: [err?.message || "An unexpected error occurred"],
-      }));
+      setGeneralErrors([err?.message || "An unexpected error occurred"]);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className={c.boatForm}>
-      <h2>{mode === "edit" ? "Edit Boat" : "Boat information"}</h2>
+    <>
+      <img
+        src={whiteArrowLeft}
+        alt="arrow"
+        className="arrow"
+        onClick={() => navigate(-1)}
+      />
+      <h2 className="boatFormTitle">
+        {mode === "info" ? (
+          <>Boat details</>
+        ) : (
+          <>
+            Type in your <br />
+            boat details
+          </>
+        )}
+      </h2>
 
-      <div className="formGroup">
-        <label htmlFor="name">Boat Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Type in boat's name"
-          value={formData.name}
-          onChange={handleChange}
-          readOnly={isReadOnly}
-          className={isReadOnly ? c.readOnlyInput : ""}
-        />
-        {fieldErrors.name.map((error, index) => (
-          <div key={`name-error-${index}`} className={c.fieldError}>
-            {error}
-          </div>
-        ))}
-      </div>
-
-      <div className="formGroup">
-        <select
-          id="boatType"
-          name="boatType"
-          value={formData.boatType}
-          onChange={handleChange}
-          disabled={isReadOnly}
-          className={isReadOnly ? c.readOnlyInput : ""}
-        >
-          <option value="">Boat type</option>
-          <option value={BoatType.MOTORBOAT}>Motorboat</option>
-          <option value={BoatType.DINGHY}>Dinghy</option>
-          <option value={BoatType.YACHT}>Yacht</option>
-        </select>
-        {fieldErrors.boatType.map((error, index) => (
-          <div key={`type-error-${index}`} className={c.fieldError}>
-            {error}
-          </div>
-        ))}
-      </div>
-
-      <div className={c.rowGroup}>
+      <form onSubmit={handleSubmit} className="boatForm">
         <div className="formGroup">
-          <label htmlFor="length">Length</label>
-          <div className={c.inputWithPrefix}>
-            <span>m</span>
-            <input
-              type="number"
-              step="0.1"
-              id="length"
-              name="length"
-              placeholder="10"
-              value={formData.length}
-              onChange={handleChange}
-              readOnly={isReadOnly}
-              className={isReadOnly ? c.readOnlyInput : ""}
-            />
-          </div>
-          {fieldErrors.length.map((error, index) => (
-            <div key={`length-error-${index}`} className={c.fieldError}>
-              {error}
-            </div>
-          ))}
+          <label htmlFor="name">Boat Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Type in your boat's name"
+            value={formData.name}
+            onChange={handleChange}
+            readOnly={isReadOnly}
+            className={isReadOnly ? c.readOnlyInput : ""}
+          />
+          {fieldErrors.name && (
+            <div className="errorText">{fieldErrors.name}</div>
+          )}
         </div>
 
         <div className="formGroup">
-          <label htmlFor="width">Width</label>
-          <div className={c.inputWithPrefix}>
-            <span>m</span>
-            <input
-              type="number"
-              step="0.1"
-              id="width"
-              name="width"
-              placeholder="3"
-              value={formData.width}
-              onChange={handleChange}
-              readOnly={isReadOnly}
-              className={isReadOnly ? c.readOnlyInput : ""}
-            />
+          <select
+            id="boatType"
+            name="boatType"
+            value={formData.boatType}
+            onChange={handleChange}
+            disabled={isReadOnly}
+            className={isReadOnly ? c.readOnlyInput : ""}
+          >
+            <option value="">Boat type</option>
+            <option value={BoatType.MOTORBOAT}>Motorboat</option>
+            <option value={BoatType.DINGHY}>Dinghy</option>
+            <option value={BoatType.YACHT}>Yacht</option>
+          </select>
+          {fieldErrors.boatType && (
+            <div className="errorText">{fieldErrors.boatType}</div>
+          )}
+        </div>
+
+        <div className={c.rowGroup}>
+          <div className="formGroup">
+            <label htmlFor="length">Length</label>
+            <div className={c.inputWithPrefix}>
+              <div className={c.prefixBox}>
+                <span>m</span>
+                <div className={c.separator} />
+              </div>
+              <input
+                type="number"
+                step="0.1"
+                id="length"
+                name="length"
+                placeholder="Enter length"
+                value={formData.length}
+                onChange={handleChange}
+                readOnly={isReadOnly}
+                className={isReadOnly ? c.readOnlyInput : ""}
+              />
+            </div>
+            {fieldErrors.length && (
+              <div className="errorText">{fieldErrors.length}</div>
+            )}
           </div>
-          {fieldErrors.width.map((error, index) => (
-            <div key={`width-error-${index}`} className={c.fieldError}>
+
+          <div className="formGroup">
+            <label htmlFor="width">Width</label>
+            <div className={c.inputWithPrefix}>
+              <div className={c.prefixBox}>
+                <span>m</span>
+                <div className={c.separator} />
+              </div>
+              <input
+                type="number"
+                step="0.1"
+                id="width"
+                name="width"
+                placeholder="Enter width"
+                value={formData.width}
+                onChange={handleChange}
+                readOnly={isReadOnly}
+                className={isReadOnly ? c.readOnlyInput : ""}
+              />
+            </div>
+            {fieldErrors.width && (
+              <div className="errorText">{fieldErrors.width}</div>
+            )}
+          </div>
+        </div>
+
+        <div className="formGroup">
+          <label htmlFor="registration">Registration</label>
+          <input
+            type="text"
+            id="registration"
+            name="registration"
+            placeholder="Type in your boat's registration"
+            value={formData.registration}
+            onChange={handleChange}
+            readOnly={isReadOnly}
+            className={isReadOnly ? c.readOnlyInput : ""}
+          />
+          {fieldErrors.registration && (
+            <div className="errorText">{fieldErrors.registration}</div>
+          )}
+        </div>
+
+        {generalErrors.length > 0 &&
+          generalErrors.map((error, index) => (
+            <div key={index} className="errorText">
               {error}
             </div>
           ))}
-        </div>
-      </div>
 
-      <div className="formGroup">
-        <label htmlFor="registration">Registration</label>
-        <input
-          type="text"
-          id="registration"
-          name="registration"
-          placeholder="ST-1234"
-          value={formData.registration}
-          onChange={handleChange}
-          readOnly={isReadOnly}
-          className={isReadOnly ? c.readOnlyInput : ""}
-        />
-        {fieldErrors.registration.map((error, index) => (
-          <div key={`reg-error-${index}`} className={c.fieldError}>
-            {error}
+        {mode === "info" && boatId ? (
+          <Link to={`/boat/edit/${boatId}`} className={c.editLink}>
+            Edit info
+          </Link>
+        ) : (
+          <div className={c.buttonGroup}>
+            <button
+              type="submit"
+              className="submitButton"
+              disabled={isCreating || isUpdating}
+            >
+              {mode === "edit"
+                ? isUpdating
+                  ? "Updating..."
+                  : "Confirm"
+                : isCreating
+                  ? "Processing..."
+                  : "Next"}
+            </button>
           </div>
-        ))}
-      </div>
-
-      {fieldErrors.general.length > 0 && (
-        <ul className="errorList">
-          {fieldErrors.general.map((msg, index) => (
-            <li key={index} className="error">
-              {msg}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {mode === "info" ? (
-        <Link to={`/boat/edit/${boatId}`}>Edit info</Link>
-      ) : (
-        <div className={c.buttonGroup}>
-          <button
-            className={c.cancelButton}
-            onClick={() => navigate(ROUTES.PROFILE)}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className={c.submitButton}
-            disabled={isCreating || isUpdating}
-          >
-            {mode === "edit"
-              ? isUpdating
-                ? "Updating..."
-                : "Confirm"
-              : isCreating
-                ? "Processing..."
-                : "Next"}
-          </button>
-        </div>
-      )}
-    </form>
+        )}
+      </form>
+    </>
   );
 };

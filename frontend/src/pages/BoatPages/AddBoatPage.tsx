@@ -1,9 +1,9 @@
 import { BoatForm } from "../../components/BoatForm";
-import "../../App.css";
+import "../../styles/App.css";
 
 export function AddBoatPage() {
   return (
-    <div className="page-container">
+    <div className="SeaContainer">
       <BoatForm context="profile" />
     </div>
   );

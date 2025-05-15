@@ -1,83 +1,46 @@
-.boatForm {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  margin-top: 40px;
-}
-
-.boatForm h2 {
-  margin-top: 0;
-  margin-bottom: 3rem;
-  color: var(--color-navy);
-  font-size: 2rem;
-  text-align: center;
-}
-
-.fieldError {
-  color: var(--color-red);
-  font-size: 14px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-
-.buttonGroup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  gap: 1rem;
-}
-
-.cancelButton {
-  background-color: var(--color-cloud);
-  color: var(--color-ocean);
-  font-weight: 700;
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
 .rowGroup {
   display: flex;
   gap: 1rem;
-  justify-content: space-between;
 }
 
 .inputWithPrefix {
   display: flex;
-  align-items: center;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
+  border: 1px solid #ccc;
   border-radius: 4px;
   overflow: hidden;
+  height: 36px;
 }
 
-.inputWithPrefix span {
-  padding: 0.75rem;
-  background-color: #eee;
-  border-right: 1px solid #ddd;
-  font-size: 0.95rem;
-  white-space: nowrap;
-  color: #333;
+.prefixBox {
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background-color: white;
+}
+
+.prefixBox span {
+  font-size: 14px;
+  color: #555;
+}
+
+.separator {
+  width: 1px;
+  height: 100%;
+  background-color: #ccc;
+  margin-left: 12px;
 }
 
 .inputWithPrefix input {
-  flex: 1;
-  padding: 0.75rem;
-  font-size: 1rem;
   border: none;
   outline: none;
-  background: transparent;
+  padding: 0 10px;
+  flex: 1;
+  font-size: 14px;
+  background-color: white;
 }
 
-.readOnlyInput {
-  background-color: #f9f9f9;
-  cursor: not-allowed;
-  opacity: 0.8;
-  border-color: #ddd;
+.editLink {
+  color: #555;
+  text-decoration: none;
 }
