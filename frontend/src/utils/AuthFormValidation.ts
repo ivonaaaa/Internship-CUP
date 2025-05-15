@@ -39,9 +39,13 @@ export const validateAuthForm = (
   if (isRegisterMode) {
     if (!validateRequired(formData.name))
       errors.push("First name is required.");
+    else if (formData.name.trim().length < 2)
+      errors.push("First name must be at least 2 characters long.");
 
     if (!validateRequired(formData.surname))
       errors.push("Last name is required.");
+    else if (formData.surname.trim().length < 2)
+      errors.push("Last name must be at least 2 characters long.");
 
     if (!validateRequired(formData.confirmPassword))
       errors.push("Please confirm your password.");
