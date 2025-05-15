@@ -77,10 +77,10 @@
 }
 
 .userDetails h3 {
+  font-family: var(--font-omnes);
   font-weight: 600;
   font-size: 32px;
   line-height: 44px;
-  letter-spacing: -2%;
   text-align: center;
   color: var(--color-ocean);
 }
@@ -92,6 +92,10 @@
   letter-spacing: 0%;
   text-align: center;
   color: #333;
+}
+
+.profileHeader > .editButton {
+  font-family: var(--font-omnes);
 }
 
 .editButton {
@@ -141,6 +145,7 @@
 }
 
 .boatName {
+  font-family: var(--font-omnes);
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
@@ -205,7 +210,7 @@
   display: flex;
   justify-content: space-between;
   gap: 0.25rem;
-  background-color: var(--color-sky);
+  background-color: #2c7bc9;
   color: white;
   padding: 2rem;
   border-radius: 1rem;
@@ -219,6 +224,7 @@
 }
 
 .subscriptionTitle {
+  font-family: var(--font-omnes);
   font-weight: 600;
   font-size: 24px;
   line-height: 24px;
@@ -232,6 +238,7 @@
 }
 
 .price {
+  font-family: var(--font-omnes);
   font-weight: 500;
 }
 
