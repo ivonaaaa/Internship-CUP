@@ -4,6 +4,8 @@ import { useUserBoats } from "../../api/boat/useBoatQueries";
 import styles from "./ProfilePage.module.css";
 import { ROUTES } from "../../constants";
 import { useDeleteBoat } from "../../api/boat/useBoatQueries";
+import whiteArrowLeft from "../../assets/images/whiteArrowLeft.svg";
+import { NavBar } from "../../components/NavBar";
 
 export const ProfilePage = () => {
   const { user, logout } = useAuth();
@@ -42,89 +44,104 @@ export const ProfilePage = () => {
   if (!user) return <div className={styles.loadingContainer}>Loading...</div>;
 
   return (
-    <div className={styles.profilePage}>
-      <div className={styles.profileHeader}>
-        <button className={styles.editButton} onClick={handleEditProfile}>
-          Edit profile
-        </button>
-      </div>
-      <div className={styles.profileContent}>
-        <div className={styles.userInfo}>
-          <div className={styles.avatar}>
-            {user.name && user.surname
-              ? user.name[0] + user.surname[0]
-              : user.email[0].toUpperCase()}
-          </div>
-          <div className={styles.userDetails}>
-            <h3>
-              {user.name} {user.surname}
-            </h3>
-            <p>{user.email}</p>
-          </div>
-        </div>
-
-        <div className={styles.boatListContainer}>
-          {boatsLoading ? (
-            <p>Loading boats...</p>
-          ) : boats && boats.length > 0 ? (
-            boats.map((boat, index) => (
-              <div key={boat.id} className={styles.boatItem}>
-                <div
-                  className={styles.boatInfo}
-                  onClick={() => handleInfoBoat(boat.id)}
-                >
-                  <div className={styles.boatNumber}>{index + 1}</div>
-                  <div className={styles.boatName}>
-                    {boat.name || `Boat ${index + 1}`}
-                  </div>
-                </div>
-                <div className={styles.boatButtons}>
-                  <button
-                    className={styles.editBoatButton}
-                    onClick={() => handleEditBoat(boat.id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className={styles.editBoatButton}
-                    onClick={() => handleRemoveBoat(boat.id)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            ))
-          ) : null}
-          <button className={styles.addButton} onClick={handleAddBoat}>
-            <span className={styles.plusIcon}>+</span> Add boat
+    <>
+      <div className={styles.profilePage}>
+        <img
+          src={whiteArrowLeft}
+          alt="arrow"
+          className="arrow"
+          onClick={() => navigate(-1)}
+        />
+        <div className={styles.profileHeader}>
+          <button className={styles.editButton} onClick={handleEditProfile}>
+            Edit profile
           </button>
         </div>
-
-        <div className={styles.subscriptionContainer}>
-          <h3 className={styles.sectionTitle}>Subscription plan</h3>
-          <div className={styles.subscriptionRow}>
-            <span>Duration</span>
-            <span>
-              {user.subscriptionExpiry
-                ? new Date(user.subscriptionExpiry).toLocaleDateString()
-                : "No expiry date"}
-            </span>
-          </div>
-          <div className={styles.subscriptionRow}>
-            <span>Price EUR</span>
-            <div className={styles.priceContainer}>
-              <span className={styles.price}>
-                {user.subscriptionPlan === "PAID" ? "9.99" : "0.00"}€
-              </span>
-              <span className={styles.pricePeriod}>per month</span>
+        <div className={styles.profileContent}>
+          <div className={styles.userInfoContainer}>
+            <div className={styles.userInfo}>
+              <div className={styles.avatar}>
+                {user.name && user.surname
+                  ? user.name[0] + user.surname[0]
+                  : user.email[0].toUpperCase()}
+              </div>
+              <div className={styles.userDetails}>
+                <h3>
+                  {user.name} {user.surname}
+                </h3>
+                <p>{user.email}</p>
+              </div>
             </div>
           </div>
-        </div>
+          <div className={styles.boatListContainer}>
+            {boatsLoading ? (
+              <p>Loading boats...</p>
+            ) : boats && boats.length > 0 ? (
+              boats.map((boat, index) => (
+                <div key={boat.id} className={styles.boatItem}>
+                  <div
+                    className={styles.boatInfo}
+                    onClick={() => handleInfoBoat(boat.id)}
+                  >
+                    <div className={styles.boatNumber}>{index + 1}</div>
+                    <div className={styles.boatName}>
+                      {boat.name || `Boat ${index + 1}`}
+                    </div>
+                  </div>
+                  <div className={styles.boatButtons}>
+                    <button
+                      className={styles.editBoatButton}
+                      onClick={() => handleEditBoat(boat.id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className={styles.editBoatButton}
+                      onClick={() => handleRemoveBoat(boat.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : null}
+            <button className={styles.addButton} onClick={handleAddBoat}>
+              <span className={styles.plusIcon}>+</span> Add boat
+            </button>
+          </div>
 
-        <button className={styles.logoutButton} onClick={handleLogout}>
-          Log out
-        </button>
+          <div className={styles.subscriptionContainer}>
+            <div className={styles.subscriptionColumn}>
+              <h3 className={styles.subscriptionTitle}>
+                {user.subscriptionPlan === "FREE_TRIAL"
+                  ? "Free trial"
+                  : "Weekly"}
+              </h3>
+              <span>
+                {user.subscriptionPlan === "FREE_TRIAL"
+                  ? user.subscriptionExpiry
+                    ? "until " + new Date(user.subscriptionExpiry).toLocaleDateString()
+                    : "no expiry date"
+                  : "billed every week"}
+              </span>
+            </div>
+            <div className={styles.subscriptionColumn}>
+              <div className={styles.priceContainer}>
+                <span className={styles.price}>
+                  {user.subscriptionPlan === "PAID" ? "24.99" : "0.00"}€
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.logoutContainer}>
+            <button className={styles.logoutButton} onClick={handleLogout}>
+              Log out
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+      <NavBar />
+    </>
   );
 };

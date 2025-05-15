@@ -33,6 +33,7 @@ button {
   height: 42px;
   top: 56px;
   left: 10px;
+  z-index: 10;
 }
 
 /* universal form style */
