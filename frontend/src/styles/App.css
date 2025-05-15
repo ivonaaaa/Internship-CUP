@@ -33,6 +33,7 @@ button {
   height: 42px;
   top: 56px;
   left: 10px;
+  z-index: 300;
 }
 
 /* universal form style */
@@ -41,9 +42,10 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  height: 100vh;
+  min-height: 100vh;
   background: url(../assets/images/sea.webp);
   position: relative;
+  overflow-y: scroll;
 }
 
 .SeaContainer::before {
@@ -85,6 +87,7 @@ button {
   vertical-align: middle;
   color: white;
   z-index: 1000;
+  padding-top: 128px;
 }
 
 .formGroup {

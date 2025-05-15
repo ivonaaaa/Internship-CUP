@@ -1,12 +1,13 @@
 .infoPage {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  min-height: 100dvh;
   padding: 60px 16px;
   gap: 36px;
   font-family: var(--font-omnes);
   position: relative;
   padding-top: 64px;
+  padding-bottom: 124px;
 }
 
 .infoPageHeader {
